@@ -1,30 +1,33 @@
-import 'dart:async';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/screens/takePicture.dart';
+import 'package:tomarfoto/routes/routes.dart';
+import 'package:tomarfoto/screens/pantallaInicial.dart';
 
+void main() => runApp(CameraApp());
 
 class CameraApp extends StatelessWidget {
-  CameraApp(List<CameraDescription> cameras);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: CameraExampleHome(cameras),
+      title: 'ConteoAppV1',
+        theme: ThemeData(
+        primarySwatch: Colors.green,
+        accentColor: Colors.greenAccent,
+      ),
+      initialRoute: '/',//CameraExampleHome(cameras),
+      routes: getAplicaciones(),
+      onGenerateRoute: (settings){
+        return MaterialPageRoute(
+          builder: (ctx) => PantallaInicial()
+        );
+      },
+      onUnknownRoute: (settings){
+        return MaterialPageRoute(
+          builder: (ctx) => PantallaInicial()
+        );
+      }
     );
   }
 }
 
-List<CameraDescription> cameras = [];
-
-Future<void> main() async {
-  // Fetch the available cameras before initializing the app.
-  try {
-    WidgetsFlutterBinding.ensureInitialized();
-    cameras = await availableCameras();
-  } on CameraException catch (e) {
-    logError(e.code, e.description);
-  }
-  runApp(CameraApp(cameras));
-}

@@ -4,15 +4,14 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:tomarfoto/main.dart';
 import 'package:video_player/video_player.dart';
+import 'package:tomarfoto/provider/camerasprovider.dart';
 
 class CameraExampleHome extends StatefulWidget {
-  CameraExampleHome(List<CameraDescription> cameras);
-
+  static const routedName = '/CameraHome';
   @override
   _CameraExampleHomeState createState() {
-    return _CameraExampleHomeState(cameras);
+    return _CameraExampleHomeState();
   }
 }
 
@@ -40,8 +39,6 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
   VideoPlayerController videoController;
   VoidCallback videoPlayerListener;
   bool enableAudio = true;
-
-  _CameraExampleHomeState(cameras);
 
   @override
   void initState() {
@@ -77,43 +74,58 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Camera example'),
+        title: const Text('Toma de foto'),
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Center(
-                  child: _cameraPreviewWidget(),
-                ),
+      body: FutureBuilder(
+        future: getInfoCamara(),
+        builder: (context, listaCamaras) {
+          if (listaCamaras.hasData) {
+            return retornoHomeCamara(listaCamaras.data);
+          }
+          if(listaCamaras.hasError){
+            return Center(child: Text(listaCamaras.error),);
+          }
+          return CircularProgressIndicator();
+        },
+      ),
+    );
+  }
+
+  Widget retornoHomeCamara(cameras) {
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(1.0),
+              child: Center(
+                child: _cameraPreviewWidget(),
               ),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(
-                  color: controller != null && controller.value.isRecordingVideo
-                      ? Colors.redAccent
-                      : Colors.grey,
-                  width: 3.0,
-                ),
+            ),
+            decoration: BoxDecoration(
+              color: Colors.black,
+              border: Border.all(
+                color: controller != null && controller.value.isRecordingVideo
+                    ? Colors.redAccent
+                    : Colors.grey,
+                width: 3.0,
               ),
             ),
           ),
-          _captureControlRowWidget(),
-          _toggleAudioWidget(),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _cameraTogglesRowWidget(cameras),
-                _thumbnailWidget(),
-              ],
-            ),
+        ),
+        _captureControlRowWidget(),
+        _toggleAudioWidget(),
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              _cameraTogglesRowWidget(cameras),
+              _thumbnailWidget(),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
