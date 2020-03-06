@@ -47,8 +47,8 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     });
   }
 
-  Future<void> inicializarCamara(CameraDescription camara){
-        controller = CameraController(
+  Future<void> inicializarCamara(CameraDescription camara) {
+    controller = CameraController(
       // Obtén una cámara específica de la lista de cámaras disponibles
       camara,
       // Define la resolución a utilizar
@@ -64,27 +64,11 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     WidgetsBinding.instance.addObserver(this);
   }
 
-
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-/*
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // App state changed before we got the chance to initialize.
-    if (controller == null || !controller.value.isInitialized) {
-      return;
-    }
-    if (state == AppLifecycleState.inactive) {
-      controller?.dispose();
-    } else if (state == AppLifecycleState.resumed) {
-      if (controller != null) {
-        onNewCameraSelected(controller.description);
-      }
-    }
-  }*/
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -99,9 +83,11 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
         future: getInfoCamara(),
         builder: (context, listaCamaras) {
           if (listaCamaras.hasData) {
-            if(controller==null)inicializarCamara((listaCamaras.data as List<CameraDescription>).first);
+            if (controller == null)
+              inicializarCamara(
+                  (listaCamaras.data as List<CameraDescription>).first);
             return FutureBuilder(
-                future: _initializeControllerFuture  ,
+                future: _initializeControllerFuture,
                 builder: (context, snapshot) {
                   print(listaCamaras.data);
                   if (snapshot.connectionState == ConnectionState.done) {
@@ -115,7 +101,10 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
               child: Text(listaCamaras.error),
             );
           }
-          return Center(child: CircularProgressIndicator(backgroundColor: Colors.red,));
+          return Center(
+              child: CircularProgressIndicator(
+            backgroundColor: Colors.red,
+          ));
         },
       ),
     );
@@ -128,12 +117,55 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
           children: <Widget>[
             Expanded(
               child: Container(
+                height: constrains.maxHeight * 0.9,
+                width: constrains.maxWidth,
                 child: Center(
                   child: _cameraPreviewWidget(),
                 ),
               ),
             ),
-            Text('espacio botones'),
+            Container(
+                color: Colors.red,
+                height: constrains.maxHeight * 0.1,
+                width: constrains.maxWidth,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      color: Theme.of(context).primaryColor,
+                      width: constrains.maxWidth * 0.5,
+                      height: constrains.maxHeight * 0.1,
+                      padding:
+                          EdgeInsets.only(top: constrains.maxHeight * 0.04),
+                      child: SafeArea(
+                        child: Text(
+                          'Galería',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),Container(
+                      color: Theme.of(context).primaryColor,
+                      width: constrains.maxWidth * 0.5,
+                      height: constrains.maxHeight * 0.1,
+                      padding:
+                          EdgeInsets.only(top: constrains.maxHeight * 0.04),
+                      child: SafeArea(
+                        child: Text(
+                          'Foto',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    )
+                  ],
+                )),
           ],
         ),
         Container(
@@ -173,7 +205,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
   Widget _cameraPreviewWidget() {
     if (controller == null || !controller.value.isInitialized) {
       return const Text(
-        'Tap a camera',
+        'no hay camara',
         style: TextStyle(
           color: Colors.white,
           fontSize: 24.0,
@@ -181,10 +213,11 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
         ),
       );
     } else {
-      return AspectRatio(
+      return CameraPreview(controller);
+      /*AspectRatio(
         aspectRatio: controller.value.aspectRatio,
         child: CameraPreview(controller),
-      );
+      );*/
     }
   }
 
@@ -207,51 +240,6 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     );
   }
 */
-  /// Display the control bar with buttons to take pictures and record videos.
-  /*Widget _captureControlRowWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.camera_alt),
-          color: Colors.blue,
-          onPressed: controller != null &&
-                  controller.value.isInitialized &&
-                  !controller.value.isRecordingVideo
-              ? onTakePictureButtonPressed
-              : null,
-        ),
-      ],
-    );
-  }*/
-
-  /// Display a row of toggle to select the camera (or a message if no camera is available).
-  Widget _cameraTogglesRowWidget(cameras) {
-    final List<Widget> toggles = <Widget>[];
-
-    if (cameras.isEmpty) {
-      return const Text('No se encontraron camaras');
-    } else {
-      for (CameraDescription cameraDescription in cameras) {
-        toggles.add(
-          SizedBox(
-            width: 90.0,
-            child: RadioListTile<CameraDescription>(
-              title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-              groupValue: controller?.description,
-              value: cameraDescription,
-              onChanged: controller != null && controller.value.isRecordingVideo
-                  ? null
-                  : onNewCameraSelected,
-            ),
-          ),
-        );
-      }
-    }
-
-    return Row(children: toggles);
-  }
 
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
