@@ -13,7 +13,7 @@ class CameraApp extends StatelessWidget {
       title: 'ConteoAppV1',
         theme: ThemeData(
         primarySwatch: Colors.blue,
-        accentColor: Colors.blueAccent,
+        accentColor: Colors.lightBlue[500],
       ),
       initialRoute: '/',//CameraExampleHome(cameras),
       routes: getAplicaciones(),
