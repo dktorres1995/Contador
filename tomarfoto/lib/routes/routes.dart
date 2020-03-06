@@ -7,6 +7,6 @@ Map <String,WidgetBuilder> getAplicaciones(){
   return <String,WidgetBuilder>{
     PantallaInicial.routedName      : (ctx) =>  PantallaInicial(),
     CameraExampleHome.routedName    : (ctx)=> CameraExampleHome(),
-    TraerInfo.routedName            : (ctx)=>TraerInfo()
+    MyApp.routedName            : (ctx)=>MyApp()
   };
 }
