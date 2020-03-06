@@ -12,8 +12,8 @@ class CameraApp extends StatelessWidget {
     return MaterialApp(
       title: 'ConteoAppV1',
         theme: ThemeData(
-        primarySwatch: Colors.green,
-        accentColor: Colors.greenAccent,
+        primarySwatch: Colors.blue,
+        accentColor: Colors.lightBlue[500],
       ),
       initialRoute: '/',//CameraExampleHome(cameras),
       routes: getAplicaciones(),

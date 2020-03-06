@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
       shape: const CircularNotchedRectangle(),
       
       child: Container(
-        color: Colors.lightBlue[900],
+        color: Theme.of(context).primaryColor,
         
         height: 50.0,),
     ),
