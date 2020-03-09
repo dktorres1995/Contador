@@ -8,6 +8,10 @@ import 'package:tomarfoto/provider/camerasprovider.dart';
 //import 'package:tomarfoto/screens/envioImagen.dart';
 
 class CameraExampleHome extends StatefulWidget {
+  Function showInSnackBar;
+  Function cambioPath;
+  CameraExampleHome(this.showInSnackBar,this.cambioPath);
+
   @override
   _CameraExampleHomeState createState() {
     return _CameraExampleHomeState();
@@ -102,24 +106,45 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
         Container(
             height: constrains.maxHeight,
             width: constrains.maxWidth,
-            padding: EdgeInsets.only(top: constrains.maxHeight * 0.5),
+            padding: EdgeInsets.only(
+                top: constrains.maxHeight * 0.8,
+                left: constrains.maxWidth * 0.4,
+                right: constrains.maxWidth * 0.3),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 InkWell(
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: Theme.of(context).accentColor,
+                  child: Container(
+                    height: constrains.maxHeight * 0.15,
+                    width: constrains.maxWidth * 0.15,
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: <Widget>[
+                        SafeArea(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white, shape: BoxShape.circle),
+                          ),
+                        ),
+                        SafeArea(
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Theme.of(context).accentColor,
+                            size:
+                                50 * constrains.maxWidth / constrains.maxHeight,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   onTap: controller != null && controller.value.isInitialized
                       ? onTakePictureButtonPressed
                       : null,
                 ),
                 InkWell(
-                  child: Icon(
-                    Icons.switch_camera,
-                    color: Theme.of(context).accentColor,
-                  ),
+                  child: Icon(Icons.switch_camera,
+                      color: Colors.white,
+                      size: 50 * constrains.maxWidth / constrains.maxHeight),
                   onTap: () {
                     if (controller != null && controller.value.isInitialized) {
                       cambiarCamara(listaCamaras);
@@ -145,8 +170,8 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
       );
     } else {
       return //CameraPreview(controller);
-      AspectRatio(
-        aspectRatio: medidas.maxWidth/medidas.maxHeight,
+          AspectRatio(
+        aspectRatio: medidas.maxWidth / medidas.maxHeight,
         child: CameraPreview(controller),
       );
     }
@@ -192,7 +217,8 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     controller.addListener(() {
       if (mounted) setState(() {});
       if (controller.value.hasError) {
-        //showInSnackBar('Camera error ${controller.value.errorDescription}');
+        widget.showInSnackBar(
+            'error de camara: ${controller.value.errorDescription}');
       }
     });
 
@@ -214,9 +240,11 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
           imagePath = filePath;
         });
         if (filePath != null) {
-          //showInSnackBar('Picture saved to $filePath');
+          widget.showInSnackBar('Foto Salvada en $filePath');
           print('inicia Envio');
           enviarImagenn(filePath);
+          widget.showInSnackBar('Foto enviada con exito');
+          widget.cambioPath(filePath);
         }
       }
     });
@@ -224,7 +252,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
   Future<String> takePicture() async {
     if (!controller.value.isInitialized) {
-      //showInSnackBar('Error: select a camera first.');
+      widget.showInSnackBar('Error: selecciona una camara.');
       return null;
     }
     final Directory extDir = await getApplicationDocumentsDirectory();
@@ -248,6 +276,6 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
   void _showCameraException(CameraException e) {
     logError(e.code, e.description);
-    //showInSnackBar('Error: ${e.code}\n${e.description}');
+    widget.showInSnackBar('Error: ${e.code}\n${e.description}');
   }
 }

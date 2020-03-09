@@ -13,6 +13,8 @@ class _EnvioImagenState extends State<EnvioImagen> {
   bool tomaFoto = true;
   bool verFoto = false;
   bool verGaleria = false;
+  String pathFoto = '';
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void tomarfoto() {
     setState(() {
@@ -38,8 +40,15 @@ class _EnvioImagenState extends State<EnvioImagen> {
     });
   }
 
-  void showInSnackBar(String message) {
-    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
+  void cambioPath(String path) {
+    setState(() {
+      pathFoto = path;
+    });
+    verfoto();
+  }
+
+  void mostrarMensaje(String mensaje) {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(mensaje)));
   }
 
   @override
@@ -50,12 +59,22 @@ class _EnvioImagenState extends State<EnvioImagen> {
         title: const Text('Toma de foto'),
         backgroundColor: Theme.of(context).accentColor,
       ),
-      body: pantallaInicialEnvios(tomaFoto, verFoto, verGaleria,tomarfoto,vergaleria,verfoto),
+      body: pantallaInicialEnvios(tomaFoto, verFoto, verGaleria, tomarfoto,
+          vergaleria, verfoto, mostrarMensaje, cambioPath, pathFoto),
     );
   }
 }
 
-Widget pantallaInicialEnvios(bool tomaFoto, bool verFoto, bool verGaleria, Function tomarfoto, Function vergaleria, Function verfoto) {
+Widget pantallaInicialEnvios(
+    bool tomaFoto,
+    bool verFoto,
+    bool verGaleria,
+    Function tomarfoto,
+    Function vergaleria,
+    Function verfoto,
+    Function mostrarMensaje,
+    Function cambioPath,
+    String pathFoto) {
   return LayoutBuilder(
     builder: (context, constrains) {
       return Column(
@@ -66,10 +85,10 @@ Widget pantallaInicialEnvios(bool tomaFoto, bool verFoto, bool verGaleria, Funct
               width: constrains.maxWidth,
               child: Center(
                 child: tomaFoto
-                    ? CameraExampleHome()
+                    ? CameraExampleHome(mostrarMensaje, cambioPath)
                     : verGaleria
                         ? Galeria()
-                        : verFoto ? VisualizacionFotoTomada() : null,
+                        : verFoto ? VisualizacionFotoTomada(pathFoto) : null,
               ),
             ),
           ),
@@ -91,12 +110,14 @@ Widget pantallaInicialEnvios(bool tomaFoto, bool verFoto, bool verGaleria, Funct
                           'Galería',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: verGaleria?Colors.white:Colors.blue[800],
+                              color:
+                                  verGaleria ? Colors.white : Colors.blue[800],
                               fontSize: 20,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-                    ),onTap:  vergaleria,
+                    ),
+                    onTap: vergaleria,
                   ),
                   InkWell(
                     child: Container(
@@ -110,13 +131,13 @@ Widget pantallaInicialEnvios(bool tomaFoto, bool verFoto, bool verGaleria, Funct
                           'Foto',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: tomaFoto?Colors.white:Colors.blue[800],
+                              color: tomaFoto ? Colors.white : Colors.blue[800],
                               fontSize: 20,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
-                    onTap: tomarfoto ,
+                    onTap: tomarfoto,
                   )
                 ],
               ))
