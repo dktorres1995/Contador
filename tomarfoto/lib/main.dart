@@ -13,7 +13,7 @@ class CameraApp extends StatelessWidget with PortraitModeMixin {
       title: 'ConteoAppV1',
         theme: ThemeData(
         primarySwatch: Colors.blue,
-        accentColor: Colors.lightBlue[900],
+        accentColor: Colors.indigo[900],
       ),
       initialRoute: '/',//CameraExampleHome(cameras),
       routes: getAplicaciones(),
