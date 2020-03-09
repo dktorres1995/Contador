@@ -5,6 +5,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tomarfoto/provider/camerasprovider.dart';
+import 'package:tomarfoto/screens/envioImagen.dart';
 
 class CameraExampleHome extends StatefulWidget {
   @override
@@ -55,8 +56,6 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -175,9 +174,9 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
   String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
-  void showInSnackBar(String message) {
+  /*void showInSnackBar(String message) {
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
-  }
+  }*/
 
   void onNewCameraSelected(CameraDescription cameraDescription) async {
     if (controller != null) {
@@ -193,7 +192,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     controller.addListener(() {
       if (mounted) setState(() {});
       if (controller.value.hasError) {
-        showInSnackBar('Camera error ${controller.value.errorDescription}');
+        //showInSnackBar('Camera error ${controller.value.errorDescription}');
       }
     });
 
@@ -215,7 +214,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
           imagePath = filePath;
         });
         if (filePath != null) {
-          showInSnackBar('Picture saved to $filePath');
+          //showInSnackBar('Picture saved to $filePath');
           print('inicia Envio');
           enviarImagenn(filePath);
         }
@@ -225,7 +224,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
   Future<String> takePicture() async {
     if (!controller.value.isInitialized) {
-      showInSnackBar('Error: select a camera first.');
+      //showInSnackBar('Error: select a camera first.');
       return null;
     }
     final Directory extDir = await getApplicationDocumentsDirectory();
@@ -249,6 +248,6 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
   void _showCameraException(CameraException e) {
     logError(e.code, e.description);
-    showInSnackBar('Error: ${e.code}\n${e.description}');
+    //showInSnackBar('Error: ${e.code}\n${e.description}');
   }
 }
