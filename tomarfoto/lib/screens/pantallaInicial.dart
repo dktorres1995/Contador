@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/TraerInfo.dart';
 import 'package:tomarfoto/screens/envioImagen.dart';
+import 'package:tomarfoto/screens/historial.dart';
 
 class PantallaInicial extends StatefulWidget {
   static const routedName = '/';

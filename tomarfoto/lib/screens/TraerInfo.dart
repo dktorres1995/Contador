@@ -39,13 +39,16 @@ class MyApp extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(
+                 
+                  
                   children: <Widget>[
                     ClipOval(
                       child: Container(
-                        color: Colors.grey,
+                        color: Colors.white.withOpacity(0.9),
                         height: 120.0, // height of the button
                         width: 120.0,
-                        child: Align(alignment:Alignment.topLeft,
+                        child: Align(
+                          
                         
                         child: Center(child: Text('${snapshot.data.conteo}')),
                         )
@@ -71,13 +74,23 @@ class MyApp extends StatelessWidget {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.camera_alt)
+          child: Container(
+           
+          child: Icon(Icons.camera_alt,
+          
+          color: Theme.of(context).accentColor,
+          
+          ),
+          
+        ),
+        backgroundColor: Colors.white,
+        
         ),
         bottomNavigationBar: BottomAppBar(
+
       shape: const CircularNotchedRectangle(),
-      
       child: Container(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).accentColor,
         
         height: 50.0,),
     ),
