@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tomarfoto/widgets/widgets/TomaFoto.dart';
 import 'package:tomarfoto/widgets/widgets/galeria.dart';
 import 'package:tomarfoto/widgets/widgets/visualizarFotoTomada.dart';
+import 'package:tomarfoto/provider/camerasprovider.dart';
 
 class EnvioImagen extends StatefulWidget {
   static const routedName = "/pantallaInicialEnvioImagen";
@@ -51,6 +52,12 @@ class _EnvioImagenState extends State<EnvioImagen> {
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(mensaje)));
   }
 
+  void enviarFotoBase() {
+    enviarImagenn(pathFoto);
+    mostrarMensaje('Foto enviada con exito');
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +65,20 @@ class _EnvioImagenState extends State<EnvioImagen> {
       appBar: AppBar(
         title: const Text('Toma de foto'),
         backgroundColor: Theme.of(context).accentColor,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 20, right: 20),
+            child: InkWell(
+              child: Text(
+                'siguiente',
+                style: TextStyle(
+                    color: verFoto ? Colors.blue : Colors.grey, fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+              onTap: verFoto ? enviarFotoBase : null,
+            ),
+          )
+        ],
       ),
       body: pantallaInicialEnvios(tomaFoto, verFoto, verGaleria, tomarfoto,
           vergaleria, verfoto, mostrarMensaje, cambioPath, pathFoto),

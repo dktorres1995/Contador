@@ -241,9 +241,6 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
         });
         if (filePath != null) {
           widget.showInSnackBar('Foto Salvada en $filePath');
-          print('inicia Envio');
-          enviarImagenn(filePath);
-          widget.showInSnackBar('Foto enviada con exito');
           widget.cambioPath(filePath);
         }
       }

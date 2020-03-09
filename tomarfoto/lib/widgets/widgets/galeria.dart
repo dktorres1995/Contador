@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tomarfoto/provider/pathProvider.dart';
+import 'dart:convert';
 
 class Galeria extends StatefulWidget {
   @override
@@ -8,10 +10,22 @@ class Galeria extends StatefulWidget {
 class _GaleriaState extends State<Galeria> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(child: Text('ver la galeria'),
-        
-      ),
+    return FutureBuilder(
+      future: listaPath(),
+      builder: (context,lista){
+        List<dynamic> listajson = json.decode(lista.data); 
+        List<dynamic> listaPaths = listajson.first['files'];
+        print(listaPaths.first.toString());
+        return imprimirPath(lista.data);
+      },
     );
   }
+}
+
+
+Widget imprimirPath(String pathlist){
+
+  return SingleChildScrollView(child: Column(children: <Widget>[
+    Text(pathlist)
+  ],),);
 }
