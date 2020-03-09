@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/screens/TraerInfo.dart';
-import 'package:tomarfoto/screens/cameraHome.dart';
+import 'package:tomarfoto/screens/envioImagen.dart';
 
 class PantallaInicial extends StatefulWidget {
   static const routedName = '/';
@@ -39,7 +39,7 @@ class _State extends State<PantallaInicial> {
                 ),
               ),
               onTap: () =>
-                  Navigator.of(context).pushNamed(CameraExampleHome.routedName),
+                  Navigator.of(context).pushNamed(EnvioImagen.routedName),
             ),
             InkWell(
               child: Container(
