@@ -7,24 +7,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:tomarfoto/provider/camerasprovider.dart';
 
 class CameraExampleHome extends StatefulWidget {
-  static const routedName = '/CameraHome';
   @override
   _CameraExampleHomeState createState() {
     return _CameraExampleHomeState();
   }
-}
-
-/// Returns a suitable camera icon for [direction].
-IconData getCameraLensIcon(CameraLensDirection direction) {
-  switch (direction) {
-    case CameraLensDirection.back:
-      return Icons.camera_rear;
-    case CameraLensDirection.front:
-      return Icons.camera_front;
-    case CameraLensDirection.external:
-      return Icons.camera;
-  }
-  throw ArgumentError('Unknown lens direction');
 }
 
 void logError(String code, String message) =>
@@ -52,7 +38,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
       // Obtén una cámara específica de la lista de cámaras disponibles
       camara,
       // Define la resolución a utilizar
-      ResolutionPreset.medium,
+      ResolutionPreset.ultraHigh,
     );
     // A continuación, debes inicializar el controlador. Esto devuelve un Future!
     _initializeControllerFuture = controller.initialize();
@@ -74,111 +60,57 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: const Text('Toma de foto'),
-      ),
-      body: FutureBuilder(
-        future: getInfoCamara(),
-        builder: (context, listaCamaras) {
-          if (listaCamaras.hasData) {
-            if (controller == null)
-              inicializarCamara(
-                  (listaCamaras.data as List<CameraDescription>).first);
-            return FutureBuilder(
-                future: _initializeControllerFuture,
-                builder: (context, snapshot) {
-                  print(listaCamaras.data);
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return retornoHomeCamara(listaCamaras.data);
-                  }
-                  return CircularProgressIndicator();
-                });
-          }
-          if (listaCamaras.hasError) {
-            return Center(
-              child: Text(listaCamaras.error),
-            );
-          }
+    return FutureBuilder(
+      future: getInfoCamara(),
+      builder: (context, listaCamaras) {
+        if (listaCamaras.hasData) {
+          if (controller == null)
+            inicializarCamara(
+                (listaCamaras.data as List<CameraDescription>).first);
+          return FutureBuilder(
+              future: _initializeControllerFuture,
+              builder: (context, snapshot) {
+                print(listaCamaras.data);
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return retornoHomeCamara(listaCamaras.data);
+                }
+                return CircularProgressIndicator();
+              });
+        }
+        if (listaCamaras.hasError) {
           return Center(
-              child: CircularProgressIndicator(
-            backgroundColor: Colors.red,
-          ));
-        },
-      ),
+            child: Text(listaCamaras.error),
+          );
+        }
+        return Center(
+            child: CircularProgressIndicator(
+          backgroundColor: Theme.of(context).accentColor,
+        ));
+      },
     );
   }
 
   Widget retornoHomeCamara(List<CameraDescription> listaCamaras) {
     return LayoutBuilder(builder: (context, constrains) {
       return Stack(children: <Widget>[
-        Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                height: constrains.maxHeight * 0.9,
-                width: constrains.maxWidth,
-                child: Center(
-                  child: _cameraPreviewWidget(),
-                ),
-              ),
-            ),
-            Container(
-                color: Colors.red,
-                height: constrains.maxHeight * 0.1,
-                width: constrains.maxWidth,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      color: Theme.of(context).primaryColor,
-                      width: constrains.maxWidth * 0.5,
-                      height: constrains.maxHeight * 0.1,
-                      padding:
-                          EdgeInsets.only(top: constrains.maxHeight * 0.04),
-                      child: SafeArea(
-                        child: Text(
-                          'Galería',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),Container(
-                      color: Theme.of(context).primaryColor,
-                      width: constrains.maxWidth * 0.5,
-                      height: constrains.maxHeight * 0.1,
-                      padding:
-                          EdgeInsets.only(top: constrains.maxHeight * 0.04),
-                      child: SafeArea(
-                        child: Text(
-                          'Foto',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    )
-                  ],
-                )),
-          ],
+        Container(
+          height: constrains.maxHeight,
+          width: constrains.maxWidth,
+          child: Center(
+            child: _cameraPreviewWidget(constrains),
+          ),
         ),
         Container(
             height: constrains.maxHeight,
             width: constrains.maxWidth,
-            padding: EdgeInsets.only(top: constrains.maxHeight * 0.6),
+            padding: EdgeInsets.only(top: constrains.maxHeight * 0.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 InkWell(
                   child: Icon(
                     Icons.camera_alt,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).accentColor,
                   ),
                   onTap: controller != null && controller.value.isInitialized
                       ? onTakePictureButtonPressed
@@ -187,7 +119,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
                 InkWell(
                   child: Icon(
                     Icons.switch_camera,
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).accentColor,
                   ),
                   onTap: () {
                     if (controller != null && controller.value.isInitialized) {
@@ -202,7 +134,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
   }
 
   /// Display the preview from the camera (or a message if the preview is not available).
-  Widget _cameraPreviewWidget() {
+  Widget _cameraPreviewWidget(BoxConstraints medidas) {
     if (controller == null || !controller.value.isInitialized) {
       return const Text(
         'no hay camara',
@@ -213,11 +145,11 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
         ),
       );
     } else {
-      return CameraPreview(controller);
-      /*AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
+      return //CameraPreview(controller);
+      AspectRatio(
+        aspectRatio: medidas.maxWidth/medidas.maxHeight,
         child: CameraPreview(controller),
-      );*/
+      );
     }
   }
 
@@ -282,7 +214,11 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
         setState(() {
           imagePath = filePath;
         });
-        if (filePath != null) showInSnackBar('Picture saved to $filePath');
+        if (filePath != null) {
+          showInSnackBar('Picture saved to $filePath');
+          print('inicia Envio');
+          enviarImagenn(filePath);
+        }
       }
     });
   }
