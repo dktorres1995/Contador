@@ -113,7 +113,7 @@ Widget pantallaInicialEnvios(
         children: <Widget>[
           Expanded(
             child: Container(
-              height: constrains.maxHeight * 0.9,
+              height: constrains.maxHeight*0.9 ,
               width: constrains.maxWidth,
               child: Center(
                 child: tomaFoto

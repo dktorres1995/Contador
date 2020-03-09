@@ -32,16 +32,33 @@ class _GaleriaState extends State<Galeria> {
               return Column(
                 children: <Widget>[
                   Container(
-                      height: constrains.maxHeight * 0.5,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(100)),
+                      height: constrains.maxHeight * 0.45,
                       width: constrains.maxWidth,
-                      color: Colors.white,
                       child: fotoescogida != null
-                          ? SafeArea(child: Image.file(fotoescogida))
+                          ? Card(
+                              elevation: 30,
+                              child: SafeArea(child: Image.file(fotoescogida,fit: BoxFit.fill,)))
                           : null),
                   Container(
-                    height: constrains.maxHeight * 0.5,
+                    height: constrains.maxHeight * 0.05,
                     width: constrains.maxWidth,
-                    child: imprimirGrilla(lista.data, escogerFoto),
+                    child: Text(
+                      'fotos',
+                      style: TextStyle(color: Theme.of(context).accentColor),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Container(
+                    height: constrains.maxHeight * 0.45,
+                    width: constrains.maxWidth,
+                    margin: EdgeInsets.all(5),
+                    child: Card(
+                      elevation: 50,
+                      child: imprimirGrilla(lista.data, escogerFoto),
+                    ),
                   )
                 ],
               );
@@ -59,7 +76,7 @@ class _GaleriaState extends State<Galeria> {
 
 Widget imprimirGrilla(List<dynamic> lista, Function escogerFoto) {
   return GridView(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(0),
       children: lista
           .map((itemImagen2) => ItemFoto(
                 path: itemImagen2,
