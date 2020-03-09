@@ -7,7 +7,7 @@ import 'package:tomarfoto/screens/envioImagen.dart';
 Map <String,WidgetBuilder> getAplicaciones(){
   return <String,WidgetBuilder>{
     PantallaInicial.routedName      : (ctx) =>  PantallaInicial(),
-      EnvioImagen.routedName        : (ctx)=> EnvioImagen(),
+    EnvioImagen.routedName        : (ctx)=> EnvioImagen(),
     MyApp.routedName            : (ctx)=>MyApp(),
     Historial.routedName            : (ctx)=>Historial()
   };
