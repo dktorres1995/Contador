@@ -77,14 +77,18 @@ class MyApp extends StatelessWidget {
           child: Container(
            
           child: Icon(Icons.camera_alt,
+          
           color: Theme.of(context).accentColor,
           
-          )
-        )
+          ),
+          
+        ),
+        backgroundColor: Colors.white,
+        
         ),
         bottomNavigationBar: BottomAppBar(
+
       shape: const CircularNotchedRectangle(),
-      
       child: Container(
         color: Theme.of(context).accentColor,
         
