@@ -38,7 +38,7 @@ class _State extends State<PantallaInicial> {
               Center(
                   child: InkWell(
                       child: Text(
-                'Númerar',
+                'NUMERATE',
                 style: TextStyle(color: Colors.white,fontSize: 20),
               ),onTap: ()=>Navigator.of(context)
             .pushNamed(Historial.routedName, arguments: obtener()),) //botonesIniciales(context),

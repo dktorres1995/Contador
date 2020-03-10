@@ -38,7 +38,9 @@ class Historial extends StatelessWidget {
                 
 
              
-              }else{
+              }
+              
+              else{
               return CircularProgressIndicator();
               }
          
@@ -85,8 +87,12 @@ class Historial extends StatelessWidget {
           
           itemCount: lista.length,
           itemBuilder: (BuildContext context, int index){
-          
-          return  
+          if(lista[index].conteo == 0){
+            String prueba = 'Cargando...';   
+          }else{
+              String prueba = lista[index].conteo.toString();
+          }
+          return
           InkWell( 
            child: ListTile(leading: Image.network(
               lista[index].imagenUrl,
@@ -95,7 +101,7 @@ class Historial extends StatelessWidget {
    
                     ),
                 
-          title: Text('Varillas conteo ' + (index + 1).toString() + '         ' +lista[index].conteo.toString()),
+          title: Text('Varillas conteo ' + (index + 1).toString() + '         ' ),
               ),
   
             onTap: (){
@@ -106,6 +112,7 @@ class Historial extends StatelessWidget {
                   
                   
           );
+          
           
 
                     
