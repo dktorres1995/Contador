@@ -21,7 +21,7 @@ class _State extends State<PantallaInicial> {
               Center(
                 child: Container(
                   height: constrains.maxHeight * 0.8,
-                  width: constrains.maxWidth*1.5,
+                  width: constrains.maxWidth,
                   decoration: BoxDecoration(color: Colors.indigo[800],shape:BoxShape.circle ),
                 ),
               ),Center(
