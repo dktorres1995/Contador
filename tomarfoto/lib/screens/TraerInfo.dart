@@ -30,19 +30,18 @@ class _MyAppState extends State<MyApp> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return SingleChildScrollView(
-                              child: Column(
+                child: Stack(
                   children: <Widget>[
+                    Image.network(snapshot.data.imagenUrl),
                     ClipOval(
                         child: Container(
-                            color: Colors.white.withOpacity(0.9),
-                            height: 120.0, // height of the button
-                            width: 120.0,
+                            color: Colors.grey.withOpacity(0.9),
+                            height: 50.0, // height of the button
+                            width: 50.0,
                             child: Align(
-                              child:
-                                  Center(child: Text('${snapshot.data.conteo}')),
-                            )
-                            )),
-                    Image.network(snapshot.data.imagenUrl),
+                              child: Center(
+                                  child: Text('${snapshot.data.conteo}')),
+                            ))),
                   ],
                 ),
               );

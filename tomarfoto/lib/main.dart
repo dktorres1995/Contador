@@ -10,6 +10,7 @@ class CameraApp extends StatelessWidget with PortraitModeMixin {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ConteoAppV1',
         theme: ThemeData(
         primarySwatch: Colors.blue,

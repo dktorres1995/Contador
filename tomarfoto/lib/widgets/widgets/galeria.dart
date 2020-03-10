@@ -40,7 +40,11 @@ class _GaleriaState extends State<Galeria> {
                       child: fotoescogida != null
                           ? Card(
                               elevation: 30,
-                              child: SafeArea(child: Image.file(fotoescogida,fit: BoxFit.fill,)))
+                              child: SafeArea(
+                                  child: Image.file(
+                                fotoescogida,
+                                fit: BoxFit.fill,
+                              )))
                           : null),
                   Container(
                     height: constrains.maxHeight * 0.05,
@@ -66,7 +70,12 @@ class _GaleriaState extends State<Galeria> {
           ); // imprimirGrilla(lista.data);
         }
         if (lista.hasError) {
-          return Text('error(${lista.connectionState})=>${lista.error}');
+          if ('${lista.error.runtimeType}'=='FileSystemException') {
+            return Center(child: Text('Aun no ha tomado fotos'),);
+          } else {
+            return Text(
+                'error(${lista.connectionState})=>${lista.error.runtimeType}');
+          }
         }
         return CircularProgressIndicator();
       },
