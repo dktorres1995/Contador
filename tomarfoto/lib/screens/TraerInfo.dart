@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('númerar'),
+        title: Text('NUMERATE'),
         centerTitle: true,
         backgroundColor: Theme.of(context).accentColor,
       ),
