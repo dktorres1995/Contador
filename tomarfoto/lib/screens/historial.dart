@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:tomarfoto/Models/Recursos.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 
+import 'TraerInfo.dart';
+
 
 class Historial extends StatelessWidget {
   static const routedName = '/historial';
-  final opciones = ['uno','dos'];
-  List<int> _listaNumeros = [1,2,3,4,5];
   @override
    
   Widget build(BuildContext context) {
@@ -33,11 +33,8 @@ class Historial extends StatelessWidget {
                  return 
 
 
-               Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 17.0, 0.0, 0.0),
-                  child: crear(snapshot.data),
-
-                );
+             crear(snapshot.data);
+                
 
              
               }else{
@@ -87,14 +84,27 @@ class Historial extends StatelessWidget {
           itemCount: lista.length,
           itemBuilder: (BuildContext context, int index){
           
-          return    
- ListTile(leading: Image.network(
-   lista[index].imagenUrl,
-   width: 100.0,
-   height: 50.0,
+          return  
+          InkWell( 
+           child: ListTile(leading: Image.network(
+              lista[index].imagenUrl,
+               width: 100.0,
+               height: 50.0,
    
- ),
-  title: Text('Varillas conteo ' + (index + 1).toString() + '           ' +lista[index].conteo.toString()));
+                    ),
+                
+          title: Text('Varillas conteo ' + (index + 1).toString() + '         ' +lista[index].conteo.toString()),
+              ),
+  
+            onTap: (){
+              Future<Recursos> aux=fetchPost();
+              Navigator.of(context).pushNamed(MyApp.routedName,arguments: aux);
+            }
+                  ,
+                  
+                  
+          );
+          
 
                     
 
