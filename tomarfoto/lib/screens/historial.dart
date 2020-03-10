@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/Models/Recursos.dart';
+import 'package:tomarfoto/provider/historialprovider.dart';
+import 'package:tomarfoto/screens/envioImagen.dart';
 
 
 class Historial extends StatelessWidget {
@@ -11,7 +13,8 @@ class Historial extends StatelessWidget {
   @override
    
   Widget build(BuildContext context) {
-    final Future<Recursos> post=ModalRoute.of(context).settings.arguments;
+    
+
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -22,9 +25,33 @@ class Historial extends StatelessWidget {
           title: Text('NUMERATE'),
           centerTitle: true,
         ),
-        body: crear(),
+        body: Center(
+           child: FutureBuilder(
+            future: obtener(),
+            builder: (context, AsyncSnapshot <List<Recursos>> snapshot) {
+              
+              if (snapshot.hasData){
+                 return 
+
+
+               Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 17.0, 0.0, 0.0),
+                  child: crear(snapshot.data),
+
+                );
+
+             
+              }else{
+              return CircularProgressIndicator();
+              }
+         
+            }
+
+        )
         
         
+        
+        ),
         
         
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -37,6 +64,7 @@ class Historial extends StatelessWidget {
           ),
          
         ),
+        onPressed:()=> Navigator.of(context).pushNamed(EnvioImagen.routedName) ,
         backgroundColor: Colors.white,
         ),
         bottomNavigationBar: BottomAppBar(
@@ -54,20 +82,25 @@ class Historial extends StatelessWidget {
   }
 
 
-  Widget crear(){
+  Widget crear(List<Recursos> lista){
 
         return ListView.builder(
-          itemCount: _listaNumeros.length,
+          
+          itemCount: lista.length,
           itemBuilder: (BuildContext context, int index){
-            final imagen = _listaNumeros[index];
-            Divider();
-            return FadeInImage(
-              image: NetworkImage('https://i.picsum.photos/id/$imagen/50/30.jpg'),
-              placeholder: AssetImage('assets/jar-loading.gif'),
+          
+          return    
+ ListTile(leading: Image.network(
+   lista[index].imagenUrl,
+   width: 100.0,
+   height: 50.0,
+   
+ ),
+  title: Text('Varillas conteo ' + (index + 1).toString() + '           ' +lista[index].conteo.toString()));
 
-            );
+                    
+
             
-
           },
 
         );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/TraerInfo.dart';
 import 'package:tomarfoto/screens/envioImagen.dart';
+import 'package:tomarfoto/screens/historial.dart';
 
 class PantallaInicial extends StatefulWidget {
   static const routedName = '/';
@@ -22,18 +23,26 @@ class _State extends State<PantallaInicial> {
                 child: Container(
                   height: constrains.maxHeight * 0.8,
                   width: constrains.maxWidth,
-                  decoration: BoxDecoration(color: Colors.indigo[800],shape:BoxShape.circle ),
-                ),
-              ),Center(
-                child: Container(
-                  height: constrains.maxHeight * 0.4,
-                  width: constrains.maxWidth,
-                  decoration: BoxDecoration(color: Colors.indigo[700],shape:BoxShape.circle ),
+                  decoration: BoxDecoration(
+                      color: Colors.indigo[800], shape: BoxShape.circle),
                 ),
               ),
               Center(
-                child: botonesIniciales(context),
+                child: Container(
+                  height: constrains.maxHeight * 0.4,
+                  width: constrains.maxWidth,
+                  decoration: BoxDecoration(
+                      color: Colors.indigo[700], shape: BoxShape.circle),
+                ),
               ),
+              Center(
+                  child: InkWell(
+                      child: Text(
+                'Númerar',
+                style: TextStyle(color: Colors.white,fontSize: 20),
+              ),onTap: ()=>Navigator.of(context)
+            .pushNamed(Historial.routedName, arguments: obtener()),) //botonesIniciales(context),
+                  ),
             ],
           ),
         );
@@ -86,6 +95,23 @@ Widget botonesIniciales(BuildContext context) {
         ),
         onTap: () => Navigator.of(context)
             .pushNamed(MyApp.routedName, arguments: fetchPost()),
+      ),
+      InkWell(
+        child: Container(
+          height: 60,
+          width: 200,
+          child: Card(
+            elevation: 20,
+            child: SafeArea(
+                child: Text(
+              'la lista',
+              textAlign: TextAlign.center,
+            )),
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        onTap: () => Navigator.of(context)
+            .pushNamed(Historial.routedName, arguments: obtener()),
       )
     ],
   );
