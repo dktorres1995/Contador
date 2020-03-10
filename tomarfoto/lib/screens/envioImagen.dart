@@ -14,6 +14,7 @@ class _EnvioImagenState extends State<EnvioImagen> {
   bool tomaFoto = true;
   bool verFoto = false;
   bool verGaleria = false;
+  bool tomaGaleria = false;
   String pathFoto = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -42,10 +43,19 @@ class _EnvioImagenState extends State<EnvioImagen> {
   }
 
   void cambioPath(String path) {
+    print(path);
     setState(() {
       pathFoto = path;
     });
     verfoto();
+  }
+
+   void cambioPathGaleria(String path) {
+     print(path);
+    setState(() {
+      pathFoto = path;
+      tomaGaleria = true;
+    });
   }
 
   void mostrarMensaje(String mensaje) {
@@ -55,7 +65,7 @@ class _EnvioImagenState extends State<EnvioImagen> {
   void enviarFotoBase() {
     enviarImagenn(pathFoto);
     mostrarMensaje('Foto enviada con exito');
-    Navigator.of(context).pop();
+    //Navigator.of(context).pop();
   }
 
   @override
@@ -72,16 +82,16 @@ class _EnvioImagenState extends State<EnvioImagen> {
               child: Text(
                 'siguiente',
                 style: TextStyle(
-                    color: verFoto ? Colors.blue : Colors.grey, fontSize: 20),
+                    color: verFoto || tomaGaleria ? Colors.blue : Colors.grey, fontSize: 20),
                 textAlign: TextAlign.center,
               ),
-              onTap: verFoto ? enviarFotoBase : null,
+              onTap: verFoto || tomaGaleria ? enviarFotoBase : null,
             ),
           )
         ],
       ),
       body: pantallaInicialEnvios(tomaFoto, verFoto, verGaleria, tomarfoto,
-          vergaleria, verfoto, mostrarMensaje, cambioPath, pathFoto),
+          vergaleria, verfoto, mostrarMensaje, cambioPath, cambioPathGaleria ,pathFoto),
     );
   }
 }
@@ -95,6 +105,7 @@ Widget pantallaInicialEnvios(
     Function verfoto,
     Function mostrarMensaje,
     Function cambioPath,
+    Function cambioPathGaleria,
     String pathFoto) {
   return LayoutBuilder(
     builder: (context, constrains) {
@@ -102,13 +113,13 @@ Widget pantallaInicialEnvios(
         children: <Widget>[
           Expanded(
             child: Container(
-              height: constrains.maxHeight * 0.9,
+              height: constrains.maxHeight*0.9 ,
               width: constrains.maxWidth,
               child: Center(
                 child: tomaFoto
                     ? CameraExampleHome(mostrarMensaje, cambioPath)
                     : verGaleria
-                        ? Galeria()
+                        ? Galeria(cambioPathGaleria)
                         : verFoto ? VisualizacionFotoTomada(pathFoto) : null,
               ),
             ),

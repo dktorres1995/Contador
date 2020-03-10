@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/routes/routes.dart';
 import 'package:tomarfoto/screens/pantallaInicial.dart';
-
+import 'package:tomarfoto/mixis/mixis_block_screen.dart';
 void main() => runApp(CameraApp());
 
-class CameraApp extends StatelessWidget {
+class CameraApp extends StatelessWidget with PortraitModeMixin {
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class CameraApp extends StatelessWidget {
       title: 'ConteoAppV1',
         theme: ThemeData(
         primarySwatch: Colors.blue,
-        accentColor: Colors.lightBlue[900],
+        accentColor: Colors.indigo[900],
       ),
       initialRoute: '/',//CameraExampleHome(cameras),
       routes: getAplicaciones(),
