@@ -1,7 +1,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:tomarfoto/Models/Recursos.dart';
 Future<Recursos> fetchPost(String id) async {
@@ -33,9 +32,13 @@ Future <List<Recursos>> obtener() async {
      try {
          
          listaRecursos.add(Recursos.fromJson(item));
+        
        } catch (e) {
+      
+
+        
          print("no fue posible obtener la url de la imagen");
-       }  
+                }  
       
       ;});
       
