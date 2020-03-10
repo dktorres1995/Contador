@@ -15,7 +15,6 @@ class Historial extends StatelessWidget {
    
   @override
   Widget build(BuildContext context) {
-   final Future<List<Recursos>> listaObtenida =  ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       
@@ -75,20 +74,27 @@ class Historial extends StatelessWidget {
 
   Widget crear(List<Recursos> lista,BuildContext ctx) {
     return ListView.builder(
+      
       itemCount: lista.length,
       itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          leading: Image.network(
-            lista[index].imagenUrl,
-            width: 100.0,
-            height: 50.0,
+       
+
+        return 
+        
+        Card(
+                  child: ListTile(
+            leading: Image.network(
+              lista[index].imagenUrl,
+              width: 100.0,
+              height: 50.0,
+            ),
+            title: Text('Varillas conteo ' +
+                (index + 1).toString() +
+                '           ' +
+                '${lista[index].conteo == -1?'Cargando..':lista[index].conteo.toString()}'),
+            onTap: () => Navigator.of(ctx)
+                .pushNamed(MyApp.routedName, arguments: lista[index].id),
           ),
-          title: Text('Varillas conteo ' +
-              (index + 1).toString() +
-              '           ' +
-              lista[index].conteo.toString()),
-          onTap: () => Navigator.of(ctx)
-              .pushNamed(MyApp.routedName, arguments: lista[index].id),
         );
       },
     );

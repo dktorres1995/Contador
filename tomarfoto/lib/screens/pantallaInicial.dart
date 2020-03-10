@@ -41,7 +41,7 @@ class _State extends State<PantallaInicial> {
                 'NUMERATE',
                 style: TextStyle(color: Colors.white,fontSize: 20),
               ),onTap: ()=>Navigator.of(context)
-            .pushNamed(Historial.routedName, arguments: obtener()),) //botonesIniciales(context),
+            .pushNamed(Historial.routedName)) //botonesIniciales(context),
                   ),
             ],
           ),

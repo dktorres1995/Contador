@@ -22,7 +22,7 @@ class Recursos {
         id: json["_id"],
         imagenUrl: json["image_url"],
         tenant: json["tenant"],
-        conteo: 0);
+        conteo: -1);
     }
   }
 
