@@ -14,9 +14,9 @@ class CameraApp extends StatelessWidget with PortraitModeMixin {
         theme: ThemeData(
         primarySwatch: Colors.blue,
         accentColor: Colors.indigo[900],
-      ),
-      initialRoute: '/',//CameraExampleHome(cameras),
+      ),//CameraExampleHome(cameras),
       routes: getAplicaciones(),
+      initialRoute: PantallaInicial.routedName,
       onGenerateRoute: (settings){
         return MaterialPageRoute(
           builder: (ctx) => PantallaInicial()

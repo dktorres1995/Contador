@@ -5,7 +5,7 @@ import 'package:tomarfoto/screens/envioImagen.dart';
 import 'package:tomarfoto/screens/historial.dart';
 
 class PantallaInicial extends StatefulWidget {
-  static const routedName = '/';
+  static const routedName = '/pantallaInicial';
   @override
   _State createState() => _State();
 }
@@ -50,7 +50,7 @@ class _State extends State<PantallaInicial> {
     );
   }
 }
-
+/*
 Widget botonesIniciales(BuildContext context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -115,4 +115,4 @@ Widget botonesIniciales(BuildContext context) {
       )
     ],
   );
-}
+}*/

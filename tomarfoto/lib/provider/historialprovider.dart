@@ -4,9 +4,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:tomarfoto/Models/Recursos.dart';
-Future<Recursos> fetchPost() async {
+Future<Recursos> fetchPost(String id) async {
   final response = await http
-      .get('https://object-counter.azurewebsites.net/contar/5e5eaed5123e0b40304c9850');
+      .get('https://object-counter.azurewebsites.net/contar/$id');
 
   if (response.statusCode == 200) {
     // Si la llamada al servidor fue exitosa, analiza el JSON
