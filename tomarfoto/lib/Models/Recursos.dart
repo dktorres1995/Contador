@@ -9,7 +9,10 @@ class Recursos {
   factory Recursos.fromJson(Map<String, dynamic> json) {
     
     return Recursos(
-        id: json["_id"], imagenUrl: json["image_url"], tenant: json["tenant"],conteo: json["resultado"]["conteo"]);
+        id: json["_id"],
+         imagenUrl: json["image_url"],
+          tenant: json["tenant"],
+          conteo: json["resultado"]["conteo"]);
   }
 
 factory Recursos.fromJsonItem(Map<String, dynamic> json) {

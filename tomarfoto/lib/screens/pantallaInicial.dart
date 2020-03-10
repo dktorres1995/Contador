@@ -41,7 +41,7 @@ class _State extends State<PantallaInicial> {
                 ),
               ),
               onTap: () =>
-                  Navigator.of(context).pushNamed(EnvioImagen.routedName),
+                  Navigator.of(context).pushNamed(Historial.routedName, arguments: obtener()),
             ),
             InkWell(
               child: Container(
@@ -59,7 +59,7 @@ class _State extends State<PantallaInicial> {
               ),
               onTap: () =>
                   Navigator.of(context).pushNamed(MyApp.routedName,arguments: fetchPost()),
-            )
+            ),
           ],
         ),
       ),
