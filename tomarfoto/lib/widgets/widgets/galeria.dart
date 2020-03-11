@@ -4,9 +4,8 @@ import 'package:tomarfoto/provider/pathProvider.dart';
 import 'package:tomarfoto/widgets/widgets/vistaCarpetasGaleria.dart';
 
 class Galeria extends StatefulWidget {
-  Function cambioPathGaleria;
-  final Future<String> listaPathGaleriaCel;
-  Galeria(this.cambioPathGaleria,this.listaPathGaleriaCel);
+ final Function cambioPathGaleria;
+ Galeria(this.cambioPathGaleria);
   @override
   _GaleriaState createState() => _GaleriaState();
 }
@@ -15,13 +14,7 @@ class _GaleriaState extends State<Galeria> {
   File fotoescogida;
   Map<String, List<dynamic>> infoGaleriaCel;
 
-  void setinfoGaleriacel(Map<String, List<dynamic>> mapaRutas) {
-    this.infoGaleriaCel = mapaRutas;
-  }
-
-  Map<String, List<dynamic>> getinfoGaleriacel() {
-    return this.infoGaleriaCel;
-  }
+ 
 
   void escogerFoto(File pathFoto) {
     setState(() {
@@ -33,10 +26,10 @@ class _GaleriaState extends State<Galeria> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: widget.listaPathGaleriaCel, //listaPath2(),
+      future: listaPath(), //listaPath2(),
       builder: (context, lista) {
         if (lista.hasData) {
-          setinfoGaleriacel(listasPaths(lista.data));
+         infoGaleriaCel=listasPaths(lista.data);
           return LayoutBuilder(
             builder: (context, constrains) {
               return Column(

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:tomarfoto/widgets/widgets/itemFoto.dart';
 
 class GrillaFotos extends StatelessWidget {
-  List<dynamic> lista;
-  Function escogerFoto;
+ final List<dynamic> lista;
+  final Function escogerFoto;
   GrillaFotos({@required this.lista, @required this.escogerFoto});
 
   @override

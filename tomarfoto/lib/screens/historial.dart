@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/Models/Recursos.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
-import 'package:tomarfoto/provider/pathProvider.dart';
 import 'package:tomarfoto/screens/TraerInfo.dart';
 import 'package:tomarfoto/screens/envioImagen.dart';
 
@@ -39,7 +36,7 @@ class Historial extends StatelessWidget {
           ),
         ),
         onPressed: () =>
-            Navigator.of(context).pushNamed(EnvioImagen.routedName,arguments: listaPath()),
+            Navigator.of(context).pushNamed(EnvioImagen.routedName),
         backgroundColor: Colors.white,
       ),
       bottomNavigationBar: BottomAppBar(

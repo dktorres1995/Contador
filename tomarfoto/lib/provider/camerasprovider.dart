@@ -30,6 +30,6 @@ void enviarImagenn(String filename) async {
     )
   );
   //print('envia');
-  var res = await request.send();
+   await request.send();
   //print('envió');
 }

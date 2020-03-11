@@ -24,7 +24,7 @@ Map<String, List<dynamic>> listasPaths(String listaPath) {
     List<dynamic> lista = carpeta['files'];
     String ruta = lista.first;
     List<String> frag = ruta.split('/');
-    direcciones[frag.elementAt(frag.length - 2)] = lista;
+    direcciones[frag.elementAt(frag.length - 2)] = lista.sublist(0,10);
   }
   /*final myDir = new Directory('/storage/emulated/0/Pictures/test');
   myDir.exists().then((isThere) {

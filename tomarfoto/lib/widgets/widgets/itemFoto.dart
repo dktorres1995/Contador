@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ItemFoto extends StatelessWidget {
-  File path;
-  Function escoger;
+  final File path;
+  final Function escoger;
   ItemFoto({@required this.path, @required this.escoger});
 
   @override

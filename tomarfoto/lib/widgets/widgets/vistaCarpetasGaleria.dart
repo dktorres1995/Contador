@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tomarfoto/widgets/widgets/ListaFotosGaleria.dart';
 
 class Carpetas extends StatefulWidget {
-  Map<String, List<dynamic>> infoGaleria;
-  Function escogerFoto;
+  final Map<String, List<dynamic>> infoGaleria;
+  final Function escogerFoto;
   Carpetas(this.infoGaleria, this.escogerFoto);
 
   @override

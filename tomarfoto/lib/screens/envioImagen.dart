@@ -68,8 +68,6 @@ class _EnvioImagenState extends State<EnvioImagen> {
 
   @override
   Widget build(BuildContext context) {
-    Future<String>  listaPathGaleriaCel =
-        ModalRoute.of(context).settings.arguments;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -101,8 +99,7 @@ class _EnvioImagenState extends State<EnvioImagen> {
           mostrarMensaje,
           cambioPath,
           cambioPathGaleria,
-          pathFoto,
-          listaPathGaleriaCel),
+          pathFoto),
     );
   }
 }
@@ -117,8 +114,7 @@ Widget pantallaInicialEnvios(
     Function mostrarMensaje,
     Function cambioPath,
     Function cambioPathGaleria,
-    String pathFoto,
-    Future<String> listaPathGaleriaCel) {
+    String pathFoto) {
   return LayoutBuilder(
     builder: (context, constrains) {
       return Column(
@@ -131,7 +127,7 @@ Widget pantallaInicialEnvios(
                 child: tomaFoto
                     ? CameraExampleHome(mostrarMensaje, cambioPath)
                     : verGaleria
-                        ? Galeria(cambioPathGaleria, listaPathGaleriaCel)
+                        ? Galeria(cambioPathGaleria)
                         : verFoto ? VisualizacionFotoTomada(pathFoto) : null,
               ),
             ),
