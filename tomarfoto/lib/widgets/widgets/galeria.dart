@@ -1,18 +1,27 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:tomarfoto/widgets/widgets/itemFoto.dart';
+import 'package:tomarfoto/provider/pathProvider.dart';
+import 'package:tomarfoto/widgets/widgets/vistaCarpetasGaleria.dart';
 
 class Galeria extends StatefulWidget {
   Function cambioPathGaleria;
-  Galeria(this.cambioPathGaleria);
+  final Future<String> listaPathGaleriaCel;
+  Galeria(this.cambioPathGaleria,this.listaPathGaleriaCel);
   @override
   _GaleriaState createState() => _GaleriaState();
 }
 
 class _GaleriaState extends State<Galeria> {
   File fotoescogida;
+  Map<String, List<dynamic>> infoGaleriaCel;
+
+  void setinfoGaleriacel(Map<String, List<dynamic>> mapaRutas) {
+    this.infoGaleriaCel = mapaRutas;
+  }
+
+  Map<String, List<dynamic>> getinfoGaleriacel() {
+    return this.infoGaleriaCel;
+  }
 
   void escogerFoto(File pathFoto) {
     setState(() {
@@ -24,9 +33,10 @@ class _GaleriaState extends State<Galeria> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: listaPath2(),
+      future: widget.listaPathGaleriaCel, //listaPath2(),
       builder: (context, lista) {
         if (lista.hasData) {
+          setinfoGaleriacel(listasPaths(lista.data));
           return LayoutBuilder(
             builder: (context, constrains) {
               return Column(
@@ -47,31 +57,23 @@ class _GaleriaState extends State<Galeria> {
                               )))
                           : null),
                   Container(
-                    height: constrains.maxHeight * 0.05,
-                    width: constrains.maxWidth,
-                    child: Text(
-                      'fotos',
-                      style: TextStyle(color: Theme.of(context).accentColor),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Container(
-                    height: constrains.maxHeight * 0.45,
+                    height: constrains.maxHeight * 0.5,
                     width: constrains.maxWidth,
                     margin: EdgeInsets.all(5),
                     child: Card(
-                      elevation: 50,
-                      child: imprimirGrilla(lista.data, escogerFoto),
-                    ),
+                        elevation: 50,
+                        child: Carpetas(infoGaleriaCel, escogerFoto)),
                   )
                 ],
               );
             },
-          ); // imprimirGrilla(lista.data);
+          );
         }
         if (lista.hasError) {
-          if ('${lista.error.runtimeType}'=='FileSystemException') {
-            return Center(child: Text('Aun no ha tomado fotos'),);
+          if ('${lista.error.runtimeType}' == 'FileSystemException') {
+            return Center(
+              child: Text('Aun no ha tomado fotos'),
+            );
           } else {
             return Text(
                 'error(${lista.connectionState})=>${lista.error.runtimeType}');
@@ -83,25 +85,5 @@ class _GaleriaState extends State<Galeria> {
   }
 }
 
-Widget imprimirGrilla(List<dynamic> lista, Function escogerFoto) {
-  return GridView(
-      padding: const EdgeInsets.all(0),
-      children: lista
-          .map((itemImagen2) => ItemFoto(
-                path: itemImagen2,
-                escoger: escogerFoto,
-              ))
-          .toList(),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          childAspectRatio: 2 / 4,
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 0));
-}
 
-Future<List<FileSystemEntity>> listaPath2() async {
-  final Directory extDir = await getApplicationDocumentsDirectory();
-  final String dirPath = '${extDir.path}/Pictures/flutter_test';
-  var ret = Directory(dirPath).list();
-  return ret.toList();
-}
+/**/
