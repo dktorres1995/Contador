@@ -8,14 +8,23 @@ class ItemFoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.grey),
-        margin: EdgeInsets.all(5),
-        child: Image.file(path),
-      ),
-      onTap: () {
-        escoger(path);
+    return LayoutBuilder(
+      builder: (context, constrains) {
+        return InkWell(
+          child: Container(
+            height: constrains.maxHeight,
+            width: constrains.maxWidth,
+            child: Image.file(
+              path,
+              filterQuality: FilterQuality.low,
+              height: constrains.maxHeight,
+              width: constrains.maxWidth,
+            ),
+          ),
+          onTap: () {
+            escoger(path);
+          },
+        );
       },
     );
   }

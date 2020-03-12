@@ -46,7 +46,8 @@ class _GaleriaState extends State<Galeria> {
                               child: SafeArea(
                                   child: Image.file(
                                 fotoescogida,
-                                fit: BoxFit.fill,
+                                height: constrains.maxHeight,
+                                width: constrains.maxWidth,
                               )))
                           : null),
                   Container(

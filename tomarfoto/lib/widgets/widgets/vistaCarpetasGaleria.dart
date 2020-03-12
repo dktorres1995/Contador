@@ -33,9 +33,10 @@ class _CarpetasState extends State<Carpetas> {
   }
 
   Widget vistafolder() {
+    if(titulosCarpetas.length==0){
     widget.infoGaleria.forEach((key, value) {
       titulosCarpetas.add(key);
-    });
+    });}
     return SingleChildScrollView(
       child: Column(
         children: titulosCarpetas.map((titulo) {

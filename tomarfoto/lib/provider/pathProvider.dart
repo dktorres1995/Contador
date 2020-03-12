@@ -9,7 +9,7 @@ Future<String> listaPath() async {
 
 Future<List<FileSystemEntity>> listaPath2() async {
   final Directory extDir = await getApplicationDocumentsDirectory();
-  final String dirPath = '${extDir.path}/Pictures/flutter_test';
+  final String dirPath = '${extDir.path}/Pictures/Conteo';
   var ret = Directory(dirPath).list();
   return ret.toList();
 }
@@ -24,7 +24,7 @@ Map<String, List<dynamic>> listasPaths(String listaPath) {
     List<dynamic> lista = carpeta['files'];
     String ruta = lista.first;
     List<String> frag = ruta.split('/');
-    direcciones[frag.elementAt(frag.length - 2)] = lista.sublist(0,10);
+    direcciones[frag.elementAt(frag.length - 2)] = lista;
   }
   /*final myDir = new Directory('/storage/emulated/0/Pictures/test');
   myDir.exists().then((isThere) {

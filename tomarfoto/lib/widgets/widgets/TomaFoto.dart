@@ -251,7 +251,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
       return null;
     }
     final Directory extDir = await getApplicationDocumentsDirectory();
-    final String dirPath = '${extDir.path}/Pictures/flutter_test';
+    final String dirPath = '${extDir.path}/Pictures/Conteo';
     await Directory(dirPath).create(recursive: true);
   
     final String filePath = '$dirPath/${timestamp()}.jpg';
