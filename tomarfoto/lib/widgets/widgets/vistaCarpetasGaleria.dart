@@ -33,26 +33,39 @@ class _CarpetasState extends State<Carpetas> {
   }
 
   Widget vistafolder() {
-    if(titulosCarpetas.length==0){
-    widget.infoGaleria.forEach((key, value) {
-      titulosCarpetas.add(key);
-    });}
-    return SingleChildScrollView(
-      child: Column(
-        children: titulosCarpetas.map((titulo) {
-          return InkWell(
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              child: Text(titulo),
-            ),
-            onTap: () {
-              cambioListaEscogida(widget.infoGaleria[titulo]);
-              cambioVista('fotos');
-            },
-          );
-        }).toList(),
-      ),
-    );
+    if (titulosCarpetas.length == 0) {
+      widget.infoGaleria.forEach((key, value) {
+        titulosCarpetas.add(key);
+      });
+    }
+    return LayoutBuilder(builder: (context, constrains) {
+      return SingleChildScrollView(
+        child: Column(
+          children: titulosCarpetas.map((titulo) {
+            return InkWell(
+              child: Container(
+                padding: EdgeInsets.only(top:constrains.maxHeight*0.1),
+                height: constrains.maxHeight * 0.3,
+                width: constrains.maxWidth,
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(20)),
+                margin: EdgeInsets.only(top: 20),
+                child: Text(
+                  titulo,
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              onTap: () {
+                cambioListaEscogida(widget.infoGaleria[titulo]);
+                cambioVista('fotos');
+              },
+            );
+          }).toList(),
+        ),
+      );
+    });
   }
 
   @override

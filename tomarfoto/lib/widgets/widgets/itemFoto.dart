@@ -11,16 +11,12 @@ class ItemFoto extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constrains) {
         return InkWell(
-          child: Container(
-            height: constrains.maxHeight,
-            width: constrains.maxWidth,
             child: Image.file(
               path,
               filterQuality: FilterQuality.none,
-              height: constrains.maxHeight,
-              width: constrains.maxWidth,
+              cacheHeight: constrains.maxHeight.toInt(),
+              cacheWidth: constrains.maxWidth.toInt() ,
             ),
-          ),
           onTap: () {
             escoger(path);
           },
