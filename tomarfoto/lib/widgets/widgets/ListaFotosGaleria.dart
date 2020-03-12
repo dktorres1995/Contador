@@ -10,21 +10,31 @@ class GrillaFotos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 3,
-      children: List.generate(lista.length>=50?50:lista.length,(index) {
-        return InkWell(
-          child: Container(
-            child: Image.file(
-              File(lista.elementAt(index) as String),
-              filterQuality: FilterQuality.none
-            ),
-          ),
-          onTap: () {
-            escogerFoto(File(lista.elementAt(index) as String));
-          },
-        );
-      }),
+    ImageCache().clear();
+    return LayoutBuilder(
+      builder: (context, constrains) {
+        return GridView.builder(
+            itemCount: lista.length,
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 100,
+                childAspectRatio: 2 / 3,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 0),
+            itemBuilder: (context, index) {
+              return ItemFoto(path:File(lista.elementAt(index) as String),escoger: escogerFoto,);
+            });
+      },
     );
   }
 }
+/*InkWell(
+                child: Container(
+                  width: constrains.maxWidth*0.5,
+                  height: constrains.maxHeight*0.25,
+                  child: Image.file(File(lista.elementAt(index) as String),
+                      filterQuality: FilterQuality.none,fit: BoxFit.fill,),
+                ),
+                onTap: () {
+                  escogerFoto(File(lista.elementAt(index) as String));
+                },
+              ); */

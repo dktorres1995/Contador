@@ -16,7 +16,7 @@ class ItemFoto extends StatelessWidget {
             width: constrains.maxWidth,
             child: Image.file(
               path,
-              filterQuality: FilterQuality.low,
+              filterQuality: FilterQuality.none,
               height: constrains.maxHeight,
               width: constrains.maxWidth,
             ),
