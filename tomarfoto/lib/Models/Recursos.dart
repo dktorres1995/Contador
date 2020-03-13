@@ -3,17 +3,18 @@ class Recursos {
   final String imagenUrl;
   final String tenant;
   final int conteo;
-
-  Recursos({this.id, this.imagenUrl, this.tenant,this.conteo});
+  final List<dynamic> centros;
+  
+  Recursos({this.id, this.imagenUrl, this.tenant,this.conteo, this.centros});
 
 
   factory Recursos.fromJson(Map<String, dynamic> json) {
     if(json["resultado"] != null){
-
     return Recursos(
         id: json["_id"],
         imagenUrl: json["image_url"],
         tenant: json["tenant"],
+        centros: json["resultado"]["centros"],
         conteo: json["resultado"]["conteo"]);
     }
     else{
