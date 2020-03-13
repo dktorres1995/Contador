@@ -19,7 +19,7 @@ Future<List<CameraDescription>> getInfoCamara() async {
   }
 }
 
-void enviarImagenn(String filename) async {
+Future enviarImagenn(String filename) async {
 
   String url = 'https://object-counter.azurewebsites.net/contar'; 
   var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -30,6 +30,7 @@ void enviarImagenn(String filename) async {
     )
   );
   //print('envia');
-  var res = await request.send();
+   var res = await request.send();
   //print('envió');
+  return res;
 }

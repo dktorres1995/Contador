@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/Models/Recursos.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/envioImagen.dart';
-import 'package:tomarfoto/screens/pantallaInicial.dart';
 
 class MyApp extends StatefulWidget {
   static const routedName = '/TraerInfo';

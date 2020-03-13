@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class VisualizacionFotoTomada extends StatefulWidget {
-  String pathDeFoto;
+  final String pathDeFoto;
   VisualizacionFotoTomada(this.pathDeFoto);
 
   @override

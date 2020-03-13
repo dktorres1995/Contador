@@ -4,11 +4,10 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tomarfoto/provider/camerasprovider.dart';
-import 'package:tomarfoto/screens/envioImagen.dart';
 
 class CameraExampleHome extends StatefulWidget {
-  Function showInSnackBar;
-  Function cambioPath;
+  final Function showInSnackBar;
+  final Function cambioPath;
   CameraExampleHome(this.showInSnackBar,this.cambioPath);
 
   @override
@@ -37,7 +36,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
     });
   }
 
-  Future<void> inicializarCamara(CameraDescription camara) {
+  void inicializarCamara(CameraDescription camara) {
     controller = CameraController(
       // Obtén una cámara específica de la lista de cámaras disponibles
       camara,
@@ -252,7 +251,7 @@ class _CameraExampleHomeState extends State<CameraExampleHome>
       return null;
     }
     final Directory extDir = await getApplicationDocumentsDirectory();
-    final String dirPath = '${extDir.path}/Pictures/flutter_test';
+    final String dirPath = '${extDir.path}/Pictures/Conteo';
     await Directory(dirPath).create(recursive: true);
   
     final String filePath = '$dirPath/${timestamp()}.jpg';

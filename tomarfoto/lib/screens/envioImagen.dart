@@ -43,15 +43,13 @@ class _EnvioImagenState extends State<EnvioImagen> {
   }
 
   void cambioPath(String path) {
-    print(path);
     setState(() {
       pathFoto = path;
     });
     verfoto();
   }
 
-   void cambioPathGaleria(String path) {
-     print(path);
+  void cambioPathGaleria(String path) {
     setState(() {
       pathFoto = path;
       tomaGaleria = true;
@@ -82,7 +80,8 @@ class _EnvioImagenState extends State<EnvioImagen> {
               child: Text(
                 'siguiente',
                 style: TextStyle(
-                    color: verFoto || tomaGaleria ? Colors.blue : Colors.grey, fontSize: 20),
+                    color: verFoto || tomaGaleria ? Colors.blue : Colors.grey,
+                    fontSize: 20),
                 textAlign: TextAlign.center,
               ),
               onTap: verFoto || tomaGaleria ? enviarFotoBase : null,
@@ -90,8 +89,17 @@ class _EnvioImagenState extends State<EnvioImagen> {
           )
         ],
       ),
-      body: pantallaInicialEnvios(tomaFoto, verFoto, verGaleria, tomarfoto,
-          vergaleria, verfoto, mostrarMensaje, cambioPath, cambioPathGaleria ,pathFoto),
+      body: pantallaInicialEnvios(
+          tomaFoto,
+          verFoto,
+          verGaleria,
+          tomarfoto,
+          vergaleria,
+          verfoto,
+          mostrarMensaje,
+          cambioPath,
+          cambioPathGaleria,
+          pathFoto),
     );
   }
 }
@@ -113,7 +121,7 @@ Widget pantallaInicialEnvios(
         children: <Widget>[
           Expanded(
             child: Container(
-              height: constrains.maxHeight*0.9 ,
+              height: constrains.maxHeight * 0.9,
               width: constrains.maxWidth,
               child: Center(
                 child: tomaFoto
