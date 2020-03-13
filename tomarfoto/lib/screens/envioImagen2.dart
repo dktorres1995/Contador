@@ -34,7 +34,7 @@ class _MyHomePageState extends State<EnvioImagen2> {
   }
 
   void enviarFotoBase() {
-    mostrarMensaje('Enviando imagen ...');
+    mostrarMensaje('Espere mientras se carga la foto');
     enviarImagenn(_image.path).then((res) {
       Navigator.of(context).pop();
       mostrarMensaje('Foto enviada con exito');

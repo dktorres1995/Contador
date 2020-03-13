@@ -42,9 +42,11 @@ class _HistorialState extends State<Historial> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Container(
-          child: Icon(
-            Icons.camera_alt,
-            color: Theme.of(context).accentColor,
+          child: InkWell(
+                      child: Icon(
+              Icons.camera_alt,
+              color: Theme.of(context).accentColor,
+            ),onLongPress:()=> Navigator.of(context).pushNamed(EnvioImagen.routedName),
           ),
         ),
         onPressed: () =>

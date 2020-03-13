@@ -61,9 +61,11 @@ class _EnvioImagenState extends State<EnvioImagen> {
   }
 
   void enviarFotoBase() {
-    enviarImagenn(pathFoto);
+    mostrarMensaje('Espere mientras se carga la foto');
+    enviarImagenn(pathFoto).then((res){ 
     mostrarMensaje('Foto enviada con exito');
-    //Navigator.of(context).pop();
+    Navigator.of(context).pop();
+    });
   }
 
   @override
