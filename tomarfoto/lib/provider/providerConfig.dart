@@ -1,5 +1,5 @@
  class ConfigPaths{
 
-static const pathServicios = 'https://object-counter.azurewebsites.net';
-// static const pathServicios = 'http://localhost:3000';
+ static const pathServicios = 'object-counter.azurewebsites.net';
+//static const pathServicios = '172.17.2.209:3000';
 }
