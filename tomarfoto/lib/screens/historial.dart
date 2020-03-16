@@ -65,7 +65,7 @@ class _HistorialState extends State<Historial> {
 
   Widget crear(List<Recursos> lista, BuildContext ctx,Function reiniciar) {
     return GestureDetector(onLongPress: reiniciar,
-          child: ListView.builder(reverse: true,
+          child: ListView.builder(reverse: false,
         itemCount: lista.length,
         itemBuilder: (BuildContext context, int index) {
           return Card(

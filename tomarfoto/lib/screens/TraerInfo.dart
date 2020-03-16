@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/envioImagen.dart';
+import 'package:photo_view/photo_view.dart';
 
 class MyApp extends StatefulWidget {
   static const routedName = '/TraerInfo';
@@ -27,48 +28,64 @@ class _MyAppState extends State<MyApp> {
         child: FutureBuilder(
           future: fetchPost(id),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-            print(snapshot.data[1]);
             if (snapshot.hasData) {
-              var image3 =
-            LibIma.decodeJpg((snapshot.data[1] as http.Response).bodyBytes);
-        print('alto: ${image3.height} ancho: ${image3.width}');
-        for (int i = 1; i < 10; i++) {
-          print('${(snapshot.data[0].centros as List<dynamic>).elementAt(0)['x']}');
-          image3 = LibIma.drawCircle(image3, (snapshot.data[0].centros as List<dynamic>).elementAt(0)['x'], (snapshot.data[0].centros as List<dynamic>).elementAt(0)['y'], 20 + i,
-              LibIma.getColor(255, 0, 0)); // coordenadas imagen
-          image3 = LibIma.drawCircle(
-              image3, 2543, 785, 40 + i, LibIma.getColor(255, 0, 0));
-        }
-        return FutureBuilder(
-           future: ruta(),
-           builder: (context, info) {
-              if (info.hasData) {
-              File(info.data ).writeAsBytesSync(LibIma.encodeJpg(image3));
-              return SingleChildScrollView(
-                child: Stack(
-                  children: <Widget>[
-                   GestureDetector(child: 
-                   Image.file(File(info.data)),
-                    ),
-                    ClipOval(
-                        child: Container(
-                            color: Colors.grey.withOpacity(0.9),
-                            height: 50.0, // height of the button
-                            width: 50.0,
-                            child: Align(
-                              child: Center(
-                                  child: Text('${snapshot.data[0].conteo}')),
-                            ))),                     
-                  ],
-                ),
-              );}
-
-                return CircularProgressIndicator(
-              backgroundColor: Colors.green,
-            );
+              var image3 = LibIma.decodeJpg(
+                  (snapshot.data[1] as http.Response).bodyBytes);
+              print('alto: ${image3.height} ancho: ${image3.width}');
+              for (int i = 1; i < 10; i++) {
+                print(
+                    '${(snapshot.data[0].centros as List<dynamic>).elementAt(0)['x']}');
+                image3 = LibIma.drawCircle(
+                    image3,
+                    (snapshot.data[0].centros as List<dynamic>)
+                        .elementAt(0)['x'],
+                    (snapshot.data[0].centros as List<dynamic>)
+                        .elementAt(0)['y'],
+                    20 + i,
+                    LibIma.getColor(255, 0, 0)); // coordenadas imagen
+                image3 = LibIma.drawCircle(
+                    image3, 2543, 785, 40 + i, LibIma.getColor(255, 0, 0));
               }
-             
-              );
+              return FutureBuilder(
+                  future: ruta(),
+                  builder: (context, info) {
+                    if (info.hasData) {
+                      File(info.data)
+                          .writeAsBytesSync(LibIma.encodeJpg(image3));
+                      print(File(info.data).path);
+                      return SingleChildScrollView(
+                        child: Stack(
+                          children: <Widget>[
+                             Container(
+                              height: 250,
+                              child:GestureDetector(
+                                child: PhotoView(
+                                imageProvider: AssetImage(File(info.data).path, ),onTapDown: (ctx,info,cont){
+                                  print('info interna: ${info.localPosition.dx} y ${info.localPosition.dy}');
+                                },
+                              ),onTapDown: (detalles){
+                               print('posicion  photo${detalles.localPosition.dx}  y ${detalles.localPosition.dy}'); 
+                            },
+                            )),
+                            ClipOval(
+                                child: Container(
+                                    color: Colors.grey.withOpacity(0.9),
+                                    height: 50.0, // height of the button
+                                    width: 50.0,
+                                    child: Align(
+                                      child: Center(
+                                          child: Text(
+                                              '${snapshot.data[0].conteo}')),
+                                    ))),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return CircularProgressIndicator(
+                      backgroundColor: Colors.green,
+                    );
+                  });
             } else if (snapshot.hasError) {
               return CircularProgressIndicator();
             }
