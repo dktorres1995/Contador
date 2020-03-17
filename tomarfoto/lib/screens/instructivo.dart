@@ -20,6 +20,10 @@ class _InstructivoScrrenState extends State<InstructivoScreen> {
 }
  Widget contenidoPagina(Widget contenido, String titulo,BuildContext context) {
     return MaterialApp(routes: getAplicaciones(),
+        theme: ThemeData(
+        primarySwatch: Colors.blue,
+        accentColor: Colors.indigo[900],
+      ),
           home: Scaffold(
           appBar: AppBar(
             title: Text(titulo),

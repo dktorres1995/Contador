@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/screens/historial.dart';
 import 'package:tomarfoto/screens/instructivo.dart';
 
 class PantallaInicial extends StatefulWidget {

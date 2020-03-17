@@ -20,7 +20,10 @@ class _HistorialState extends State<Historial> {
         addAutomaticKeepAlives: true,
         itemCount: totalPag,
         itemBuilder: (ctx, index) {
-          return  PagHistorial(index + 1);
+          return Container(
+              height: 1000,
+              width: double.infinity,
+              child: PagHistorial(index + 1));
         });
   }
 
@@ -37,7 +40,6 @@ class _HistorialState extends State<Historial> {
         } else if (infoIni.hasError) {
           return contenidoPagina(
               Text('${infoIni.error}'), 'Historial', context);
-          ;
         }
 
         return contenidoPagina(
