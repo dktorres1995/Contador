@@ -37,10 +37,10 @@ Future<String> ruta() async {
 
 Future <List<Recursos>> obtener() async {
 
-    final url = Uri.http(ConfigPaths.pathServicios,'/obtenerLista');
-  print(url);
+    //final url = Uri.http();
+  //print(url);
   final response = await http
-      .get(url);
+      .get(ConfigPaths.pathServicios +'/obtenerLista');
 print('entro');
   if (response.statusCode == 200) {
     // Si la llamada al servidor fue exitosa, analiza el JSON
