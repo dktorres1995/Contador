@@ -42,12 +42,15 @@ List<Map<String,int>> prueba = List<Map<String,int>>();
             if (snapshot.hasData) {
                var image3 =
                 LibIma.decodeJpg((snapshot.data[1] as http.Response).bodyBytes);
-              
-            for (var coordenada in snapshot.data[0].centros) {
+              print('${image3.width} ancho' + '${image3.height} largo');
+           /* for (var coordenada in snapshot.data[0].centros) {
               
               image3 = LibIma.drawCircle(image3, coordenada['x'], coordenada['y'], snapshot.data[0].radio.toInt(),
               LibIma.getColor(0, 255, 255)); 
-             }        
+             }  */      
+
+              image3 = LibIma.drawCircle(image3, 1588, 906, snapshot.data[0].radio.toInt(),
+              LibIma.getColor(255, 255, 255));
          if(prueba.isNotEmpty)  {
           for(var coord in prueba){
             image3 = LibIma.drawCircle(image3, coord['x'], coord['y'], snapshot.data[0].radio.toInt(),
@@ -65,17 +68,14 @@ List<Map<String,int>> prueba = List<Map<String,int>>();
                    GestureDetector(child:
                    Container(child: PhotoViewGestureDetectorScope(
                   child: PhotoView(
-                          
+                        //basePosition: Alignment.topLeft,
                         imageProvider: AssetImage(File(info.data).path),
-                         minScale: PhotoViewComputedScale.contained * 0.2,
-                         backgroundDecoration: BoxDecoration(
-                          
-                         ), 
+                         
+                         
                    ),                                
                    ),
                     height: 800.0, 
                    width: 800.0,
-                    
                    ),
                    onTapUp: (info) {        
                    
