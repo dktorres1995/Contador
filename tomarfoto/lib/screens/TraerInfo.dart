@@ -14,6 +14,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Map<String,int> dasdsad;
+
+
+  void modificar(Map<String,int> nueva){
+    
+    setState(() {
+      dasdsad = nueva;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final String id = ModalRoute.of(context).settings.arguments;

@@ -85,12 +85,12 @@ class _MyHomePageState extends State<EnvioImagen2> {
                               EdgeInsets.only(top: constrains.maxHeight * 0.04),
                           width: constrains.maxWidth * 0.5,
                           height: constrains.maxHeight * 0.1,
-                          color: Theme.of(context).accentColor,
+                          color:Colors.white ,
                           child: Text(
                             'galería',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Colors.white,
+                                color:Theme.of(context).accentColor ,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600),
                           )),
@@ -100,13 +100,13 @@ class _MyHomePageState extends State<EnvioImagen2> {
                       child: Container(
                         padding:
                             EdgeInsets.only(top: constrains.maxHeight * 0.04),
-                        color: Theme.of(context).accentColor,
+                        color:Colors.white,
                         width: constrains.maxWidth * 0.5,
                         height: constrains.maxHeight * 0.1,
                         child: Text('Foto',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Theme.of(context).accentColor ,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600)),
                       ),
