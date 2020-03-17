@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/screens/TraerInfo.dart';
+import 'package:tomarfoto/screens/detalleImagen.dart';
 
 class ItemHistorial extends StatelessWidget {
   final String idImag;
@@ -80,7 +80,7 @@ class ItemHistorial extends StatelessWidget {
             ),onTap:(){
               if (conteo!=null){
                  Navigator.of(context)
-                                .pushNamed(MyApp.routedName,arguments: idImag);
+                                .pushNamed(DetalleImagen.routedName,arguments: idImag);
               }
             } ,
           ),

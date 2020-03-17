@@ -8,6 +8,8 @@ import 'package:tomarfoto/screens/envioImagen.dart';
 
 class MyApp extends StatefulWidget {
   static const routedName = '/TraerInfo';
+  final String id;
+  MyApp(this.id);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -27,17 +29,10 @@ List<Map<String,int>> prueba = List<Map<String,int>>();
   
   @override
   Widget build(BuildContext context) {
-    final String id = ModalRoute.of(context).settings.arguments;
-    modificar(200,300);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('NUMERATE'),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).accentColor,
-      ),
-      body: Center(
+    
+    return  Center(
         child: FutureBuilder(
-          future: fetchPost(id),
+          future: fetchPost(widget.id),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
                var image3 =
@@ -111,26 +106,6 @@ List<Map<String,int>> prueba = List<Map<String,int>>();
             return CircularProgressIndicator();
           },
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Navigator.of(context).pushNamed(EnvioImagen.routedName),
-        child: Container(
-          child: Icon(
-            Icons.camera_alt,
-            color: Theme.of(context).accentColor,
-          ),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Container(
-          color: Theme.of(context).accentColor,
-          height: 50.0,
-        ),
-      ),
-    );
+      );
   }
 }
