@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/screens/historial.dart';
+import 'package:tomarfoto/screens/instructivo.dart';
 
 class PantallaInicial extends StatefulWidget {
   static const routedName = '/pantallaInicial';
@@ -37,8 +37,11 @@ class _State extends State<PantallaInicial> {
                       child: Text(
                 'NUMERATE',
                 style: TextStyle(color: Colors.white,fontSize: 20),
-              ),onTap: ()=>Navigator.of(context)
-            .pushNamed(Historial.routedName)) //botonesIniciales(context),
+              ),onTap: (){
+                print('paso');
+                Navigator.of(context)
+            .pushNamed(InstructivoScreen.routedName);
+            }) //botonesIniciales(context),
                   ),
             ],
           ),
