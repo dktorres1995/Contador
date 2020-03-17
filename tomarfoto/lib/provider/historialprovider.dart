@@ -67,25 +67,12 @@ Future<List<Recursos>> obtener() async {
   }
 }
 
-Future<List<RecursoConteo>> obtenerListaCorta() async {
-  final response =
-      await http.get(ConfigPaths.pathServicios + '/obtenerListaCorta');
-  if (response.statusCode == 200) {
-    // Si la llamada al servidor fue exitosa, analiza el JSON
-    final List<dynamic> lista = json.decode(response.body);
-    List<RecursoConteo> listaRecursos = [];
-    lista.forEach((item) {
-      try {
-        listaRecursos.add(RecursoConteo.fromJson(item));
-      } catch (e) {
-        print("no fue posible obtener la url de la imagen");
-      }
-    });
-
-    return listaRecursos;
+Future<http.Response> anadirEtiquetas(List<Map<String, int>> centros) async{
+  final response = await http.put('${ConfigPaths.pathServicios}/actualizarEtiquetas');
+if (response.statusCode == 200) {
+    return response;
   } else {
-    // Si la llamada no fue exitosa, lanza un error.
-    throw Exception('Failed to load post');
+    throw ('errorCode: 200');
   }
 }
 

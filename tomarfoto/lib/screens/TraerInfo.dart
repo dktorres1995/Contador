@@ -14,19 +14,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Map<String,int> dasdsad;
+ 
+List<Map<String,int>> prueba = List<Map<String,int>>();
 
+ void modificar(int dx, int dy){
 
-  void modificar(Map<String,int> nueva){
-    
     setState(() {
-      dasdsad = nueva;
+     prueba.add({'x': dx,'y': dy}); 
     });
   }
+  
+  
   @override
   Widget build(BuildContext context) {
     final String id = ModalRoute.of(context).settings.arguments;
-
+    modificar(200,300);
     return Scaffold(
       appBar: AppBar(
         title: Text('NUMERATE'),
@@ -38,21 +40,19 @@ class _MyAppState extends State<MyApp> {
           future: fetchPost(id),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
+               var image3 =
+                LibIma.decodeJpg((snapshot.data[1] as http.Response).bodyBytes);
               
-              var image3 =
-            LibIma.decodeJpg((snapshot.data[1] as http.Response).bodyBytes);
-        var i = 0;
-        for (var coordenada in snapshot.data[0].centros ) {
-          
-         for (int i = 1; i < 10; i++) {
-         image3 = LibIma.drawCircle(image3, coordenada['x'], coordenada['y'], snapshot.data[0].radio.toInt() + i,
-              LibIma.getColor(255, 0, 0)); // coordenadas imagen
-          image3 = LibIma.drawCircle(
-              image3, 2543, 785, 40 + i, LibIma.getColor(255, 0, 0));
-        }
-        image3 = LibIma.drawString(image3,LibIma.arial_48,coordenada['x'], coordenada['y'], i.toString());
-        i++;
-        }
+            for (var coordenada in snapshot.data[0].centros) {
+              
+              image3 = LibIma.drawCircle(image3, coordenada['x'], coordenada['y'], snapshot.data[0].radio.toInt(),
+              LibIma.getColor(0, 255, 255)); 
+             }        
+         if(prueba.isNotEmpty)  {
+          for(var coord in prueba){
+            image3 = LibIma.drawCircle(image3, coord['x'], coord['y'], snapshot.data[0].radio.toInt(),
+              LibIma.getColor(255, 0, 0));             
+          }}
 
         return FutureBuilder(
            future: ruta(),
@@ -63,11 +63,26 @@ class _MyAppState extends State<MyApp> {
                 child: Stack(
                   children: <Widget>[
                    GestureDetector(child:
-                   Container(child: 
-                   PhotoView(imageProvider: AssetImage(File(info.data).path) ),
-                   height: 500.0, // height of the button
-                   width: 500.0,
+                   Container(child: PhotoViewGestureDetectorScope(
+                  child: PhotoView(
+                          
+                        imageProvider: AssetImage(File(info.data).path),
+                         minScale: PhotoViewComputedScale.contained * 0.2,
+                         backgroundDecoration: BoxDecoration(
+                          
+                         ), 
+                   ),                                
                    ),
+                    height: 800.0, 
+                   width: 800.0,
+                    
+                   ),
+                   onTapUp: (info) {        
+                   
+                    print('${info.globalPosition.dy} en y' + '${info.globalPosition.dx} en x');
+                    
+                     modificar((info.localPosition.dx).toInt(),(info.localPosition.dy).toInt());
+                      }
                     ),
                     ClipOval(
                         child: Container(
