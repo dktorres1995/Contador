@@ -61,6 +61,14 @@ print('entro');
   }
 }
 
+Future<http.Response> anadirEtiquetas(List<Map<String, int>> centros) async{
+  final response = await http.put('${ConfigPaths.pathServicios}/actualizarEtiquetas');
+if (response.statusCode == 200) {
+    return response;
+  } else {
+    throw ('errorCode: 200');
+  }
+}
 
 Future<http.Response> traerImagen(String url) async {
    final response = await http.get(url);

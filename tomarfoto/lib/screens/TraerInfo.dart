@@ -16,13 +16,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
  
 List<Map<String,int>> prueba = List<Map<String,int>>();
-List<int> prueba2 =List<int>();
 
  void modificar(int dx, int dy){
 
     setState(() {
-     prueba.add({'x': dx}); 
-     prueba.add({'y': dy}); 
+     prueba.add({'x': dx,'y': dy}); 
     });
   }
   
@@ -50,10 +48,11 @@ List<int> prueba2 =List<int>();
               image3 = LibIma.drawCircle(image3, coordenada['x'], coordenada['y'], snapshot.data[0].radio.toInt(),
               LibIma.getColor(0, 255, 255)); 
              }        
+         if(prueba.isNotEmpty)  {
           for(var coord in prueba){
             image3 = LibIma.drawCircle(image3, coord['x'], coord['y'], snapshot.data[0].radio.toInt(),
               LibIma.getColor(255, 0, 0));             
-          }
+          }}
 
         return FutureBuilder(
            future: ruta(),
@@ -65,17 +64,24 @@ List<int> prueba2 =List<int>();
                   children: <Widget>[
                    GestureDetector(child:
                    Container(child: PhotoViewGestureDetectorScope(
-                  child: PhotoView(imageProvider: AssetImage(File(info.data).path) ),                                
+                  child: PhotoView(
+                          
+                        imageProvider: AssetImage(File(info.data).path),
+                         minScale: PhotoViewComputedScale.contained * 0.2,
+                         backgroundDecoration: BoxDecoration(
+                          
+                         ), 
+                   ),                                
                    ),
-                    height: 500.0, // height of the button
-                   width: 500.0,
-
+                    height: 800.0, 
+                   width: 800.0,
+                    
                    ),
                    onTapUp: (info) {        
                    
-                    print('${info.localPosition.dy} en y' + '${info.localPosition.dx} en x');
+                    print('${info.globalPosition.dy} en y' + '${info.globalPosition.dx} en x');
                     
-                     modificar2(info.localPosition.dx.toInt(),info.localPosition.dy.toInt());
+                     modificar((info.localPosition.dx).toInt(),(info.localPosition.dy).toInt());
                       }
                     ),
                     ClipOval(
