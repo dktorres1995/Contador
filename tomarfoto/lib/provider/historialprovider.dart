@@ -43,6 +43,7 @@ Future<String> ruta() async {
   await Directory(dirPath).create(recursive: true);
 
   final String filePath = '$dirPath/${timestamp()}.jpg'; //
+  print('crea uno nuevo $filePath' );
   return filePath;
 }
 
