@@ -120,3 +120,17 @@ Future<dynamic> obtenerListaPaginadatotal() async {
     throw Exception('Failed to load post');
   }
 }
+
+Future<dynamic> actualizarNombre(String id, String nombreC) async {
+    String url = ConfigPaths.pathServicios + '/editarNombre/$id/$nombreC'; 
+    final response =
+      await http.put(url);
+  if (response.statusCode == 200) {
+    return json.decode(response.body);
+  } else {
+    throw Exception('Failed put');
+  }
+  }
+
+
+  
