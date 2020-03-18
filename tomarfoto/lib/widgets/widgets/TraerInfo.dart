@@ -29,36 +29,36 @@ class _MyAppState extends State<MyApp> {
   }
 
   void cambiaScalayZoom(double scale, double zoom) {
-    setState(() {
-      _zoom = zoom;
-      _scale = scale;
-    });
+    _zoom = zoom;
+    _scale = scale;
   }
 
   void cambiaOffset(double x, double y) {
-    setState(() {
-      _offsetX = x;
-      _offsetY = y;
-    });
+    _offsetX = x;
+    _offsetY = y;
   }
 
   void modificar(int dx, int dy) {
-    var xIn = (_offsetX+ _scale * dx.toDouble()).toInt();
-    var yIn = (_offsetY + _scale * dy.toDouble()).toInt();
-    print('punto: x$xIn, y$yIn  y tamaño total: yT${imageMostrar.height}, xT${imageMostrar.width}');
-    print('escala $_scale');
+    var xIn =
+        ((_offsetX < 0 ? _offsetX * 1.5 : _offsetX) + dx.toDouble() / _scale)
+            .round();
+    var yIn =
+        ((_offsetY < 0 ? _offsetY * 1.7 : _offsetY) + dy.toDouble() / _scale)
+            .round();
+    print(
+        'punto: x$xIn, y$yIn  y tamaño total: yT${imageMostrar.height}, xT${imageMostrar.width}');
+    print('escala $_scale zoom:$_zoom');
     setState(() {
       prueba.add({'x': xIn, 'y': yIn});
-      for (var coord in prueba) {
-        imageMostrar = LibIma.drawCircle(imageMostrar, coord['x'], coord['y'],
-            widget.listaPuntos[0].radio.toInt(), LibIma.getColor(255, 0, 0));
-      }
+
+      imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
+          widget.listaPuntos[0].radio.toInt(), LibIma.getColor(255, 0, 0));
     });
     //print(prueba);
   }
 
   Widget circulo(BoxConstraints medida, double pH, double pW, double marg,
-      Widget contenido) {
+      Widget contenido, Color colorFondo) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.grey, borderRadius: BorderRadius.circular(80)),
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
       padding: EdgeInsets.all(2),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(80)),
+            color: colorFondo, borderRadius: BorderRadius.circular(80)),
         child: contenido,
       ),
     );
@@ -110,35 +110,35 @@ class _MyAppState extends State<MyApp> {
                   height: medida.maxHeight,
                   width: medida.maxWidth,
                   child: Zoom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.white,
                       initZoom: 0.0,
                       width: imageMostrar.width.toDouble(),
                       height: imageMostrar.height.toDouble(),
                       onPositionUpdate: (Offset position) {
-                        // print('${position.dx} ' + '${position.dy}');
-                        if (_editar) {
-                          cambiaOffset(position.dx, position.dy);
-                        }
+                        print('${position.dx} ' + '${position.dy}');
+
+                        cambiaOffset(position.dx, position.dy);
                       },
                       onScaleUpdate: (double scale, double zoom) {
-                        //print("escala: $scale y zoom:  $zoom");
-                        if (_editar) {
-                          cambiaScalayZoom(scale, zoom);
-                        }
+                        print("escala: $scale y zoom:  $zoom");
+
+                        cambiaScalayZoom(scale, zoom);
                       },
                       child: Center(
                         child: Image.memory(LibIma.encodeJpg(imageMostrar)),
                       )),
                 ),
                 onTapDown: (dato) {
-                   if (_editar) {
-                  modificar(dato.localPosition.dx.toInt(),
-                      dato.localPosition.dy.toInt());}
+                  if (_editar) {
+                    modificar(dato.localPosition.dx.toInt(),
+                        dato.localPosition.dy.toInt());
+                  }
                 },
                 onTapUp: (dato) {
-                   if (_editar) {
-                  modificar(dato.localPosition.dx.toInt(),
-                      dato.localPosition.dy.toInt());}
+                  if (_editar) {
+                    modificar(dato.localPosition.dx.toInt(),
+                        dato.localPosition.dy.toInt());
+                  }
                 },
               ),
               circulo(
@@ -153,7 +153,8 @@ class _MyAppState extends State<MyApp> {
                         color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.bold,
                         fontSize: medida.maxHeight * 0.05),
-                  ))),
+                  )),
+                  Colors.white),
               Container(
                 height: medida.maxHeight,
                 width: medida.maxWidth,
@@ -171,12 +172,17 @@ class _MyAppState extends State<MyApp> {
                           Center(
                             child: Icon(
                               Icons.add,
-                              color: _editar? Colors.grey:Theme.of(context).accentColor,
+                              color: _editar
+                                  ? Colors.white
+                                  : Theme.of(context).accentColor,
                               size: 30,
                             ),
-                          )),
+                          ),
+                          _editar
+                              ? Theme.of(context).accentColor
+                              : Colors.white),
                       onTap: () {
-                        cambiarEditar(_editar?false:true);
+                        cambiarEditar(_editar ? false : true);
                       },
                     ),
                     circulo(
@@ -190,7 +196,8 @@ class _MyAppState extends State<MyApp> {
                             color: Theme.of(context).accentColor,
                             size: 30,
                           ),
-                        ))
+                        ),
+                        Colors.white)
                   ],
                 ),
               )
