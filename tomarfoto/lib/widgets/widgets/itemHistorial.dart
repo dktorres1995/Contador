@@ -1,19 +1,39 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rich_alert/rich_alert.dart';
+import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/detalleImagen.dart';
-
-class ItemHistorial extends StatelessWidget {
-  final String idImag;
-  final String urlImag;
-  final int conteo;
-  final String fecha;
-  final String nombre;
-
+import 'package:tomarfoto/screens/historial.dart';
+class ItemHistorial extends StatefulWidget {
   ItemHistorial(
       {@required this.idImag,
       this.urlImag,
       this.conteo,
       this.fecha,
       this.nombre});
+
+  final String idImag;
+  final String urlImag;
+  final int conteo;
+  final String fecha;
+  final String nombre;
+  @override
+  _itemHistorial createState() => _itemHistorial();
+}
+
+class _itemHistorial extends State<ItemHistorial> {
+  TextEditingController nombreConteo = new TextEditingController();
+
+  void actualizar() {
+    actualizarNombre(widget.idImag, nombreConteo.text.toString()).then((res) {
+      print('enviado nombre');
+    });
+  }
+
+  void refrescar(String conteo) {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -23,7 +43,7 @@ class ItemHistorial extends StatelessWidget {
               horizontal: medida.maxWidth * 0.05,
               vertical: medida.maxHeight * 0.05),
           child: InkWell(
-                      child: Card(
+            child: Card(
               elevation: 20,
               child: Row(
                 children: <Widget>[
@@ -34,7 +54,7 @@ class ItemHistorial extends StatelessWidget {
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(20)),
                     child: Image.network(
-                      urlImag,
+                      widget.urlImag,
                       cacheWidth: (medida.maxWidth * 0.3).floor(),
                       cacheHeight: (medida.maxHeight).floor(),
                       fit: BoxFit.cover,
@@ -49,45 +69,121 @@ class ItemHistorial extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          nombre == null ? 'No tiene Nombre' : nombre,
+                          widget.nombre == null
+                              ? 'No tiene Nombre'
+                              : widget.nombre,
                           style: TextStyle(
                               color: Theme.of(context).accentColor,
                               fontWeight: FontWeight.bold,
                               fontSize: medida.maxHeight * 0.15),
                         ),
                         Text(
-                          fecha == null ? 'no hay fecha' : fecha,
+                          widget.fecha == null ? 'no hay fecha' : widget.fecha,
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize: medida.maxHeight * 0.1,
                               fontStyle: FontStyle.italic),
-                        )
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.favorite),
+                          onPressed: () {
+                            showBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                    height: 200.0,
+                                    child: Column(
+                                      children: <Widget>[
+                                        ListTile(
+                                            title: Text(
+                                              'Eliminar del historial',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            onTap: () {}),
+                                        ListTile(
+                                          title: Text(
+                                            'Cambiar Nombre',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          onTap: () {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title:
+                                                        Text("Cambiar Nombre"),
+                                                    content: TextField(
+                                                      controller: nombreConteo,
+                                                      decoration:
+                                                          InputDecoration(
+                                                              hintText:
+                                                                  "Nombre"),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      new FlatButton(
+                                                        child: new Text(
+                                                            'Cancelar'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                      new FlatButton(
+                                                        child:
+                                                            new Text('Aceptar'),
+                                                        onPressed: () {
+                                                          actualizar();
+                                                          Navigator.of(context)
+                                                              .pushNamed(Historial
+                                                                  .routedName);   
+                                                          
+                                                          
+                                                        },
+                                                      )
+                                                    ],
+                                                  );
+                                                });
+                                          },
+                                        ),
+                                        ListTile(
+                                            title: Text(
+                                              'Cerrar',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            onTap: () =>
+                                                Navigator.of(context).pop()),
+                                      ],
+                                    ));
+                              },
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ),
-                  conteo == null
+                  widget.conteo == null
                       ? Center(
-                        child: Icon(Icons.access_time),
-                      )
+                          child: Icon(Icons.access_time),
+                        )
                       : Text(
-                          '$conteo',
+                          '${widget.conteo}',
                           style: TextStyle(
                               color: Theme.of(context).accentColor,
                               fontWeight: FontWeight.bold),
                         )
                 ],
               ),
-            ),onTap:(){
-              if (conteo!=null){
-                 Navigator.of(context)
-                                .pushNamed(DetalleImagen.routedName,arguments: idImag);
+            ),
+            onTap: () {
+              if (widget.conteo != null) {
+                Navigator.of(context).pushNamed(DetalleImagen.routedName,
+                    arguments: widget.idImag);
               }
-            } ,
+            },
           ),
         );
       },
     );
   }
 }
-
-
