@@ -23,12 +23,10 @@ class _HistorialState extends State<Historial> {
         itemCount: totalPag,
         itemBuilder: (ctx, index) {
           return Container(
-              height: 1200,
-              width: double.infinity,
-              child: InkWell(
-                child: PagHistorial(index + 1),
-                onLongPress: reiniciar,
-              ));
+            height: 1500,
+            width: double.infinity,
+            child: PagHistorial(index + 1),
+          );
         });
   }
 

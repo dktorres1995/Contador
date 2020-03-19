@@ -78,8 +78,6 @@ class _itemHistorial extends State<ItemHistorial> {
                             color: Colors.grey,
                             child: Image.network(
                               widget.urlImag,
-                              fit: BoxFit.contain,
-                              filterQuality: FilterQuality.low,
                             ),
                           ),
                           Container(
