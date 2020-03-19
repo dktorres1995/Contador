@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/screens/instructivo.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
+import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:tomarfoto/widgets/widgets/paginaHistorial.dart';
 
 class Historial extends StatefulWidget {
@@ -12,6 +13,7 @@ class Historial extends StatefulWidget {
 
 class _HistorialState extends State<Historial> {
   void reiniciar() {
+    print('reinicio');
     setState(() {});
   }
 
@@ -21,9 +23,10 @@ class _HistorialState extends State<Historial> {
         itemCount: totalPag,
         itemBuilder: (ctx, index) {
           return Container(
-              height: 1000,
-              width: double.infinity,
-              child: PagHistorial(index + 1));
+            height: 1500,
+            width: double.infinity,
+            child: PagHistorial(index + 1),
+          );
         });
   }
 
@@ -33,17 +36,22 @@ class _HistorialState extends State<Historial> {
       future: obtenerListaPaginadatotal(),
       builder: (context, infoIni) {
         if (infoIni.hasData) {
-          return contenidoPagina(
-              contenidoHistorial(infoIni.data['totalPag'] as int, context),
-              'Historial',
-              context);
+          return ContenidoPagina(
+              contenido:
+                  contenidoHistorial(infoIni.data['totalPag'] as int, context),
+              titulo: 'Historial',
+              bloqueo: false);
         } else if (infoIni.hasError) {
-          return contenidoPagina(
-              Text('${infoIni.error}'), 'Historial', context);
+          return ContenidoPagina(
+              contenido: Text('${infoIni.error}'),
+              titulo: 'Historial',
+              bloqueo: false);
         }
 
-        return contenidoPagina(
-            Center(child: CircularProgressIndicator()), 'Historial', context);
+        return ContenidoPagina(
+            contenido: Center(child: CircularProgressIndicator()),
+            titulo: 'Historial',
+            bloqueo: false);
       },
     );
   }

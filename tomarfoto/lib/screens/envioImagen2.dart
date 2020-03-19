@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/provider/camerasprovider.dart';
+import 'package:tomarfoto/screens/Espera.dart';
+import 'package:tomarfoto/screens/historial.dart';
 
 class EnvioImagen2 extends StatefulWidget {
   static const routedName = "/pantallaInicialEnvioImagen2";
@@ -33,11 +35,41 @@ class _MyHomePageState extends State<EnvioImagen2> {
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(mensaje)));
   }
 
-  void enviarFotoBase() {
-    mostrarMensaje('Espere mientras se carga la foto');
+  void enviarFotoBase(BuildContext ctx) {
+    //mostrarMensaje('Espere mientras se carga la foto');
+    Navigator.of(context)
+          .pushNamed(EsperaScreen.routedName);
     enviarImagenn(_image.path).then((res) {
-      Navigator.of(context).pop();
-      mostrarMensaje('Foto enviada con exito');
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(Historial.routedName, (ro) => false);
+
+      showDialog(
+          context: ctx,
+          barrierDismissible: true,
+          builder: (context) {
+            return AlertDialog(
+                title: Text('Envio correcto',
+                    style: TextStyle(color: Colors.blue)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                titleTextStyle: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'RobotoCondensed',
+                  fontWeight: FontWeight.bold,
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('cerrar'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+                content: Text(
+                    'Se ha enviado la foto por favor expere hasta que el sistema registre el conteo'));
+          });
+    }).catchError((err){
+      print('error: $err');
     });
   }
 
@@ -59,7 +91,9 @@ class _MyHomePageState extends State<EnvioImagen2> {
                       fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
-                onTap: _image != null ? enviarFotoBase : null,
+                onTap: () {
+                  if (_image != null) enviarFotoBase(context);
+                },
               ),
             )
           ],
@@ -85,12 +119,12 @@ class _MyHomePageState extends State<EnvioImagen2> {
                               EdgeInsets.only(top: constrains.maxHeight * 0.04),
                           width: constrains.maxWidth * 0.5,
                           height: constrains.maxHeight * 0.1,
-                          color:Colors.white ,
+                          color: Colors.white,
                           child: Text(
                             'galería',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color:Theme.of(context).accentColor ,
+                                color: Theme.of(context).accentColor,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600),
                           )),
@@ -100,13 +134,13 @@ class _MyHomePageState extends State<EnvioImagen2> {
                       child: Container(
                         padding:
                             EdgeInsets.only(top: constrains.maxHeight * 0.04),
-                        color:Colors.white,
+                        color: Colors.white,
                         width: constrains.maxWidth * 0.5,
                         height: constrains.maxHeight * 0.1,
                         child: Text('Foto',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Theme.of(context).accentColor ,
+                                color: Theme.of(context).accentColor,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600)),
                       ),

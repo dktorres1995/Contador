@@ -2,6 +2,7 @@ import 'package:image/image.dart' as LibIma;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tomarfoto/provider/historialprovider.dart';
+import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 
 class MyApp extends StatefulWidget {
@@ -17,7 +18,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   List<Map<String, int>> prueba = List<Map<String, int>>();
   List<Map<String, int>> etEliminadas = List<Map<String, int>>();
-   List<Map<String, int>> aEliminar = List<Map<String, int>>();
+  List<Map<String, int>> aEliminar = List<Map<String, int>>();
   double _zoom = 0;
   double _scale = 0;
   double _offsetX = 0;
@@ -32,11 +33,12 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-void actualizarEstado(bool estado) {
+  void actualizarEstado(bool estado) {
     setState(() {
       _eliminar = estado;
     });
   }
+
   void cambiaScalayZoom(double scale, double zoom) {
     _zoom = zoom;
     _scale = scale;
@@ -48,7 +50,6 @@ void actualizarEstado(bool estado) {
   }
 
   void modificar(int dx, int dy, bool _eliminar) {
-
     var xIn =
         ((_offsetX < 0 ? _offsetX * 1.5 : _offsetX) + dx.toDouble() / _scale)
             .round();
@@ -59,59 +60,33 @@ void actualizarEstado(bool estado) {
         'punto: x$xIn, y$yIn  y tamaño total: yT${imageMostrar.height}, xT${imageMostrar.width}');
     print('escala $_scale zoom:$_zoom');
 
-    if(_eliminar){
+    if (_eliminar) {
+      setState(() {
+        etEliminadas.add({'x': xIn, 'y': yIn});
 
+        imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
+            widget.listaPuntos[0].radio.toInt(), LibIma.getColor(0, 255, 0));
+      });
+    } else {
+      setState(() {
+        prueba.add({'x': xIn, 'y': yIn});
 
-
-    setState(() {
-      etEliminadas.add({'x': xIn, 'y': yIn});
-
-      imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
-          widget.listaPuntos[0].radio.toInt(), LibIma.getColor(0, 255, 0));
-
-    });
-    }else{
-    setState(() {
-      prueba.add({'x': xIn, 'y': yIn});
-
-      imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
-          widget.listaPuntos[0].radio.toInt(), LibIma.getColor(255, 0, 0));
-    });
+        imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
+            widget.listaPuntos[0].radio.toInt(), LibIma.getColor(255, 0, 0));
+      });
     }
   }
 
-
   void actualizar() {
-    
-    anadirEtiquetas(prueba, widget.id ).then((res) {
+    anadirEtiquetas(prueba, widget.id).then((res) {
       print('enviadas');
     });
-    }
+  }
 
-    void eliminar() {
-    
-    eliminarEtiquetas(etEliminadas, widget.id ).then((res) {
+  void eliminar() {
+    eliminarEtiquetas(etEliminadas, widget.id).then((res) {
       print('enviadas para eliminar');
     });
-    }
-
-  
-
-  Widget circulo(BoxConstraints medida, double pH, double pW, double marg,
-      Widget contenido, Color colorFondo) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.grey, borderRadius: BorderRadius.circular(80)),
-      margin: EdgeInsets.all(medida.maxWidth * marg),
-      height: medida.maxHeight * pH,
-      width: medida.maxWidth * pW,
-      padding: EdgeInsets.all(2),
-      child: Container(
-        decoration: BoxDecoration(
-            color: colorFondo, borderRadius: BorderRadius.circular(80)),
-        child: contenido,
-      ),
-    );
   }
 
   @override
@@ -173,21 +148,19 @@ void actualizarEstado(bool estado) {
                     modificar(dato.localPosition.dx.toInt(),
                         dato.localPosition.dy.toInt(), false);
                   }
-                  if(_eliminar){
-                  modificar(dato.localPosition.dx.toInt(),
-                        dato.localPosition.dy.toInt(),true);
-                    
+                  if (_eliminar) {
+                    modificar(dato.localPosition.dx.toInt(),
+                        dato.localPosition.dy.toInt(), true);
                   }
                 },
                 onTapUp: (dato) {
                   if (_editar) {
                     modificar(dato.localPosition.dx.toInt(),
-                        dato.localPosition.dy.toInt(),false);
+                        dato.localPosition.dy.toInt(), false);
                   }
-                  if(_eliminar){
-                  modificar(dato.localPosition.dx.toInt(),
-                        dato.localPosition.dy.toInt(),true);
-                    
+                  if (_eliminar) {
+                    modificar(dato.localPosition.dx.toInt(),
+                        dato.localPosition.dy.toInt(), true);
                   }
                 },
               ),
@@ -204,7 +177,8 @@ void actualizarEstado(bool estado) {
                         fontWeight: FontWeight.bold,
                         fontSize: medida.maxHeight * 0.05),
                   )),
-                  Colors.white),
+                  Colors.white,
+                  Colors.grey),
               Container(
                 height: medida.maxHeight,
                 width: medida.maxWidth,
@@ -230,7 +204,8 @@ void actualizarEstado(bool estado) {
                           ),
                           _editar
                               ? Theme.of(context).accentColor
-                              : Colors.white),
+                              : Colors.white,
+                          Colors.grey),
                       onTap: () {
                         cambiarEditar(_editar ? false : true);
                       },
@@ -242,35 +217,33 @@ void actualizarEstado(bool estado) {
                         0.03,
                         Center(
                           child: IconButton(
-                            icon: Icon(Icons.remove,
-                            size: 30,
-                            color: _eliminar
+                            icon: Icon(
+                              Icons.remove,
+                              size: 30,
+                              color: _eliminar
                                   ? Colors.white
                                   : Theme.of(context).accentColor,
                             ),
-                            
-                            
-                            onPressed: (){
-                           actualizarEstado(_eliminar ? false : true);
-                         },
+                            onPressed: () {
+                              actualizarEstado(_eliminar ? false : true);
+                            },
                           ),
                         ),
                         _eliminar
-                              ? Theme.of(context).accentColor
-                              : Colors.white,
-                        ),
-                        
-                      IconButton(
-                         icon: Icon(Icons.send),
-                         onPressed: (){
-                           if(_eliminar){
-                              eliminar();
-                           }
-                           if(_editar){
-                           actualizar();}
-                         },
-                      ),
-
+                            ? Theme.of(context).accentColor
+                            : Colors.white,
+                        Colors.grey),
+                    IconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () {
+                        if (_eliminar) {
+                          eliminar();
+                        }
+                        if (_editar) {
+                          actualizar();
+                        }
+                      },
+                    ),
                   ],
                 ),
               )
