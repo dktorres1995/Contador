@@ -16,13 +16,15 @@ class Recursos {
 
   factory Recursos.fromJson(Map<String, dynamic> json) {
     if (json["resultado"] != null) {
+      //double tempo = (json["resultado"]["mean_radius"]as int).toDouble();
+      double radioAux = json["resultado"]["mean_radius"].toDouble();
       return Recursos(
           id: json["_id"],
           imagenUrl: json["image_url"],
           tenant: json["tenant"],
           centros: json["resultado"]["centros"],
-          radio: json["resultado"]["mean_radius"],
-          conteo: json["resultado"]["conteo"]);
+          radio: radioAux,
+          conteo: json["resultado"]["conteo"] );
     } else {
       return Recursos(
           id: json["_id"],

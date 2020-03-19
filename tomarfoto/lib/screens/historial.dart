@@ -12,6 +12,7 @@ class Historial extends StatefulWidget {
 
 class _HistorialState extends State<Historial> {
   void reiniciar() {
+    print('reinicio');
     setState(() {});
   }
 
@@ -23,7 +24,7 @@ class _HistorialState extends State<Historial> {
           return Container(
               height: 1000,
               width: double.infinity,
-              child: PagHistorial(index + 1));
+              child: InkWell(child: PagHistorial(index + 1),onLongPress: reiniciar,));
         });
   }
 

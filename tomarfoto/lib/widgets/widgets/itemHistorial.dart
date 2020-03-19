@@ -4,6 +4,8 @@ import 'package:rich_alert/rich_alert.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/detalleImagen.dart';
 import 'package:tomarfoto/screens/historial.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class ItemHistorial extends StatefulWidget {
   ItemHistorial(
@@ -24,6 +26,7 @@ class ItemHistorial extends StatefulWidget {
 
 class _itemHistorial extends State<ItemHistorial> {
   TextEditingController nombreConteo = new TextEditingController();
+  
 
   void actualizar() {
     actualizarNombre(widget.idImag, nombreConteo.text.toString()).then((res) {
@@ -31,14 +34,29 @@ class _itemHistorial extends State<ItemHistorial> {
     });
   }
 
-  void  eliminar(){
-    deshabilitarConteo(widget.idImag).then((res){
+  void eliminar() {
+    deshabilitarConteo(widget.idImag).then((res) {
       print('elemento eliminado');
     });
   }
 
   void refrescar(String conteo) {
     setState(() {});
+  }
+
+  String convFecha(String fecha) {
+    initializeDateFormatting();
+    //DateTime now = DateTime.now();
+   //var dateString = DateFormat('dd-MM-yyyy').format(now);
+  //final String configFileName = 'lastConfig.$dateString.json';
+    try {
+      DateFormat dateConvert = DateFormat("yyyy-MM-dd'T'HH:mm:ss");
+      //DateFormat dateFormat = DateFormat(" MMMM dd yyyy", 'es_ES');
+      DateTime date = dateConvert.parse(fecha);
+      return DateFormat.yMd().format(date);
+    } on FormatException {
+      return fecha;
+    }
   }
 
   @override
@@ -85,7 +103,9 @@ class _itemHistorial extends State<ItemHistorial> {
                               fontSize: medida.maxHeight * 0.15),
                         ),
                         Text(
-                          widget.fecha == null ? 'no hay fecha' : widget.fecha,
+                          widget.fecha == null
+                              ? 'no hay fecha'
+                              : convFecha(widget.fecha),
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize: medida.maxHeight * 0.1,

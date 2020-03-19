@@ -20,9 +20,8 @@ class _DetalleImagenState extends State<DetalleImagen> {
             return contenidoPagina(
                 MyApp(id: id, listaPuntos: snapshot.data), 'Entrega', context);
           } else if (snapshot.hasError) {
-            return contenidoPagina(Text('error en detalle imagen${snapshot.error}'), 'Entrega', context);
+            return contenidoPagina(Text('error en detalle imagen ${snapshot.error}'), 'Entrega', context);
           }
-
           // Por defecto, muestra un loading spinner
           return contenidoPagina(
                 Center(child: CircularProgressIndicator(),), 'Entrega', context);
