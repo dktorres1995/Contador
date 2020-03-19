@@ -68,14 +68,6 @@ Future<List<Recursos>> obtener() async {
   }
 }
 
-Future<http.Response> anadirEtiquetas(List<Map<String, int>> centros) async{
-  final response = await http.put('${ConfigPaths.pathServicios}/actualizarEtiquetas');
-if (response.statusCode == 200) {
-    return response;
-  } else {
-    throw ('errorCode: 200');
-  }
-}
 
 Future<http.Response> traerImagen(String url) async {
   final response = await http.get(url);
@@ -143,6 +135,19 @@ Future<dynamic> actualizarNombre(String id, String nombreC) async {
     throw Exception('Failed put');
   }
   }
+  
+Future<dynamic> anadirEtiquetas(List<Map<String, int>> add, String id) async{
+ String url= ConfigPaths.pathServicios+"/adicionarEtiquetas/" + id;
+ await http.put(
+   Uri.encodeFull(url),
+   body: json.encode({'lista':add}),
+   headers: {
+        "content-type": "application/json",
+        "accept": "application/json",
+      },
+ );
+
+}
 
 
   

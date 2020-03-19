@@ -1,6 +1,7 @@
 import 'package:image/image.dart' as LibIma;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 
 class MyApp extends StatefulWidget {
@@ -56,6 +57,15 @@ class _MyAppState extends State<MyApp> {
     });
     //print(prueba);
   }
+
+  void actualizar() {
+    
+    anadirEtiquetas(prueba, widget.id ).then((res) {
+      print('enviadas');
+    });
+    }
+
+  
 
   Widget circulo(BoxConstraints medida, double pH, double pW, double marg,
       Widget contenido, Color colorFondo) {
@@ -196,8 +206,14 @@ class _MyAppState extends State<MyApp> {
                             color: Theme.of(context).accentColor,
                             size: 30,
                           ),
-                        ),
-                        Colors.white)
+                        ),Colors.white),
+                      IconButton(
+                         icon: Icon(Icons.send),
+                         onPressed: (){
+                           actualizar();
+                         },
+                      ),
+
                   ],
                 ),
               )
