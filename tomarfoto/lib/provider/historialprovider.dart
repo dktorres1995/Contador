@@ -133,5 +133,16 @@ Future<dynamic> actualizarNombre(String id, String nombreC) async {
   }
   }
 
+  Future<dynamic> deshabilitarConteo(String id) async {
+    String url = ConfigPaths.pathServicios + '/DesHabilitar/$id'; 
+    final response =
+      await http.put(url);
+  if (response.statusCode == 200) {
+    return json.decode(response.body);
+  } else {
+    throw Exception('Failed put');
+  }
+  }
+
 
   

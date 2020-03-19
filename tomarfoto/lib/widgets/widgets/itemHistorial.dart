@@ -4,6 +4,7 @@ import 'package:rich_alert/rich_alert.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/detalleImagen.dart';
 import 'package:tomarfoto/screens/historial.dart';
+
 class ItemHistorial extends StatefulWidget {
   ItemHistorial(
       {@required this.idImag,
@@ -27,6 +28,12 @@ class _itemHistorial extends State<ItemHistorial> {
   void actualizar() {
     actualizarNombre(widget.idImag, nombreConteo.text.toString()).then((res) {
       print('enviado nombre');
+    });
+  }
+
+  void  eliminar(){
+    deshabilitarConteo(widget.idImag).then((res){
+      print('elemento eliminado');
     });
   }
 
@@ -99,7 +106,40 @@ class _itemHistorial extends State<ItemHistorial> {
                                               'Eliminar del historial',
                                               textAlign: TextAlign.center,
                                             ),
-                                            onTap: () {}),
+                                            onTap: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text("Eliminar "),
+                                                      content: Text(
+                                                          '¿Esta seguro que desea eliminar ? \n ${widget.nombre}'),
+                                                      actions: <Widget>[
+                                                        new FlatButton(
+                                                          child: new Text(
+                                                              'Cancelar'),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                        new FlatButton(
+                                                          child: new Text(
+                                                              'Aceptar'),
+                                                          onPressed: () {
+                                                            eliminar();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pushNamed(Historial
+                                                                    .routedName);
+                                                          },
+                                                        )
+                                                      ],
+                                                    );
+                                                  });
+                                            }),
                                         ListTile(
                                           title: Text(
                                             'Cambiar Nombre',
@@ -136,9 +176,7 @@ class _itemHistorial extends State<ItemHistorial> {
                                                           actualizar();
                                                           Navigator.of(context)
                                                               .pushNamed(Historial
-                                                                  .routedName);   
-                                                          
-                                                          
+                                                                  .routedName);
                                                         },
                                                       )
                                                     ],
