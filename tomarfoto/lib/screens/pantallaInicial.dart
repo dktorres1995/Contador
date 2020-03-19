@@ -38,9 +38,8 @@ class _State extends State<PantallaInicial> {
                 'NUMERATE',
                 style: TextStyle(color: Colors.white,fontSize: 20),
               ),onTap: (){
-                print('paso');
                 Navigator.of(context)
-            .pushNamed(InstructivoScreen.routedName);
+            .pushNamedAndRemoveUntil(InstructivoScreen.routedName,(ro)=>false);
             }) //botonesIniciales(context),
                   ),
             ],

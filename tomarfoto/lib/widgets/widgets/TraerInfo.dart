@@ -1,6 +1,7 @@
 import 'package:image/image.dart' as LibIma;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 
 class MyApp extends StatefulWidget {
@@ -55,23 +56,6 @@ class _MyAppState extends State<MyApp> {
           widget.listaPuntos[0].radio.toInt(), LibIma.getColor(255, 0, 0));
     });
     //print(prueba);
-  }
-
-  Widget circulo(BoxConstraints medida, double pH, double pW, double marg,
-      Widget contenido, Color colorFondo) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.grey, borderRadius: BorderRadius.circular(80)),
-      margin: EdgeInsets.all(medida.maxWidth * marg),
-      height: medida.maxHeight * pH,
-      width: medida.maxWidth * pW,
-      padding: EdgeInsets.all(2),
-      child: Container(
-        decoration: BoxDecoration(
-            color: colorFondo, borderRadius: BorderRadius.circular(80)),
-        child: contenido,
-      ),
-    );
   }
 
   @override
@@ -154,7 +138,8 @@ class _MyAppState extends State<MyApp> {
                         fontWeight: FontWeight.bold,
                         fontSize: medida.maxHeight * 0.05),
                   )),
-                  Colors.white),
+                  Colors.white,
+                  Colors.grey),
               Container(
                 height: medida.maxHeight,
                 width: medida.maxWidth,
@@ -180,7 +165,8 @@ class _MyAppState extends State<MyApp> {
                           ),
                           _editar
                               ? Theme.of(context).accentColor
-                              : Colors.white),
+                              : Colors.white,
+                          Colors.grey),
                       onTap: () {
                         cambiarEditar(_editar ? false : true);
                       },
@@ -197,7 +183,8 @@ class _MyAppState extends State<MyApp> {
                             size: 30,
                           ),
                         ),
-                        Colors.white)
+                        Colors.white,
+                        Colors.grey)
                   ],
                 ),
               )

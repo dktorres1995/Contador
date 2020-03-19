@@ -30,7 +30,7 @@ class _PagHistorialState extends State<PagHistorial> {
                         fecha: conteoIndividual.fecha,
                         nombre: conteoIndividual.nombre,
                         urlImag: conteoIndividual.imagenUrl,
-                      ):Container(height: 1,));
+                      ):Divider());
                 }).toList(),
               );
             },
