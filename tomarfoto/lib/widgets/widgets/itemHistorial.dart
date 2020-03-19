@@ -37,9 +37,6 @@ class _itemHistorial extends State<ItemHistorial> {
     });
   }
 
-  void refrescar(String conteo) {
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {

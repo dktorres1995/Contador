@@ -149,5 +149,18 @@ Future<dynamic> anadirEtiquetas(List<Map<String, int>> add, String id) async{
 
 }
 
+Future<dynamic> eliminarEtiquetas(List<Map<String, int>> elim, String id) async{
+ String url= ConfigPaths.pathServicios+"/actEtiquetasEliminadas/" + id;
+ await http.put(
+   Uri.encodeFull(url),
+   body: json.encode({'lista':elim}),
+   headers: {
+        "content-type": "application/json",
+        "accept": "application/json",
+      },
+ );
+
+}
+
 
   

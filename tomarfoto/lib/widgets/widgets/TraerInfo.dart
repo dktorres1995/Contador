@@ -16,11 +16,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<Map<String, int>> prueba = List<Map<String, int>>();
+  List<Map<String, int>> etEliminadas = List<Map<String, int>>();
+   List<Map<String, int>> aEliminar = List<Map<String, int>>();
   double _zoom = 0;
   double _scale = 0;
   double _offsetX = 0;
   double _offsetY = 0;
   bool _editar = false;
+  bool _eliminar = false;
   LibIma.Image imageMostrar;
 
   void cambiarEditar(bool estado) {
@@ -29,6 +32,11 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+void actualizarEstado(bool estado) {
+    setState(() {
+      _eliminar = estado;
+    });
+  }
   void cambiaScalayZoom(double scale, double zoom) {
     _zoom = zoom;
     _scale = scale;
@@ -39,7 +47,8 @@ class _MyAppState extends State<MyApp> {
     _offsetY = y;
   }
 
-  void modificar(int dx, int dy) {
+  void modificar(int dx, int dy, bool _eliminar) {
+
     var xIn =
         ((_offsetX < 0 ? _offsetX * 1.5 : _offsetX) + dx.toDouble() / _scale)
             .round();
@@ -49,19 +58,40 @@ class _MyAppState extends State<MyApp> {
     print(
         'punto: x$xIn, y$yIn  y tamaño total: yT${imageMostrar.height}, xT${imageMostrar.width}');
     print('escala $_scale zoom:$_zoom');
+
+    if(_eliminar){
+
+
+
+    setState(() {
+      etEliminadas.add({'x': xIn, 'y': yIn});
+
+      imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
+          widget.listaPuntos[0].radio.toInt(), LibIma.getColor(0, 255, 0));
+
+    });
+    }else{
     setState(() {
       prueba.add({'x': xIn, 'y': yIn});
 
       imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
           widget.listaPuntos[0].radio.toInt(), LibIma.getColor(255, 0, 0));
     });
-    //print(prueba);
+    }
   }
+
 
   void actualizar() {
     
     anadirEtiquetas(prueba, widget.id ).then((res) {
       print('enviadas');
+    });
+    }
+
+    void eliminar() {
+    
+    eliminarEtiquetas(etEliminadas, widget.id ).then((res) {
+      print('enviadas para eliminar');
     });
     }
 
@@ -141,13 +171,23 @@ class _MyAppState extends State<MyApp> {
                 onTapDown: (dato) {
                   if (_editar) {
                     modificar(dato.localPosition.dx.toInt(),
-                        dato.localPosition.dy.toInt());
+                        dato.localPosition.dy.toInt(), false);
+                  }
+                  if(_eliminar){
+                  modificar(dato.localPosition.dx.toInt(),
+                        dato.localPosition.dy.toInt(),true);
+                    
                   }
                 },
                 onTapUp: (dato) {
                   if (_editar) {
                     modificar(dato.localPosition.dx.toInt(),
-                        dato.localPosition.dy.toInt());
+                        dato.localPosition.dy.toInt(),false);
+                  }
+                  if(_eliminar){
+                  modificar(dato.localPosition.dx.toInt(),
+                        dato.localPosition.dy.toInt(),true);
+                    
                   }
                 },
               ),
@@ -201,16 +241,33 @@ class _MyAppState extends State<MyApp> {
                         0.2 / 2,
                         0.03,
                         Center(
-                          child: Icon(
-                            Icons.remove,
-                            color: Theme.of(context).accentColor,
+                          child: IconButton(
+                            icon: Icon(Icons.remove,
                             size: 30,
+                            color: _eliminar
+                                  ? Colors.white
+                                  : Theme.of(context).accentColor,
+                            ),
+                            
+                            
+                            onPressed: (){
+                           actualizarEstado(_eliminar ? false : true);
+                         },
                           ),
-                        ),Colors.white),
+                        ),
+                        _eliminar
+                              ? Theme.of(context).accentColor
+                              : Colors.white,
+                        ),
+                        
                       IconButton(
                          icon: Icon(Icons.send),
                          onPressed: (){
-                           actualizar();
+                           if(_eliminar){
+                              eliminar();
+                           }
+                           if(_editar){
+                           actualizar();}
                          },
                       ),
 
