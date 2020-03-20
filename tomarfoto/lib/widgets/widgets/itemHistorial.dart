@@ -113,7 +113,13 @@ class _itemHistorial extends State<ItemHistorial> {
                                   style: TextStyle(
                                       color: Theme.of(context).accentColor,
                                       fontWeight: FontWeight.bold),
-                                )
+                                ),
+                                Puntos(
+                      nombre: widget.nombre,
+                      eliminar: eliminar,
+                      actualizar: actualizar,
+                      nombreConteo: nombreConteo,tam: medida.maxHeight*0.15,
+                    ),
                         ],
                       ),
                     ),
@@ -123,11 +129,21 @@ class _itemHistorial extends State<ItemHistorial> {
                             DetalleImagen.routedName, (ro) => false,
                             arguments: widget.idImag);
                       }
-                    }),Puntos(
+                    }
+                    
+                    ),
+                Divider(
+                  height: 1,
+                ),
+                Container(
+                    height: medida.maxHeight * 0.04,
+                    margin: EdgeInsets.only(left: medida.maxWidth*0.7),
+                    child: Puntos(
                       nombre: widget.nombre,
                       eliminar: eliminar,
                       actualizar: actualizar,
                       nombreConteo: nombreConteo,tam: medida.maxHeight*0.15,
+                    ),
                     )
               ],
             ),

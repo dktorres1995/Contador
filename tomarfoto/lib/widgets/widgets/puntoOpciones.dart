@@ -7,25 +7,54 @@ class Puntos extends StatelessWidget {
   final Function actualizar;
   final TextEditingController nombreConteo;
   final double tam;
-  Puntos({this.nombre, this.eliminar, this.actualizar, this.nombreConteo,this.tam});
+  Puntos(
+      {this.nombre,
+      this.eliminar,
+      this.actualizar,
+      this.nombreConteo,
+      this.tam});
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Icon(Icons.more_horiz,size: tam,),
-      onTap: () {
+    return IconButton(
+      icon: Icon(
+        Icons.more_horiz,
+        size: tam,
+      ),
+      onPressed: () {
         showBottomSheet(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(40.0)),
+          ),
           context: context,
           builder: (context) {
             return Container(
-                height: 200.0,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius:
+                      new BorderRadius.vertical(top: Radius.circular(40.0)),
+                ),
+                height: 220.0,
+                alignment: Alignment.center,
                 child: Column(
                   children: <Widget>[
-                    ListTile(
-                        title: Text(
+                    Divider(
+                      height: 30.0,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.circular(40.0)),
+                      height: 180.0,
+                      width: 350,
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            title: Text(
                           'Eliminar del historial',
+                          style: TextStyle(color: Colors.red),
                           textAlign: TextAlign.center,
-                        ),
-                        onTap: () {
+                          ),
+                           onTap: () {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -52,7 +81,10 @@ class Puntos extends StatelessWidget {
                                 );
                               });
                         }),
-                    ListTile(
+                        Divider(
+                      height: 1,
+                    ),
+                          ListTile(
                       title: Text(
                         'Cambiar Nombre',
                         textAlign: TextAlign.center,
@@ -88,12 +120,22 @@ class Puntos extends StatelessWidget {
                             });
                       },
                     ),
+                     Divider(
+                      height: 1,
+                    ),
                     ListTile(
                         title: Text(
                           'Cerrar',
                           textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         onTap: () => Navigator.of(context).pop()),
+
+                        ],
+                      ),
+
+                    ),
+                    
                   ],
                 ));
           },
