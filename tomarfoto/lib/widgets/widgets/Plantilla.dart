@@ -8,8 +8,15 @@ import 'package:tomarfoto/screens/instructivo.dart';
 class ContenidoPagina extends StatelessWidget {
   final Widget contenido;
   final String titulo;
-  final bool bloqueo;
-  ContenidoPagina({this.contenido, this.titulo, this.bloqueo});
+  final bool bloqueo; //bloquear botontes
+  bool confirmacionSalida ;
+  Function mensajeConfirmacionSalida ;
+  ContenidoPagina(
+      {@required this.contenido,
+      @required this.titulo,
+      @required this.bloqueo,
+      @required this.confirmacionSalida,
+      @required this.mensajeConfirmacionSalida});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,11 +56,15 @@ class ContenidoPagina extends StatelessWidget {
                                   child: Icon(Icons.home,
                                       color: Theme.of(context).accentColor),
                                   onTap: () {
-                                    if (!bloqueo)
+                                    if (!bloqueo & !confirmacionSalida) {
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil(
                                               InstructivoScreen.routedName,
                                               (ro) => false);
+                                    }
+                                    if (confirmacionSalida) {
+                                      mensajeConfirmacionSalida();
+                                    }
                                   },
                                 ),
                                 Container(
@@ -63,11 +74,15 @@ class ContenidoPagina extends StatelessWidget {
                                   child: Icon(Icons.history,
                                       color: Theme.of(context).accentColor),
                                   onTap: () {
-                                    if (!bloqueo)
+                                    if (!bloqueo & !confirmacionSalida) {
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil(
                                               Historial.routedName,
                                               (ro) => false);
+                                    }
+                                    if (confirmacionSalida) {
+                                      mensajeConfirmacionSalida();
+                                    }
                                   },
                                 ),
                                 Container(width: constrains.maxWidth * 0.5),
@@ -77,11 +92,15 @@ class ContenidoPagina extends StatelessWidget {
                                     color: Theme.of(context).accentColor,
                                   ),
                                   onTap: () {
-                                    if (!bloqueo)
+                                    if (!bloqueo & !confirmacionSalida) {
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil(
                                               CuentaScreen.routedName,
                                               (ro) => false);
+                                    }
+                                    if (confirmacionSalida) {
+                                      mensajeConfirmacionSalida();
+                                    }
                                   },
                                 )
                               ],
@@ -99,16 +118,19 @@ class ContenidoPagina extends StatelessWidget {
                       child: circulo(
                           constrains,
                           0.1,
-                          0.15,
                           0,
                           Icon(Icons.photo_camera,
                               color: Theme.of(context).accentColor),
                           Colors.white,
                           Theme.of(context).accentColor),
                       onTap: () {
-                        if (!bloqueo)
+                        if (!bloqueo & !confirmacionSalida) {
                           Navigator.of(context)
                               .pushNamed(EnvioImagen2.routedName);
+                        }
+                        if (confirmacionSalida) {
+                          mensajeConfirmacionSalida();
+                        }
                       },
                     ),
                   )
@@ -120,13 +142,13 @@ class ContenidoPagina extends StatelessWidget {
   }
 }
 
-Widget circulo(BoxConstraints medida, double pH, double pW, double marg,
+Widget circulo(BoxConstraints medida,  double pW, double marg,
     Widget contenido, Color colorFondo, Color colorBorde) {
   return Container(
     decoration: BoxDecoration(
         color: colorBorde, borderRadius: BorderRadius.circular(80)),
     margin: EdgeInsets.all(medida.maxWidth * marg),
-    height: medida.maxHeight * pH,
+    height: medida.maxWidth * pW,//medida.maxHeight * pH,
     width: medida.maxWidth * pW,
     padding: EdgeInsets.all(2),
     child: Container(

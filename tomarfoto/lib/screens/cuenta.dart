@@ -15,7 +15,7 @@ class _CuentaScreenState extends State<CuentaScreen> {
         child: Text('aqui va lo referente a la cuenta'),
       ),
       titulo: 'Cuenta',
-      bloqueo: false,
+      bloqueo: false,confirmacionSalida: false,mensajeConfirmacionSalida: (){},
     );
   }
 }

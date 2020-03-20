@@ -21,6 +21,6 @@ class EsperaScreen extends StatelessWidget {
           ),
         ),
         titulo: 'Espera',
-        bloqueo: true);
+        bloqueo: true,confirmacionSalida: false,mensajeConfirmacionSalida: (){});
   }
 }

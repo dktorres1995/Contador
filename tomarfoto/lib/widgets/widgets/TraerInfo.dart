@@ -1,7 +1,8 @@
+import 'dart:math';
+
 import 'package:image/image.dart' as LibIma;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 
@@ -9,66 +10,72 @@ class MyApp extends StatefulWidget {
   static const routedName = '/TraerInfo';
   final String id;
   final List<dynamic> listaPuntos;
-  MyApp({this.id, this.listaPuntos});
+  final Function eliminarEtiquetas;
+  final Function anadirEtiquetas;
+  MyApp(
+      {@required this.id,
+      @required this.listaPuntos,
+      @required this.anadirEtiquetas,
+      @required this.eliminarEtiquetas});
 
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Map<String, int>> prueba = List<Map<String, int>>();
-  List<Map<String, int>> etEliminadas = List<Map<String, int>>();
-  List<Map<String, int>> aEliminar = List<Map<String, int>>();
+ 
 
   bool _editar = false;
   bool _eliminar = false;
   LibIma.Image imageMostrar;
+  int cambioConteo = 0;
 
   void cambiarEditar(bool estado) {
     setState(() {
-      _editar = estado;
+      if (!_eliminar) _editar = estado;
     });
   }
 
-  void actualizarEstado(bool estado) {
+  void cambiarEliminar(bool estado) {
     setState(() {
-      _eliminar = estado;
+      if (!_editar) _eliminar = estado;
     });
   }
 
+  double distanciaEuclidiana(int dx, int dy) {
+    return sqrt(pow(dx, 2) + pow(dy, 2));
+  }
 
-
-  void modificar(int dx, int dy, bool _eliminar) {
-    var xIn = dx;
-    var yIn = dy; 
-
+  void modificar(int x, int y, bool _eliminar) {
+    var menorDistancia = double.infinity;
+    double dist = 0;
+    var xIn = 0;
+    var yIn = 0;
     if (_eliminar) {
+      for (var coordenada in widget.listaPuntos[0].centros) {
+        dist = distanciaEuclidiana(coordenada['x'] - x, coordenada['y'] - y);
+        if (dist < menorDistancia) {
+          menorDistancia = dist;
+          xIn = coordenada['x'];
+          yIn = coordenada['y'];
+        }
+      }
       setState(() {
-        etEliminadas.add({'x': xIn, 'y': yIn});
-
-        imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
-            widget.listaPuntos[0].radio.toInt(), LibIma.getColor(0, 255, 0));
-      });
-    } else {
-      setState(() {
-        prueba.add({'x': xIn, 'y': yIn});
-
+        widget.eliminarEtiquetas(xIn,yIn);
         imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
             widget.listaPuntos[0].radio.toInt(), LibIma.getColor(255, 0, 0));
+        cambioConteo--;
       });
+      //print('eliminadas $etEliminadas');
+    } else if(_editar) {
+      setState(() {
+        widget.anadirEtiquetas(x,y);
+        imageMostrar = LibIma.drawCircle(imageMostrar, x, y,
+            widget.listaPuntos[0].radio.toInt(), LibIma.getColor(0, 255, 0));
+        cambioConteo++;
+      });
+      //print('agregadas $etAgregadas');
     }
-  }
-
-  void actualizar() {
-    anadirEtiquetas(prueba, widget.id).then((res) {
-      print('enviadas');
-    });
-  }
-
-  void eliminar() {
-    eliminarEtiquetas(etEliminadas, widget.id).then((res) {
-      print('enviadas para eliminar');
-    });
   }
 
   @override
@@ -86,7 +93,7 @@ class _MyAppState extends State<MyApp> {
             coordenada['x'],
             coordenada['y'],
             widget.listaPuntos[0].radio.toInt(),
-            LibIma.getColor(0, 255, 255));
+            LibIma.getColor(0, 0, 255));
       }
     });
   }
@@ -109,7 +116,7 @@ class _MyAppState extends State<MyApp> {
                   height: imageMostrar.height.toDouble(),
                   child: GestureDetector(
                     child: Container(
-                      height:imageMostrar.height.toDouble(),
+                      height: imageMostrar.height.toDouble(),
                       width: imageMostrar.width.toDouble(),
                       child: Image.memory(LibIma.encodeJpg(imageMostrar)),
                     ),
@@ -123,25 +130,14 @@ class _MyAppState extends State<MyApp> {
                             dato.localPosition.dy.toInt(), true);
                       }
                     },
-                    onTapUp: (dato) {
-                      if (_editar) {
-                        modificar(dato.localPosition.dx.toInt(),
-                            dato.localPosition.dy.toInt(), false);
-                      }
-                      if (_eliminar) {
-                        modificar(dato.localPosition.dx.toInt(),
-                            dato.localPosition.dy.toInt(), true);
-                      }
-                    },
                   )),
               circulo(
                   medida,
                   0.15,
-                  0.2,
                   0.03,
                   Center(
                       child: Text(
-                    '${widget.listaPuntos[0].conteo}',
+                    '${widget.listaPuntos[0].conteo + cambioConteo}',
                     style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.bold,
@@ -161,7 +157,6 @@ class _MyAppState extends State<MyApp> {
                       child: circulo(
                           medida,
                           0.15 / 2,
-                          0.2 / 2,
                           0,
                           Center(
                             child: Icon(
@@ -183,7 +178,6 @@ class _MyAppState extends State<MyApp> {
                     circulo(
                         medida,
                         0.15 / 2,
-                        0.2 / 2,
                         0.03,
                         Center(
                           child: IconButton(
@@ -195,7 +189,7 @@ class _MyAppState extends State<MyApp> {
                                   : Theme.of(context).accentColor,
                             ),
                             onPressed: () {
-                              actualizarEstado(_eliminar ? false : true);
+                              cambiarEliminar(_eliminar ? false : true);
                             },
                           ),
                         ),
@@ -203,17 +197,6 @@ class _MyAppState extends State<MyApp> {
                             ? Theme.of(context).accentColor
                             : Colors.white,
                         Colors.grey),
-                    IconButton(
-                      icon: Icon(Icons.send),
-                      onPressed: () {
-                        if (_eliminar) {
-                          eliminar();
-                        }
-                        if (_editar) {
-                          actualizar();
-                        }
-                      },
-                    ),
                   ],
                 ),
               )
@@ -224,3 +207,17 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+/*
+                    IconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () {
+                        if (_eliminar) {
+                          widget.enviarEtiquetasEliminadas(
+                              etAgregadas, widget.id);
+                        }
+                        if (_editar) {
+                          widget.enviarEtiquetasAnadidas(
+                              etEliminadas, widget.id);
+                        }
+                      },
+                    ),*/

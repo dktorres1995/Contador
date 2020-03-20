@@ -13,6 +13,6 @@ class _InstructivoScrrenState extends State<InstructivoScreen> {
     return ContenidoPagina(
         contenido: Center(child: Text('aqui iria el instructivo')),
         titulo: 'Inicio',
-        bloqueo: false);
+        bloqueo: false,confirmacionSalida: false,mensajeConfirmacionSalida: (){});
   }
 }

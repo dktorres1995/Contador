@@ -10,9 +10,9 @@ class Puntos extends StatelessWidget {
   Puntos({this.nombre, this.eliminar, this.actualizar, this.nombreConteo,this.tam});
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.more_horiz,size: tam,),
-      onPressed: () {
+    return InkWell(
+      child: Icon(Icons.more_horiz,size: tam,),
+      onTap: () {
         showBottomSheet(
           context: context,
           builder: (context) {

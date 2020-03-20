@@ -67,7 +67,7 @@ class _itemHistorial extends State<ItemHistorial> {
               children: <Widget>[
                 InkWell(
                     child: Container(
-                      height: medida.maxHeight*0.65,
+                      height: medida.maxHeight*0.4,
                       child: Row(
                         children: <Widget>[
                           Container(
@@ -123,19 +123,12 @@ class _itemHistorial extends State<ItemHistorial> {
                             DetalleImagen.routedName, (ro) => false,
                             arguments: widget.idImag);
                       }
-                    }),
-                Divider(
-                  height: 1,
-                ),
-                Container(
-                    height: medida.maxHeight * 0.04,
-                    margin: EdgeInsets.only(left: medida.maxWidth*0.7),
-                    child: Puntos(
+                    }),Puntos(
                       nombre: widget.nombre,
                       eliminar: eliminar,
                       actualizar: actualizar,
                       nombreConteo: nombreConteo,tam: medida.maxHeight*0.15,
-                    ))
+                    )
               ],
             ),
           ),
