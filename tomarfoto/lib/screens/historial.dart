@@ -39,18 +39,18 @@ class _HistorialState extends State<Historial> {
           return ContenidoPagina(
               contenido:
                   contenidoHistorial(infoIni.data['totalPag'] as int, context),
-              titulo: 'Historial',
+              titulo: 'Historial de conteo',
               bloqueo: false);
         } else if (infoIni.hasError) {
           return ContenidoPagina(
               contenido: Text('${infoIni.error}'),
-              titulo: 'Historial',
+              titulo: 'Historial de conteo',
               bloqueo: false);
         }
 
         return ContenidoPagina(
             contenido: Center(child: CircularProgressIndicator()),
-            titulo: 'Historial',
+            titulo: 'Historial de conteo',
             bloqueo: false);
       },
     );
