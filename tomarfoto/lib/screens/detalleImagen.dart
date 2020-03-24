@@ -17,14 +17,10 @@ class _DetalleImagenState extends State<DetalleImagen> {
 
   void addEtiquetas(int x, int y) {
     etAgregadas.add({'x': x, 'y': y});
-
-    print('agregadas $etAgregadas');
   }
 
   void eliminadasEtiquetas(int x, int y) {
     etEliminadas.add({'x': x, 'y': y});
-
-    print('eliminadas $etEliminadas');
   }
 
   void compararEtiquetas(){

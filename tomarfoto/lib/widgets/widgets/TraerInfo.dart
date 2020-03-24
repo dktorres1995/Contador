@@ -1,8 +1,10 @@
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:image/image.dart' as LibIma;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tomarfoto/Models/Recursos.dart';
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 
@@ -12,7 +14,6 @@ class MyApp extends StatefulWidget {
   final List<dynamic> listaPuntos;
   final Function eliminarEtiquetas;
   final Function anadirEtiquetas;
-  final List<Map<String, int>> listaEditada = new List<Map<String, int>>();
   MyApp(
       {@required this.id,
       @required this.listaPuntos,
@@ -28,25 +29,25 @@ class _MyAppState extends State<MyApp> {
   bool _eliminar = false;
   LibIma.Image imageMostrar;
   int cambioConteo = 0;
+  List<dynamic> listaAdibujar = List<dynamic>();
 
   void cambiarEditar(bool estado) {
     setState(() {
-      
-      if(!_editar){
-       _editar = estado;
-       _eliminar = !estado;}
-      else{
+      if (!_editar) {
+        _editar = estado;
+        _eliminar = !estado;
+      } else {
         _editar = false;
-      } 
+      }
     });
   }
 
   void cambiarEliminar(bool estado) {
     setState(() {
-      if(!_eliminar){
-      _eliminar = estado;
-      _editar = !estado;}
-      else{
+      if (!_eliminar) {
+        _eliminar = estado;
+        _editar = !estado;
+      } else {
         _eliminar = false;
       }
     });
@@ -61,8 +62,9 @@ class _MyAppState extends State<MyApp> {
     double dist = 0;
     var xIn = 0;
     var yIn = 0;
+
     if (_eliminar) {
-      for (var coordenada in widget.listaPuntos[0].centros) {
+      for (var coordenada in listaAdibujar) {
         dist = distanciaEuclidiana(coordenada['x'] - x, coordenada['y'] - y);
         if (dist < menorDistancia) {
           menorDistancia = dist;
@@ -71,23 +73,17 @@ class _MyAppState extends State<MyApp> {
         }
       }
 
-      widget.listaEditada.add({'x': xIn, 'y': yIn});
-
       setState(() {
         widget.eliminarEtiquetas(xIn, yIn);
-        imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
-            widget.listaPuntos[0].radio.toInt(), LibIma.getColor(255, 0, 0));
+        listaAdibujar.add({'x': xIn , 'y': yIn, 'estado': 'eliminada'});
         cambioConteo--;
       });
-      //print('eliminadas $etEliminadas');
     } else if (_editar) {
       setState(() {
         widget.anadirEtiquetas(x, y);
-        imageMostrar = LibIma.drawCircle(imageMostrar, x, y,
-            widget.listaPuntos[0].radio.toInt(), LibIma.getColor(0, 255, 0));
+        listaAdibujar.add({'x': x, 'y': y, 'estado': 'agregada'});
         cambioConteo++;
       });
-      //print('agregadas $etAgregadas');
     }
   }
 
@@ -99,14 +95,9 @@ class _MyAppState extends State<MyApp> {
       imageMostrar =
           LibIma.decodeJpg((widget.listaPuntos[1] as http.Response).bodyBytes);
 
-      //dibuja de lo que trae de internet
-      for (var coordenada in widget.listaPuntos[0].centros) {
-        imageMostrar = LibIma.drawCircle(
-            imageMostrar,
-            coordenada['x'],
-            coordenada['y'],
-            widget.listaPuntos[0].radio.toInt(),
-            LibIma.getColor(0, 0, 255));
+      for (var coor in (widget.listaPuntos[0] as Recursos).centros) {
+        listaAdibujar
+            .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
       }
     });
   }
@@ -122,7 +113,8 @@ class _MyAppState extends State<MyApp> {
           width: medida.maxWidth,
           child: Stack(
             children: <Widget>[
-              Zoom(zoomSensibility: 2,
+              Zoom(
+                  zoomSensibility: 2,
                   backgroundColor: Colors.white,
                   initZoom: 0.0,
                   width: imageMostrar.width.toDouble(),
@@ -131,7 +123,18 @@ class _MyAppState extends State<MyApp> {
                     child: Container(
                       height: imageMostrar.height.toDouble(),
                       width: imageMostrar.width.toDouble(),
-                      child: Image.memory(LibIma.encodePng(imageMostrar),filterQuality: FilterQuality.none,),
+                      child: Stack(
+                        children: <Widget>[
+                          Image.network(widget.listaPuntos[0].imagenUrl),
+                          CustomPaint(
+                            size: Size(imageMostrar.width.toDouble(),
+                                imageMostrar.height.toDouble()),
+                            painter: MyPainter(
+                                (widget.listaPuntos[0] as Recursos).radio,
+                                listaAdibujar),
+                          )
+                        ],
+                      ),
                     ),
                     onTapDown: (dato) {
                       if (_editar) {
@@ -222,17 +225,35 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-/*
-                    IconButton(
-                      icon: Icon(Icons.send),
-                      onPressed: () {
-                        if (_eliminar) {
-                          widget.enviarEtiquetasEliminadas(
-                              etAgregadas, widget.id);
-                        }
-                        if (_editar) {
-                          widget.enviarEtiquetasAnadidas(
-                              etEliminadas, widget.id);
-                        }
-                      },
-                    ),*/
+
+class MyPainter extends CustomPainter {
+  //         <-- CustomPainter class
+
+  double radio;
+  List<dynamic> centros = List<dynamic>();
+  MyPainter(this.radio, this.centros);
+  @override
+  void paint(Canvas canvas, Size size) {
+    var center;
+    var paint = Paint();
+    for (var coordenada in centros) {
+      center = Offset(coordenada['x'].toDouble(), coordenada['y'].toDouble());
+      paint
+        ..color = coordenada['estado'] == 'sistema'
+            ? Colors.blue
+            : coordenada['estado'] == 'agregada'
+                ? Colors.green
+                : coordenada['estado'] == 'eliminada'
+                    ? Colors.red
+                    : Colors.black
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 10;
+      canvas.drawCircle(center, radio, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter old) {
+    return false;
+  }
+}
