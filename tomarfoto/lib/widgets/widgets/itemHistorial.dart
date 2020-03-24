@@ -4,6 +4,7 @@ import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/detalleImagen.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:tomarfoto/widgets/widgets/puntoOpciones.dart';
 
 class ItemHistorial extends StatefulWidget {
   ItemHistorial(
@@ -36,7 +37,6 @@ class _itemHistorial extends State<ItemHistorial> {
     deshabilitarConteo(widget.idImag).then((res) {});
   }
 
-
   String convFecha(String fecha) {
     initializeDateFormatting();
     //DateTime now = DateTime.now();
@@ -62,19 +62,23 @@ class _itemHistorial extends State<ItemHistorial> {
               vertical: medida.maxHeight * 0.05),
           child: Card(
             elevation: 20,
-            child: Column(
+            child: Column(mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 InkWell(
                     child: Container(
-                      height: medida.maxHeight*0.7,
+                      height: medida.maxHeight * 0.65,
                       child: Row(
                         children: <Widget>[
                           Container(
                             width: medida.maxWidth * 0.3,
                             color: Colors.grey,
-                            child:widget.urlImagSmall==null? Center(child: Icon(Icons.error),): Image.network(
-                             widget.urlImagSmall,
-                            ),
+                            child: widget.urlImagSmall == null
+                                ? Center(
+                                    child: Icon(Icons.error),
+                                  )
+                                : Image.network(
+                                    widget.urlImagSmall,
+                                  ),
                           ),
                           Container(
                             width: medida.maxWidth * 0.4,
@@ -122,10 +126,18 @@ class _itemHistorial extends State<ItemHistorial> {
                             DetalleImagen.routedName, (ro) => false,
                             arguments: widget.idImag);
                       }
-                    }
-                    
-                    ),
-               
+                    }),
+                Container(
+                  height: medida.maxHeight * 0.1,
+                  margin: EdgeInsets.only(left: medida.maxWidth * 0.7),
+                  child: Puntos(
+                    nombre: widget.nombre,
+                    eliminar: eliminar,
+                    actualizar: actualizar,
+                    nombreConteo: nombreConteo,
+                    tam: medida.maxHeight * 0.2,
+                  ),
+                )
               ],
             ),
           ),

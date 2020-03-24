@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:zoom_widget/zoom_widget.dart';
+
 class MyApp extends StatefulWidget {
   static const routedName = '/TraerInfo';
   final String id;
@@ -23,8 +24,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
- 
-
   bool _editar = false;
   bool _eliminar = false;
   LibIma.Image imageMostrar;
@@ -32,17 +31,26 @@ class _MyAppState extends State<MyApp> {
 
   void cambiarEditar(bool estado) {
     setState(() {
-      if (!_eliminar) _editar = estado;
+      
+      if(!_editar){
+       _editar = estado;
+       _eliminar = !estado;}
+      else{
+        _editar = false;
+      } 
     });
   }
 
   void cambiarEliminar(bool estado) {
     setState(() {
-      if (!_editar) _eliminar = estado;
+      if(!_eliminar){
+      _eliminar = estado;
+      _editar = !estado;}
+      else{
+        _eliminar = false;
+      }
     });
   }
-
-
 
   double distanciaEuclidiana(int dx, int dy) {
     return sqrt(pow(dx, 2) + pow(dy, 2));
@@ -61,21 +69,20 @@ class _MyAppState extends State<MyApp> {
           xIn = coordenada['x'];
           yIn = coordenada['y'];
         }
-
       }
 
-      widget.listaEditada.add({'x': xIn,'y':yIn});
-      
+      widget.listaEditada.add({'x': xIn, 'y': yIn});
+
       setState(() {
-        widget.eliminarEtiquetas(xIn,yIn);
+        widget.eliminarEtiquetas(xIn, yIn);
         imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
             widget.listaPuntos[0].radio.toInt(), LibIma.getColor(255, 0, 0));
         cambioConteo--;
       });
       //print('eliminadas $etEliminadas');
-    } else if(_editar) {
+    } else if (_editar) {
       setState(() {
-        widget.anadirEtiquetas(x,y);
+        widget.anadirEtiquetas(x, y);
         imageMostrar = LibIma.drawCircle(imageMostrar, x, y,
             widget.listaPuntos[0].radio.toInt(), LibIma.getColor(0, 255, 0));
         cambioConteo++;
@@ -124,7 +131,7 @@ class _MyAppState extends State<MyApp> {
                     child: Container(
                       height: imageMostrar.height.toDouble(),
                       width: imageMostrar.width.toDouble(),
-                      child: Image.memory(LibIma.encodeJpg(imageMostrar)),
+                      child: Image.memory(LibIma.encodeJpg(imageMostrar),filterQuality: FilterQuality.low,),
                     ),
                     onTapDown: (dato) {
                       if (_editar) {
@@ -162,7 +169,7 @@ class _MyAppState extends State<MyApp> {
                     InkWell(
                       child: circulo(
                           medida,
-                          0.15 / 2,
+                          0.1,
                           0,
                           Center(
                             child: Icon(
@@ -170,7 +177,7 @@ class _MyAppState extends State<MyApp> {
                               color: _editar
                                   ? Colors.white
                                   : Theme.of(context).accentColor,
-                              size: 30,
+                              size: 15,
                             ),
                           ),
                           _editar
@@ -178,56 +185,33 @@ class _MyAppState extends State<MyApp> {
                               : Colors.white,
                           Colors.grey),
                       onTap: () {
+                        print('cambiar');
                         cambiarEditar(_editar ? false : true);
                       },
                     ),
-                    circulo(
-                        medida,
-                        0.15 / 2,
-                        0.03,
-                        Center(
-                          child: IconButton(
-                            icon: Icon(
+                    InkWell(
+                      child: circulo(
+                          medida,
+                          0.1,
+                          0.03,
+                          Center(
+                            child: Icon(
                               Icons.remove,
-                              size: 30,
+                              size: 15,
                               color: _eliminar
                                   ? Colors.white
                                   : Theme.of(context).accentColor,
                             ),
-                            onPressed: () {
-                              cambiarEliminar(_eliminar ? false : true);
-                            },
                           ),
-                        ),
-                        _eliminar
-                            ? Theme.of(context).accentColor
-                            : Colors.white,
-                        Colors.grey),
-
-
-
-circulo(
-                        medida,
-                        0.15 / 2,
-                        0.03,
-                        Center(
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.send,
-                              size: 30,
-                              color: _eliminar
-                                  ? Colors.white
-                                  : Theme.of(context).accentColor,
-                            ),
-                            onPressed: () {
-                            },
-                          ),
-                        ),
-                        _eliminar
-                            ? Theme.of(context).accentColor
-                            : Colors.white,
-                        Colors.grey),
-
+                          _eliminar
+                              ? Theme.of(context).accentColor
+                              : Colors.white,
+                          Colors.grey),
+                      onTap: () {
+                        print('elimianr');
+                        cambiarEliminar(_eliminar ? false : true);
+                      },
+                    ),
                   ],
                 ),
               )

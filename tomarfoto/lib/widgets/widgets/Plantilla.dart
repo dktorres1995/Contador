@@ -117,7 +117,7 @@ class ContenidoPagina extends StatelessWidget {
                     child: InkWell(
                       child: circulo(
                           constrains,
-                          0.1,
+                          0.15,
                           0,
                           Icon(Icons.photo_camera,
                               color: Theme.of(context).accentColor),
