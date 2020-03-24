@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:zoom_widget/zoom_widget.dart';
-import 'package:tomarfoto/provider/historialprovider.dart';
 class MyApp extends StatefulWidget {
   static const routedName = '/TraerInfo';
   final String id;

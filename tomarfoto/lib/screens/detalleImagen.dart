@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/Espera.dart';
 import 'package:tomarfoto/screens/historial.dart';
-import 'package:tomarfoto/screens/instructivo.dart';
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:tomarfoto/widgets/widgets/TraerInfo.dart';
 

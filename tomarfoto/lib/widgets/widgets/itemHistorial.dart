@@ -4,7 +4,6 @@ import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/detalleImagen.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:tomarfoto/widgets/widgets/puntoOpciones.dart';
 
 class ItemHistorial extends StatefulWidget {
   ItemHistorial(
