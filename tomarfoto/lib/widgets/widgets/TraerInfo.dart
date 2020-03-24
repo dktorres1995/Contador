@@ -153,7 +153,7 @@ class _MyAppState extends State<MyApp> {
                   0.03,
                   Center(
                       child: Text(
-                    '${widget.listaPuntos[0].conteo + cambioConteo}',
+                    '${widget.listaPuntos[0].conteo}',
                     style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.bold,
