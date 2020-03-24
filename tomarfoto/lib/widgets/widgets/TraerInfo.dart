@@ -137,11 +137,11 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     onTapDown: (dato) {
-                      if (_editar) {
+                      if (_editar ) {
                         modificar(dato.localPosition.dx.toInt(),
                             dato.localPosition.dy.toInt(), false);
                       }
-                      if (_eliminar) {
+                      if (_eliminar && (widget.listaPuntos[0].conteo + cambioConteo)>0) {
                         modificar(dato.localPosition.dx.toInt(),
                             dato.localPosition.dy.toInt(), true);
                       }
@@ -153,7 +153,7 @@ class _MyAppState extends State<MyApp> {
                   0.03,
                   Center(
                       child: Text(
-                    '${widget.listaPuntos[0].conteo}',
+                    '${widget.listaPuntos[0].conteo + cambioConteo}',
                     style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontWeight: FontWeight.bold,

@@ -11,39 +11,38 @@ class InstructivoScreen extends StatefulWidget {
 class _InstructivoScrrenState extends State<InstructivoScreen> {
   @override
   Widget build(BuildContext context) {
-    return ContenidoPagina(
-        contenido: Center(
-          child: Column(
-            children: <Widget>[
-              swiperInstructivo()
-            ],
-            
-          )
-        
-        
-        
-         ),
-        titulo: 'Inicio',
-        bloqueo: false,confirmacionSalida: false,mensajeConfirmacionSalida: (){});
+    return LayoutBuilder(
+      builder: (context, medida) {
+        return ContenidoPagina(
+            contenido: Padding(
+                padding: EdgeInsets.only(bottom: medida.maxHeight * 0.07),
+                child: Center(child: swiperInstructivo(medida))),
+            titulo: 'Inicio',
+            bloqueo: false,
+            confirmacionSalida: false,
+            mensajeConfirmacionSalida: () {});
+      },
+    );
   }
 
-  Widget swiperInstructivo(){
-    
-    return Container(
-      padding: EdgeInsets.only(top: 50),
-      width: 300,
-      height: 500,
-      child:
-    Swiper(
-        itemBuilder: (BuildContext context,int index){
-          
-          return new Image.network("http://via.placeholder.com/350x150",fit: BoxFit.fill,);
-        },
-        itemCount: 3,
-        pagination: new SwiperPagination(),
-      )
-    
-    );  
-    
+  Widget swiperInstructivo(BoxConstraints medida) {
+    return Swiper(
+      itemBuilder: (BuildContext context, int index) {
+        return Card(
+            margin: EdgeInsets.symmetric(
+                horizontal: medida.maxHeight * 0.07,
+                vertical: medida.maxWidth * 0.15),
+            elevation: 20,
+            borderOnForeground: true,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0)),
+            child: Image.asset(
+              'assets/images/${index + 1}.png',
+              fit: BoxFit.fill,
+            ));
+      },
+      itemCount: 3,
+      pagination: SwiperPagination(),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/Models/Conteo.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
+import 'package:tomarfoto/screens/detalleImagen.dart';
 import 'package:tomarfoto/widgets/widgets/itemHistorial.dart';
 
 class PagHistorial extends StatefulWidget {
@@ -39,6 +40,7 @@ class _PagHistorialState extends State<PagHistorial> {
             },
           );
         } else if (infoPagina.hasError) {
+          mensaje(context, 'Error al cargar historial', 'Se ha presentado un error al cargar algunos elementos del historial.');
           return Center(
             child: Text('${infoPagina.error}'),
           );

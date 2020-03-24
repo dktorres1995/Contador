@@ -82,6 +82,7 @@ class _itemHistorial extends State<ItemHistorial> {
                           ),
                           Container(
                             width: medida.maxWidth * 0.4,
+                            padding: EdgeInsets.only(left:medida.maxWidth*0.05),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,6 +147,3 @@ class _itemHistorial extends State<ItemHistorial> {
     );
   }
 }
-/*,
-          
-            }*/

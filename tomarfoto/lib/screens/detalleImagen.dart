@@ -28,7 +28,7 @@ class _DetalleImagenState extends State<DetalleImagen> {
   }
 
   void enviarTodo(String id, BuildContext ctx) {
-    Navigator.of(context).pop();
+    
     Navigator.of(context).pushNamed(EsperaScreen.routedName);
     anadirEtiquetas(etAgregadas, id).then((res) {
       print('enviadas');
@@ -63,7 +63,9 @@ class _DetalleImagenState extends State<DetalleImagen> {
                 InkWell(
                   child: Text('Guardar Cambios',
                       style: TextStyle(color: Theme.of(context).accentColor)),
-                  onTap: () => enviarTodo(id, ctx),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    enviarTodo(id, ctx);},
                 ),
                 Divider(
                   height: 20,

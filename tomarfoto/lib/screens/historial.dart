@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
+import 'package:tomarfoto/screens/detalleImagen.dart';
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:tomarfoto/widgets/widgets/paginaHistorial.dart';
 
@@ -41,6 +42,7 @@ class _HistorialState extends State<Historial> {
               titulo: 'Historial',
               bloqueo: false,confirmacionSalida: false,mensajeConfirmacionSalida: (){});
         } else if (infoIni.hasError) {
+          mensaje(context, 'Error al cargar historial', 'Se ha presentado un error al cargar el historial');
           return ContenidoPagina(
               contenido: Text('${infoIni.error}'),
               titulo: 'Historial',
