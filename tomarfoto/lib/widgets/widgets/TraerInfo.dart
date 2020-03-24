@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
 
       setState(() {
         widget.eliminarEtiquetas(xIn, yIn);
-        listaAdibujar.add({'x': xIn , 'y': yIn, 'estado': 'eliminada'});
+        listaAdibujar.add({'x': xIn, 'y': yIn, 'estado': 'eliminada'});
         cambioConteo--;
       });
     } else if (_editar) {
@@ -131,17 +131,19 @@ class _MyAppState extends State<MyApp> {
                                 imageMostrar.height.toDouble()),
                             painter: MyPainter(
                                 (widget.listaPuntos[0] as Recursos).radio,
-                                listaAdibujar),
+                                listaAdibujar,
+                                imageMostrar.width.toDouble()*0.1),
                           )
                         ],
                       ),
                     ),
                     onTapDown: (dato) {
-                      if (_editar ) {
+                      if (_editar) {
                         modificar(dato.localPosition.dx.toInt(),
                             dato.localPosition.dy.toInt(), false);
                       }
-                      if (_eliminar && (widget.listaPuntos[0].conteo + cambioConteo)>0) {
+                      if (_eliminar &&
+                          (widget.listaPuntos[0].conteo + cambioConteo) > 0) {
                         modificar(dato.localPosition.dx.toInt(),
                             dato.localPosition.dy.toInt(), true);
                       }
@@ -231,7 +233,8 @@ class MyPainter extends CustomPainter {
 
   double radio;
   List<dynamic> centros = List<dynamic>();
-  MyPainter(this.radio, this.centros);
+  double grosor;
+  MyPainter(this.radio, this.centros, this.grosor);
   @override
   void paint(Canvas canvas, Size size) {
     var center;
@@ -247,7 +250,7 @@ class MyPainter extends CustomPainter {
                     ? Colors.red
                     : Colors.black
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 10;
+        ..strokeWidth = grosor;
       canvas.drawCircle(center, radio, paint);
     }
   }
