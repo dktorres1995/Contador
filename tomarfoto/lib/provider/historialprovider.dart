@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 import 'package:tomarfoto/Models/Recursos.dart';
 import 'package:tomarfoto/provider/providerConfig.dart';
 import 'package:tomarfoto/Models/Conteo.dart';
@@ -15,7 +13,7 @@ Future<List<dynamic>> fetchPost(String id) async {
     // Si la llamada al servidor fue exitosa, analiza el JSON
     lista.add(Recursos.fromJson(json.decode(response.body)));
     final resp =
-        await http.get(Recursos.fromJson(json.decode(response.body)).imagenUrl);
+        await http.get(json.decode(response.body)["image_url"]);
     lista.add(resp);
     return lista;
   } else {
@@ -37,15 +35,7 @@ Future<Recursos> traerInfoIndividual(String id) async {
 }
 
 String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
-Future<String> ruta() async {
-  final Directory extDir = await getApplicationDocumentsDirectory();
-  final String dirPath = '${extDir.path}/Pictures/Dibujo_test';
-  await Directory(dirPath).create(recursive: true);
 
-  final String filePath = '$dirPath/${timestamp()}.jpg'; //
-  print('crea uno nuevo $filePath' );
-  return filePath;
-}
 
 Future<List<Recursos>> obtener() async {
   final response = await http.get(ConfigPaths.pathServicios + '/obtenerLista');

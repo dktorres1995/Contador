@@ -122,7 +122,7 @@ class _MyAppState extends State<MyApp> {
           width: medida.maxWidth,
           child: Stack(
             children: <Widget>[
-              Zoom(
+              Zoom(zoomSensibility: 2,
                   backgroundColor: Colors.white,
                   initZoom: 0.0,
                   width: imageMostrar.width.toDouble(),
@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
                     child: Container(
                       height: imageMostrar.height.toDouble(),
                       width: imageMostrar.width.toDouble(),
-                      child: Image.memory(LibIma.encodeJpg(imageMostrar),filterQuality: FilterQuality.low,),
+                      child: Image.memory(LibIma.encodePng(imageMostrar),filterQuality: FilterQuality.none,),
                     ),
                     onTapDown: (dato) {
                       if (_editar) {

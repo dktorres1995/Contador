@@ -1,18 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:storage_path/storage_path.dart';
-import 'package:path_provider/path_provider.dart';
-
-Future<String> listaPath() async {
-  return await StoragePath.imagesPath;
-}
-
-Future<List<FileSystemEntity>> listaPath2() async {
-  final Directory extDir = await getApplicationDocumentsDirectory();
-  final String dirPath = '${extDir.path}/Pictures/Conteo';
-  var ret = Directory(dirPath).list();
-  return ret.toList();
-}
 
 
 Map<String, List<dynamic>> listasPaths(String listaPath) {
