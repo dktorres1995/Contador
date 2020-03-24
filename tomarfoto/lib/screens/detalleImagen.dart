@@ -28,6 +28,10 @@ class _DetalleImagenState extends State<DetalleImagen> {
     print('eliminadas $etEliminadas');
   }
 
+  void compararEtiquetas(){
+    
+  }
+
   void enviarTodo(String id, BuildContext ctx) {
     Navigator.of(context).pop();
     Navigator.of(context).pushNamed(EsperaScreen.routedName);
@@ -35,6 +39,7 @@ class _DetalleImagenState extends State<DetalleImagen> {
       print('enviadas');
       eliminarEtiquetas(etEliminadas, id).then((res) {
         print('enviadas para eliminar');
+      
         Navigator.of(context).pushNamed(Historial.routedName);
         mensaje(ctx, 'Cambios realizados',
             'sus cambios se han guardado exitosamente');
@@ -48,7 +53,7 @@ class _DetalleImagenState extends State<DetalleImagen> {
       mensaje(ctx, 'Error', 'Hubo un error al enviar los conteos añadidos');
     });
   }
-
+  
   void mensajeConfirmacionEnvio(String id, BuildContext ctx) {
     showDialog(
         context: context,

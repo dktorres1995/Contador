@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:zoom_widget/zoom_widget.dart';
-
+import 'package:tomarfoto/provider/historialprovider.dart';
 class MyApp extends StatefulWidget {
   static const routedName = '/TraerInfo';
   final String id;
   final List<dynamic> listaPuntos;
   final Function eliminarEtiquetas;
   final Function anadirEtiquetas;
+  final List<Map<String, int>> listaEditada = new List<Map<String, int>>();
   MyApp(
       {@required this.id,
       @required this.listaPuntos,
@@ -42,6 +43,8 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+
+
   double distanciaEuclidiana(int dx, int dy) {
     return sqrt(pow(dx, 2) + pow(dy, 2));
   }
@@ -59,7 +62,11 @@ class _MyAppState extends State<MyApp> {
           xIn = coordenada['x'];
           yIn = coordenada['y'];
         }
+
       }
+
+      widget.listaEditada.add({'x': xIn,'y':yIn});
+      
       setState(() {
         widget.eliminarEtiquetas(xIn,yIn);
         imageMostrar = LibIma.drawCircle(imageMostrar, xIn, yIn,
@@ -197,6 +204,31 @@ class _MyAppState extends State<MyApp> {
                             ? Theme.of(context).accentColor
                             : Colors.white,
                         Colors.grey),
+
+
+
+circulo(
+                        medida,
+                        0.15 / 2,
+                        0.03,
+                        Center(
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.send,
+                              size: 30,
+                              color: _eliminar
+                                  ? Colors.white
+                                  : Theme.of(context).accentColor,
+                            ),
+                            onPressed: () {
+                            },
+                          ),
+                        ),
+                        _eliminar
+                            ? Theme.of(context).accentColor
+                            : Colors.white,
+                        Colors.grey),
+
                   ],
                 ),
               )

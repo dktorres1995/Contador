@@ -36,6 +36,7 @@ class _InstructivoScrrenState extends State<InstructivoScreen> {
       child:
     Swiper(
         itemBuilder: (BuildContext context,int index){
+          
           return new Image.network("http://via.placeholder.com/350x150",fit: BoxFit.fill,);
         },
         itemCount: 3,

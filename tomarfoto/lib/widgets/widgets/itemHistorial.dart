@@ -90,7 +90,7 @@ class _itemHistorial extends State<ItemHistorial> {
                                   style: TextStyle(
                                       color: Theme.of(context).accentColor,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: medida.maxHeight * 0.15),
+                                      fontSize: medida.maxHeight * 0.1),
                                 ),
                                 Text(
                                   widget.fecha == null
@@ -126,19 +126,7 @@ class _itemHistorial extends State<ItemHistorial> {
                     }
                     
                     ),
-                Divider(
-                  height: 1,
-                ),
-                Container(
-                    height: medida.maxHeight * 0.04,
-                    margin: EdgeInsets.only(left: medida.maxWidth*0.7),
-                    child: Puntos(
-                      nombre: widget.nombre,
-                      eliminar: eliminar,
-                      actualizar: actualizar,
-                      nombreConteo: nombreConteo,tam: medida.maxHeight*0.15,
-                    ),
-                    )
+               
               ],
             ),
           ),
