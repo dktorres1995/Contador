@@ -132,7 +132,7 @@ class _MyAppState extends State<MyApp> {
                             painter: MyPainter(
                                 (widget.listaPuntos[0] as Recursos).radio,
                                 listaAdibujar,
-                                imageMostrar.width.toDouble()*0.1),
+                                imageMostrar.width.toDouble()*0.0025),
                           )
                         ],
                       ),
