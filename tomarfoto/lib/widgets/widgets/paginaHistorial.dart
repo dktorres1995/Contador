@@ -24,13 +24,16 @@ class _PagHistorialState extends State<PagHistorial> {
                     .map((conteoIndividual) {
                   return Container(
                       height: medida.maxHeight / 10,
-                      child: conteoIndividual.id!=null?ItemHistorial(
-                        idImag: conteoIndividual.id,
-                        conteo: conteoIndividual.conteo,
-                        fecha: conteoIndividual.fecha,
-                        nombre: conteoIndividual.nombre,
-                        urlImag: conteoIndividual.imagenUrl,
-                      ):Divider());
+                      child: conteoIndividual.id != null
+                          ? ItemHistorial(
+                              idImag: conteoIndividual.id,
+                              conteo: conteoIndividual.conteo,
+                              fecha: conteoIndividual.fecha,
+                              nombre: conteoIndividual.nombre,
+                              urlImag: conteoIndividual.imagenUrl,
+                              urlImagSmall: conteoIndividual.imagenUrlSmall,
+                            )
+                          : Divider());
                 }).toList(),
               );
             },

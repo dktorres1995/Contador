@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rich_alert/rich_alert.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/detalleImagen.dart';
-import 'package:tomarfoto/screens/historial.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:tomarfoto/widgets/widgets/puntoOpciones.dart';
@@ -12,12 +10,14 @@ class ItemHistorial extends StatefulWidget {
   ItemHistorial(
       {@required this.idImag,
       this.urlImag,
+      this.urlImagSmall,
       this.conteo,
       this.fecha,
       this.nombre});
 
   final String idImag;
   final String urlImag;
+  final String urlImagSmall;
   final int conteo;
   final String fecha;
   final String nombre;
@@ -67,14 +67,14 @@ class _itemHistorial extends State<ItemHistorial> {
               children: <Widget>[
                 InkWell(
                     child: Container(
-                      height: medida.maxHeight*0.4,
+                      height: medida.maxHeight*0.7,
                       child: Row(
                         children: <Widget>[
                           Container(
                             width: medida.maxWidth * 0.3,
                             color: Colors.grey,
-                            child: Image.network(
-                              widget.urlImag,
+                            child:widget.urlImagSmall==null? Center(child: Icon(Icons.error),): Image.network(
+                             widget.urlImagSmall,
                             ),
                           ),
                           Container(
@@ -114,12 +114,6 @@ class _itemHistorial extends State<ItemHistorial> {
                                       color: Theme.of(context).accentColor,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Puntos(
-                      nombre: widget.nombre,
-                      eliminar: eliminar,
-                      actualizar: actualizar,
-                      nombreConteo: nombreConteo,tam: medida.maxHeight*0.15,
-                    ),
                         ],
                       ),
                     ),
