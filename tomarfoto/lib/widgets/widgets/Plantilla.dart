@@ -9,8 +9,8 @@ class ContenidoPagina extends StatelessWidget {
   final Widget contenido;
   final String titulo;
   final bool bloqueo; //bloquear botontes
-  bool confirmacionSalida ;
-  Function mensajeConfirmacionSalida ;
+  bool confirmacionSalida;
+  Function mensajeConfirmacionSalida;
   ContenidoPagina(
       {@required this.contenido,
       @required this.titulo,
@@ -112,18 +112,15 @@ class ContenidoPagina extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: constrains.maxWidth * 0.42,
+                        left: constrains.maxWidth * 0.45,
                         top: constrains.maxHeight * 0.86),
-                    child: InkWell(
-                      child: circulo(
-                          constrains,
-                          0.15,
-                          0,
-                          Icon(Icons.photo_camera,
-                              color: Theme.of(context).accentColor),
-                          Colors.white,
-                          Theme.of(context).accentColor),
-                      onTap: () {
+                    child: FloatingActionButton(
+                      elevation: 20,
+                      tooltip: 'toma una foto',
+                      child: Icon(Icons.photo_camera,
+                          color: Theme.of(context).accentColor),
+                      backgroundColor: Colors.white,
+                      onPressed: () {
                         if (!bloqueo & !confirmacionSalida) {
                           Navigator.of(context)
                               .pushNamed(EnvioImagen2.routedName);
@@ -142,16 +139,17 @@ class ContenidoPagina extends StatelessWidget {
   }
 }
 
-Widget circulo(BoxConstraints medida,  double pW, double marg,
-    Widget contenido, Color colorFondo, Color colorBorde) {
+Widget circulo(BoxConstraints medida, double pW, double marg, Widget contenido,
+    Color colorFondo, Color colorBorde) {
   return Container(
     decoration: BoxDecoration(
         color: colorBorde, borderRadius: BorderRadius.circular(80)),
     margin: EdgeInsets.all(medida.maxWidth * marg),
-    height: medida.maxWidth * pW,//medida.maxHeight * pH,
+    height: medida.maxWidth * pW, //medida.maxHeight * pH,
     width: medida.maxWidth * pW,
-    padding: EdgeInsets.all(2),
+
     child: Container(
+      margin: EdgeInsets.all(2),
       decoration: BoxDecoration(
           color: colorFondo, borderRadius: BorderRadius.circular(80)),
       child: contenido,

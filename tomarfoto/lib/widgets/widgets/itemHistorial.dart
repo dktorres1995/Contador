@@ -62,7 +62,8 @@ class _itemHistorial extends State<ItemHistorial> {
               vertical: medida.maxHeight * 0.05),
           child: Card(
             elevation: 20,
-            child: Column(mainAxisAlignment: MainAxisAlignment.start,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 InkWell(
                     child: Container(
@@ -71,18 +72,20 @@ class _itemHistorial extends State<ItemHistorial> {
                         children: <Widget>[
                           Container(
                             width: medida.maxWidth * 0.3,
-                            color: Colors.grey,
+                            padding: EdgeInsets.all(medida.maxHeight * 0.07),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20)),
                             child: widget.urlImagSmall == null
                                 ? Center(
                                     child: Icon(Icons.error),
                                   )
-                                : Image.network(
-                                    widget.urlImagSmall,
-                                  ),
+                                : Image.network(widget.urlImagSmall,
+                                    fit: BoxFit.fill),
                           ),
                           Container(
                             width: medida.maxWidth * 0.4,
-                            padding: EdgeInsets.only(left:medida.maxWidth*0.05),
+                            padding:
+                                EdgeInsets.only(left: medida.maxWidth * 0.05),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,6 +131,7 @@ class _itemHistorial extends State<ItemHistorial> {
                             arguments: widget.idImag);
                       }
                     }),
+                    Divider(color: Colors.black,height: 1,),
                 Container(
                   height: medida.maxHeight * 0.1,
                   margin: EdgeInsets.only(left: medida.maxWidth * 0.7),

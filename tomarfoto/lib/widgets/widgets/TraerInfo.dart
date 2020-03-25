@@ -129,10 +129,10 @@ class _MyAppState extends State<MyApp> {
                           CustomPaint(
                             size: Size(imageMostrar.width.toDouble(),
                                 imageMostrar.height.toDouble()),
-                            painter: MyPainter(
+                            painter:new MyPainter(
                                 (widget.listaPuntos[0] as Recursos).radio,
                                 listaAdibujar,
-                                imageMostrar.width.toDouble()*0.0025),
+                                imageMostrar.width.toDouble() * 0.0025),
                           )
                         ],
                       ),
@@ -151,7 +151,7 @@ class _MyAppState extends State<MyApp> {
                   )),
               circulo(
                   medida,
-                  0.15,
+                  0.2,
                   0.03,
                   Center(
                       child: Text(
@@ -167,56 +167,50 @@ class _MyAppState extends State<MyApp> {
                 height: medida.maxHeight,
                 width: medida.maxWidth,
                 margin: EdgeInsets.only(
-                    top: medida.maxHeight * 0.7, left: medida.maxWidth * 0.7),
+                    top: medida.maxHeight * 0.75,
+                    left: medida.maxWidth * 0.8,
+                    bottom: medida.maxHeight * 0.025),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    InkWell(
-                      child: circulo(
-                          medida,
-                          0.1,
-                          0,
-                          Center(
-                            child: Icon(
-                              Icons.add,
-                              color: _editar
-                                  ? Colors.white
-                                  : Theme.of(context).accentColor,
-                              size: 15,
-                            ),
-                          ),
-                          _editar
-                              ? Theme.of(context).accentColor
-                              : Colors.white,
-                          Colors.grey),
-                      onTap: () {
+                    FloatingActionButton(
+                      elevation: 20,
+                      child: Center(
+                        child: Icon(
+                          Icons.add,
+                          size: medida.maxWidth * 0.1,
+                          color: _editar
+                              ? Colors.white
+                              : Theme.of(context).accentColor,
+                        ),
+                      ),
+                      backgroundColor: _editar
+                          ? Theme.of(context).accentColor
+                          : Colors.white,
+                      onPressed: () {
                         print('cambiar');
                         cambiarEditar(_editar ? false : true);
                       },
                     ),
-                    InkWell(
-                      child: circulo(
-                          medida,
-                          0.1,
-                          0.03,
-                          Center(
-                            child: Icon(
-                              Icons.remove,
-                              size: 15,
-                              color: _eliminar
-                                  ? Colors.white
-                                  : Theme.of(context).accentColor,
-                            ),
-                          ),
-                          _eliminar
-                              ? Theme.of(context).accentColor
-                              : Colors.white,
-                          Colors.grey),
-                      onTap: () {
+                    FloatingActionButton(
+                      elevation: 20,
+                      child: Center(
+                        child: Icon(
+                          Icons.remove,
+                          size: medida.maxWidth * 0.1,
+                          color: _eliminar
+                              ? Colors.white
+                              : Theme.of(context).accentColor,
+                        ),
+                      ),
+                      backgroundColor: _eliminar
+                          ? Theme.of(context).accentColor
+                          : Colors.white,
+                      onPressed: () {
                         print('elimianr');
                         cambiarEliminar(_eliminar ? false : true);
                       },
-                    ),
+                    )
                   ],
                 ),
               )
@@ -243,20 +237,20 @@ class MyPainter extends CustomPainter {
       center = Offset(coordenada['x'].toDouble(), coordenada['y'].toDouble());
       paint
         ..color = coordenada['estado'] == 'sistema'
-            ? Colors.blue
+            ? Color(0x8F0000A0)
             : coordenada['estado'] == 'agregada'
-                ? Colors.green
+              ? Color(0x8F00FF00)
                 : coordenada['estado'] == 'eliminada'
-                    ? Colors.red
+                    ? Color(0x8FFF0000)
                     : Colors.black
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = grosor;
+        ..style = PaintingStyle.fill
+        ..strokeWidth = grosor ;
       canvas.drawCircle(center, radio, paint);
     }
   }
 
   @override
   bool shouldRepaint(CustomPainter old) {
-    return false;
+    return true;
   }
 }

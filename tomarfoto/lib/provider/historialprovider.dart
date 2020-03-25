@@ -126,16 +126,18 @@ Future<dynamic> actualizarNombre(String id, String nombreC) async {
   }
   }
   
-Future<dynamic> anadirEtiquetas(List<Map<String, int>> add, String id) async{
+Future<dynamic> anadirEtiquetas(List<dynamic> add, String id) async{
  String url= ConfigPaths.pathServicios+"/adicionarEtiquetas/" + id;
- await http.put(
+ print(json.encode({"lista":add}));
+ var res = await http.put(
    Uri.encodeFull(url),
-   body: json.encode({'lista':add}),
+   body: json.encode({"lista":add}),
    headers: {
         "content-type": "application/json",
         "accept": "application/json",
       },
  );
+ return res;
 
 }
 
