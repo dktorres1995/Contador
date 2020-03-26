@@ -99,6 +99,7 @@ class _MyAppState extends State<MyApp> {
         listaAdibujar
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
       }
+      print(widget.id + 'id de la img');
     });
   }
 
