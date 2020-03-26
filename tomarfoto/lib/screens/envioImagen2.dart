@@ -66,7 +66,7 @@ class _MyHomePageState extends State<EnvioImagen2> {
                   )
                 ],
                 content: Text(
-                    'Se ha enviado la foto por favor expere hasta que el sistema registre el conteo'));
+                    'Se ha enviado la foto, por favor espere hasta que el sistema haga el conteo'));
           });
     }).catchError((err){
       print('error: $err');

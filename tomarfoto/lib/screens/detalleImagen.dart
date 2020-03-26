@@ -31,7 +31,7 @@ class _DetalleImagenState extends State<DetalleImagen> {
     
     Navigator.of(context).pushNamed(EsperaScreen.routedName);
     anadirEtiquetas(etAgregadas, id).then((res) {
-      print('enviadas');
+      print('esta es la respuesta ${res.body}');
       eliminarEtiquetas(etEliminadas, id).then((res) {
         print('enviadas para eliminar');
       
@@ -53,9 +53,9 @@ class _DetalleImagenState extends State<DetalleImagen> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
+          return AlertDialog(titlePadding: EdgeInsets.only(left:50),
             title: Text(
-              "¿descartar cambios? ",
+              "¿Descartar cambios? ",
             ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
@@ -67,8 +67,7 @@ class _DetalleImagenState extends State<DetalleImagen> {
                     Navigator.of(context).pop();
                     enviarTodo(id, ctx);},
                 ),
-                Divider(
-                  height: 20,
+                Divider(color: Colors.black,
                 ),
                 InkWell(
                   child: Text('Descartar Cambios',
@@ -76,8 +75,7 @@ class _DetalleImagenState extends State<DetalleImagen> {
                   onTap: () =>
                       Navigator.of(context).pushNamed(Historial.routedName),
                 ),
-                Divider(
-                  height: 20,
+                Divider(color: Colors.black,
                 ),
                 InkWell(
                   child: Text(
