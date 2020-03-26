@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/screens/Espera.dart';
+import 'package:tomarfoto/screens/PantallaWeb.dart';
 import 'package:tomarfoto/screens/cuenta.dart';
 import 'package:tomarfoto/screens/detalleImagen.dart';
 import 'package:tomarfoto/screens/historial.dart';
@@ -15,6 +16,7 @@ Map<String, WidgetBuilder> getAplicaciones() {
     InstructivoScreen.routedName: (ctx) => InstructivoScreen(),
     DetalleImagen.routedName: (ctx) => DetalleImagen(),
     EsperaScreen.routedName: (ctx) => EsperaScreen(),
-    CuentaScreen.routedName: (ctx)=> CuentaScreen()
+    CuentaScreen.routedName: (ctx)=> CuentaScreen(),
+    PantallaWeb.routedname: (ctx)=>PantallaWeb()
   };
 }
