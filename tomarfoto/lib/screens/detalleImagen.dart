@@ -17,6 +17,7 @@ class _DetalleImagenState extends State<DetalleImagen> {
 
   void addEtiquetas(int x, int y) {
     etAgregadas.add({'x': x, 'y': y});
+    print(etAgregadas);
   }
 
   void eliminadasEtiquetas(int x, int y) {

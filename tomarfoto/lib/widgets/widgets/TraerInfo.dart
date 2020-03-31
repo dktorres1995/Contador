@@ -1,6 +1,6 @@
-
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:image/image.dart' as LibIma;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -75,7 +75,34 @@ class _MyAppState extends State<MyApp> {
 
       setState(() {
         widget.eliminarEtiquetas(xIn, yIn);
-        listaAdibujar.add({'x': xIn, 'y': yIn, 'estado': 'eliminada'});
+       print({'x': xIn, 'y': yIn, 'estado': 'agregada'});
+
+        var indiceAgregada = -1;
+         var conteo=0;   
+            listaAdibujar.forEach((element){
+              if(mapEquals({'x': xIn, 'y': yIn, 'estado': 'agregada'}, element)){
+                indiceAgregada = conteo;
+              } 
+              conteo++;
+              });
+
+        var indiceSistema = -1;
+        conteo = 0;
+            listaAdibujar.forEach((element){
+              if(mapEquals({'x': xIn, 'y': yIn, 'estado': 'sistema'}, element)){
+                indiceAgregada = conteo;
+              } 
+              conteo++;
+              });
+
+          print('coordenada x:$xIn, y: $yIn :: indiceAgregada=$indiceAgregada, indicesistema=$indiceSistema');
+      
+        if (indiceAgregada != -1) {
+            listaAdibujar.removeAt(indiceAgregada);
+        }else if(indiceSistema!=-1){
+            listaAdibujar.removeAt(indiceSistema);
+            listaAdibujar.add({'x': xIn, 'y': yIn, 'estado': 'eliminada'});
+        } 
         cambioConteo--;
       });
     } else if (_editar) {
@@ -99,7 +126,6 @@ class _MyAppState extends State<MyApp> {
         listaAdibujar
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
       }
-      print(widget.id + 'id de la img');
     });
   }
 
@@ -126,11 +152,12 @@ class _MyAppState extends State<MyApp> {
                       width: imageMostrar.width.toDouble(),
                       child: Stack(
                         children: <Widget>[
-                          Image.network(widget.listaPuntos[0].imagenUrl),
+                         // Image.network(widget.listaPuntos[0].imagenUrl),
+                            Image.memory(LibIma.encodeJpg(imageMostrar)),
                           CustomPaint(
                             size: Size(imageMostrar.width.toDouble(),
                                 imageMostrar.height.toDouble()),
-                            painter:new MyPainter(
+                            painter: new MyPainter(
                                 (widget.listaPuntos[0] as Recursos).radio,
                                 listaAdibujar,
                                 imageMostrar.width.toDouble() * 0.0025),
@@ -240,12 +267,12 @@ class MyPainter extends CustomPainter {
         ..color = coordenada['estado'] == 'sistema'
             ? Color(0x8F0000A0)
             : coordenada['estado'] == 'agregada'
-              ? Color(0x8F00FF00)
+                ? Color(0x8F00FF00)
                 : coordenada['estado'] == 'eliminada'
                     ? Color(0x8FFF0000)
                     : Colors.black
         ..style = PaintingStyle.fill
-        ..strokeWidth = grosor ;
+        ..strokeWidth = grosor;
       canvas.drawCircle(center, radio, paint);
     }
   }
