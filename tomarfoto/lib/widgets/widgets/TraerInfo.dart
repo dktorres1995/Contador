@@ -212,7 +212,7 @@ class _MyAppState extends State<MyApp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    FloatingActionButton(
+                    FloatingActionButton(heroTag: 'boton_mas',
                       elevation: 20,
                       child: Center(
                         child: Icon(
@@ -231,7 +231,7 @@ class _MyAppState extends State<MyApp> {
                         cambiarEditar(_editar ? false : true);
                       },
                     ),
-                    FloatingActionButton(
+                    FloatingActionButton(heroTag: 'boton_menos',
                       elevation: 20,
                       child: Center(
                         child: Icon(

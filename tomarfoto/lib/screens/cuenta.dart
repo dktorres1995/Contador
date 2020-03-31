@@ -10,8 +10,13 @@ class CuentaScreen extends StatefulWidget {
 }
 
 class _CuentaScreenState extends State<CuentaScreen> {
+
+  
+
   @override
   Widget build(BuildContext context) {
+  
+
     return ContenidoPagina(
       contenido: LayoutBuilder(builder: (context, constrains) {
         return Column(
@@ -20,9 +25,7 @@ class _CuentaScreenState extends State<CuentaScreen> {
             Container(
               height: constrains.maxHeight * 0.2,
               width: constrains.maxWidth * 0.2,
-              child: FloatingActionButton(
-                onPressed: () {},
-                elevation: 20,
+              child: CircleAvatar(
                 child: Text(
                   PaginaMain.user.getnombre().substring(0, 1).toUpperCase(),
                   style: TextStyle(
@@ -42,7 +45,9 @@ class _CuentaScreenState extends State<CuentaScreen> {
               textAlign: TextAlign.right,
               style: TextStyle(color: Colors.grey),
             ),
-            Padding(padding: EdgeInsets.only(top:constrains.maxHeight*0.03),),
+            Padding(
+              padding: EdgeInsets.only(top: constrains.maxHeight * 0.03),
+            ),
             Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +68,9 @@ class _CuentaScreenState extends State<CuentaScreen> {
                 ],
               ),
             ),
-            Padding(padding: EdgeInsets.only(top:constrains.maxHeight*0.03),),
+            Padding(
+              padding: EdgeInsets.only(top: constrains.maxHeight * 0.03),
+            ),
             Container(
               child: InkWell(
                   child: Text(
@@ -96,8 +103,10 @@ class _CuentaScreenState extends State<CuentaScreen> {
                   ],
                 ),
                 onTap: () {
-                  _ejecutarCorreo('atencionAlCliente@numeratead.onmicrosoft.com',
-                      'Dudas e inquietudes', 'prueba');
+                  _ejecutarCorreo(
+                      'atencionAlCliente@numeratead.onmicrosoft.com',
+                      'Dudas e inquietudes',
+                      'prueba');
                 }),
           ],
         );

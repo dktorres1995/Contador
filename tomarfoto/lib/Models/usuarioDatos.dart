@@ -3,6 +3,8 @@ class Usuario{
   String _nombre;
   String _tennant;
   String _correo;
+  String _apellido;
+  String _tokenMicrosof;
 
   String gettoken() {
     return _token;
@@ -10,6 +12,13 @@ class Usuario{
 
   void setToken(String tok) {
     _token = tok;
+  }
+  String gettokenMicrosoft() {
+    return _tokenMicrosof;
+  }
+
+  void setTokenMicrosoft(String tok) {
+    _tokenMicrosof = tok;
   }
 
   String getcorreo() {
@@ -35,6 +44,13 @@ class Usuario{
   void setnombre(String nombre) {
     _nombre = nombre;
   }
+  String getApellido() {
+    return _apellido;
+  }
+
+  void setApellido(String apellido) {
+    _apellido = apellido;
+  }
 
   //constructores
   Usuario(this._token);
@@ -42,6 +58,8 @@ class Usuario{
   void completarDatosBasicos(Map<String,dynamic> claims){
     _nombre = claims['name'];
     _correo = (claims['emails'] as List<dynamic>).first;
+    _apellido = claims['family_name'];
+    _tokenMicrosof = claims['idp_access_token']!=null?claims['idp_access_token']:'';
   }
 
 

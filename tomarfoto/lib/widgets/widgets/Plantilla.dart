@@ -114,7 +114,7 @@ class ContenidoPagina extends StatelessWidget {
                     padding: EdgeInsets.only(
                         left: constrains.maxWidth * 0.45,
                         top: constrains.maxHeight * 0.86),
-                    child: FloatingActionButton(
+                    child: FloatingActionButton(heroTag: 'boton_foto',
                       elevation: 20,
                       tooltip: 'toma una foto',
                       child: Icon(Icons.photo_camera,

@@ -14,7 +14,6 @@ class _InstructivoScrrenState extends State<InstructivoScreen> {
   Widget build(BuildContext context) {
 
   var decodedToken = new JWT.parse(PaginaMain.user.gettoken());
-  print(decodedToken.claims);
   PaginaMain.user.completarDatosBasicos(decodedToken.claims);
 
   //print(decodedToken.verify(signer)); 
