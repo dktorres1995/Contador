@@ -39,8 +39,8 @@ class _State extends State<PantallaInicial> {
                 'NUMERATE',
                 style: TextStyle(color: Colors.white,fontSize: 20),
               ),onTap: (){
-                Navigator.of(context)//.pushNamedAndRemoveUntil(PantallaWeb.routedname,(ro)=>false);
-            .pushNamedAndRemoveUntil(InstructivoScreen.routedName,(ro)=>false);
+                Navigator.of(context).pushNamedAndRemoveUntil(PantallaWeb.routedname,(ro)=>false);
+           // .pushNamedAndRemoveUntil(InstructivoScreen.routedName,(ro)=>false);
             }) //botonesIniciales(context),
                   ),
             ],

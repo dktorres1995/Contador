@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/screens/historial.dart';
+import 'package:tomarfoto/screens/instructivo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
 
@@ -18,9 +19,6 @@ class _PantallaWebState extends State<PantallaWeb> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Web'),
-      ),
       body: WebView(
         initialUrl: linkAzure,
         onWebViewCreated: (WebViewController webViewController) {
@@ -32,12 +30,12 @@ class _PantallaWebState extends State<PantallaWeb> {
           return NavigationDecision.navigate;
         },
         onPageStarted: (este) {
-          print('este: $este');
           if (este.contains(
               'https://login.microsoftonline.com/tfp/oauth2/nativeclient')) {
             var token = este.split('#')[1];
+            token = token.split('id_token=')[1]; 
             print('token $token');
-            Navigator.of(context).pushNamedAndRemoveUntil(Historial.routedName,(ro)=>false);
+            Navigator.of(context).pushNamedAndRemoveUntil(InstructivoScreen.routedName,(ro)=>false);
           }},
       ),
     );

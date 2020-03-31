@@ -1,11 +1,14 @@
 
 import 'package:flutter/material.dart';
+import 'package:tomarfoto/Models/usuarioDatos.dart';
 import 'package:tomarfoto/routes/routes.dart';
 import 'package:tomarfoto/screens/pantallaInicial.dart';
 import 'package:tomarfoto/mixis/mixis_block_screen.dart';
-void main() => runApp(CameraApp());
+void main() => runApp(PaginaMain());
 
-class CameraApp extends StatelessWidget with PortraitModeMixin {
+class PaginaMain extends StatelessWidget with PortraitModeMixin {
+  
+   static  Usuario user =  Usuario(''); 
 
   @override
   Widget build(BuildContext context) {
