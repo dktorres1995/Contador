@@ -15,13 +15,14 @@ class _DetalleImagenState extends State<DetalleImagen> {
   List<Map<String, int>> etAgregadas = List<Map<String, int>>();
   List<Map<String, int>> etEliminadas = List<Map<String, int>>();
 
-  void addEtiquetas(int x, int y) {
-    etAgregadas.add({'x': x, 'y': y});
-    print(etAgregadas);
+  void addEtiquetas(List<Map<String, int>> listaentrante) {
+    etAgregadas=listaentrante;
   }
 
   void eliminadasEtiquetas(int x, int y) {
     etEliminadas.add({'x': x, 'y': y});
+    print('entro a aliminar');
+    print(etEliminadas);
   }
 
   void compararEtiquetas(){

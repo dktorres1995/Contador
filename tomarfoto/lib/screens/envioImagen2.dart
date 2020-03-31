@@ -42,7 +42,6 @@ class _MyHomePageState extends State<EnvioImagen2> {
     enviarImagenn(_image.path).then((res) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(Historial.routedName, (ro) => false);
-
       showDialog(
           context: ctx,
           barrierDismissible: true,
@@ -70,6 +69,31 @@ class _MyHomePageState extends State<EnvioImagen2> {
           });
     }).catchError((err){
       print('error: $err');
+        showDialog(
+          context: ctx,
+          barrierDismissible: true,
+          builder: (context) {
+            return AlertDialog(
+                title: Text('Envio Incorrecto',
+                    style: TextStyle(color: Colors.blue)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
+                titleTextStyle: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'RobotoCondensed',
+                  fontWeight: FontWeight.bold,
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('cerrar'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+                content: Text(
+                    'Ha habido un error al enviar la foto'));
+          });
     });
   }
 

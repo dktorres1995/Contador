@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 
 
 Future enviarImagenn(String filename) async {
-
-  String url = '${ConfigPaths.pathServicios}/contar'; 
+  String tenant = 'ASESOFTWARE';
+  String url = '${ConfigPaths.pathServicios}/contar/'+tenant; 
   var request = http.MultipartRequest('POST', Uri.parse(url));
 
   request.files.add(
@@ -17,9 +17,14 @@ Future enviarImagenn(String filename) async {
       filename
     )
   );
-  //print('envia');
+  print('envia...');
    var res = await request.send();
-  //print('envió');
+  print('envió codigo:${res.statusCode}');
+  if (res.statusCode==200){
   return res;
+  }else
+  {
+    throw Exception('error envio imagen');
+  }
 }
 

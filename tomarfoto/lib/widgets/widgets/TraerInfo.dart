@@ -74,41 +74,52 @@ class _MyAppState extends State<MyApp> {
       }
 
       setState(() {
-        widget.eliminarEtiquetas(xIn, yIn);
-       print({'x': xIn, 'y': yIn, 'estado': 'agregada'});
-
         var indiceAgregada = -1;
-         var conteo=0;   
-            listaAdibujar.forEach((element){
-              if(mapEquals({'x': xIn, 'y': yIn, 'estado': 'agregada'}, element)){
-                indiceAgregada = conteo;
-              } 
-              conteo++;
-              });
+        var conteo = 0;
+        listaAdibujar.forEach((element) {
+          if (mapEquals({'x': xIn, 'y': yIn, 'estado': 'agregada'}, element)) {
+            indiceAgregada = conteo;
+          }
+          conteo++;
+        });
 
         var indiceSistema = -1;
         conteo = 0;
-            listaAdibujar.forEach((element){
-              if(mapEquals({'x': xIn, 'y': yIn, 'estado': 'sistema'}, element)){
-                indiceAgregada = conteo;
-              } 
-              conteo++;
-              });
+        listaAdibujar.forEach((element) {
+          if (mapEquals({'x': xIn, 'y': yIn, 'estado': 'sistema'}, element)) {
+            indiceSistema = conteo;
+          }
+          conteo++;
+        });
 
-          print('coordenada x:$xIn, y: $yIn :: indiceAgregada=$indiceAgregada, indicesistema=$indiceSistema');
-      
+        
         if (indiceAgregada != -1) {
-            listaAdibujar.removeAt(indiceAgregada);
-        }else if(indiceSistema!=-1){
-            listaAdibujar.removeAt(indiceSistema);
-            listaAdibujar.add({'x': xIn, 'y': yIn, 'estado': 'eliminada'});
-        } 
+          listaAdibujar.removeAt(indiceAgregada);
+          List<Map<String, int>> listaAgregada = List<Map<String, int>>();
+          listaAdibujar.forEach((element) {
+            if (element['estado'] == 'agregada') {
+              listaAgregada.add({'x': element['x'], 'y': element['y']});
+            }
+          });
+          widget.anadirEtiquetas(listaAgregada);
+        } else if (indiceSistema != -1) {
+          print('este elimino');
+          listaAdibujar.removeAt(indiceSistema);
+          widget.eliminarEtiquetas(xIn, yIn);
+          listaAdibujar.add({'x': xIn, 'y': yIn, 'estado': 'eliminada'});
+        }
         cambioConteo--;
       });
     } else if (_editar) {
       setState(() {
-        widget.anadirEtiquetas(x, y);
         listaAdibujar.add({'x': x, 'y': y, 'estado': 'agregada'});
+        List<Map<String, int>> listaAgregada = List<Map<String, int>>();
+        listaAdibujar.forEach((element) {
+          if (element['estado'] == 'agregada') {
+            listaAgregada.add({'x': element['x'], 'y': element['y']});
+          }
+        });
+        widget.anadirEtiquetas(listaAgregada);
         cambioConteo++;
       });
     }
@@ -152,8 +163,8 @@ class _MyAppState extends State<MyApp> {
                       width: imageMostrar.width.toDouble(),
                       child: Stack(
                         children: <Widget>[
-                         // Image.network(widget.listaPuntos[0].imagenUrl),
-                            Image.memory(LibIma.encodeJpg(imageMostrar)),
+                          Image.network(widget.listaPuntos[0].imagenUrl),
+                          // Image.memory(LibIma.encodeJpg(imageMostrar)),
                           CustomPaint(
                             size: Size(imageMostrar.width.toDouble(),
                                 imageMostrar.height.toDouble()),
@@ -269,7 +280,7 @@ class MyPainter extends CustomPainter {
             : coordenada['estado'] == 'agregada'
                 ? Color(0x8F00FF00)
                 : coordenada['estado'] == 'eliminada'
-                    ? Color(0x8FFF0000)
+                    ? Color(0x00000000)
                     : Colors.black
         ..style = PaintingStyle.fill
         ..strokeWidth = grosor;

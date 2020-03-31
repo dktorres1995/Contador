@@ -11,7 +11,7 @@ class EsperaScreen extends StatelessWidget {
             children: <Widget>[
               Text(
                 'Cargando...',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Theme.of(context).accentColor),
               ),
               CircularProgressIndicator(
                 backgroundColor: Colors.white,

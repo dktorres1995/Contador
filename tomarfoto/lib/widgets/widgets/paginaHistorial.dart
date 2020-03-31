@@ -20,27 +20,34 @@ class _PagHistorialState extends State<PagHistorial> {
         if (infoPagina.hasData) {
           return LayoutBuilder(
             builder: (context, medida) {
-              return Column(
-                children: (infoPagina.data['lista'] as List<RecursoConteo>)
-                    .map((conteoIndividual) {
-                  return Container(
-                      height: medida.maxHeight / 10,
-                      child: conteoIndividual.id != null
-                          ? ItemHistorial(
-                              idImag: conteoIndividual.id,
-                              conteo: conteoIndividual.conteo,
-                              fecha: conteoIndividual.fecha,
-                              nombre: conteoIndividual.nombre,
-                              urlImag: conteoIndividual.imagenUrl,
-                              urlImagSmall: conteoIndividual.imagenUrlSmall,
-                            )
-                          : Divider());
-                }).toList(),
-              );
+              return (infoPagina.data['lista'] as List<RecursoConteo>).isEmpty
+                  ? Center(
+                      child: Text('No hay registros en esta cuenta'),
+                    )
+                  : Column(
+                      children:
+                          (infoPagina.data['lista'] as List<RecursoConteo>)
+                              .map((conteoIndividual) {
+                        return Container(
+                            height: medida.maxHeight / 10,
+                            child: conteoIndividual.id != null
+                                ? ItemHistorial(
+                                    idImag: conteoIndividual.id,
+                                    conteo: conteoIndividual.conteo,
+                                    fecha: conteoIndividual.fecha,
+                                    nombre: conteoIndividual.nombre,
+                                    urlImag: conteoIndividual.imagenUrl,
+                                    urlImagSmall:
+                                        conteoIndividual.imagenUrlSmall,
+                                  )
+                                : Divider());
+                      }).toList(),
+                    );
             },
           );
         } else if (infoPagina.hasError) {
-          mensaje(context, 'Error al cargar historial', 'Se ha presentado un error al cargar algunos elementos del historial.');
+          mensaje(context, 'Error al cargar historial',
+              'Se ha presentado un error al cargar algunos elementos del historial.');
           return Center(
             child: Text('${infoPagina.error}'),
           );
