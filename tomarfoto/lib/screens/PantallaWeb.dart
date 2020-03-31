@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/screens/historial.dart';
+import 'package:tomarfoto/main.dart';
 import 'package:tomarfoto/screens/instructivo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
@@ -34,7 +34,9 @@ class _PantallaWebState extends State<PantallaWeb> {
               'https://login.microsoftonline.com/tfp/oauth2/nativeclient')) {
             var token = este.split('#')[1];
             token = token.split('id_token=')[1]; 
-            print('token $token');
+            //print('token $token');
+            //print('----------');
+            PaginaMain.user.setToken(token);
             Navigator.of(context).pushNamedAndRemoveUntil(InstructivoScreen.routedName,(ro)=>false);
           }},
       ),

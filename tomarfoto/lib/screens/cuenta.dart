@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tomarfoto/main.dart';
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,53 +15,68 @@ class _CuentaScreenState extends State<CuentaScreen> {
     return ContenidoPagina(
       contenido: LayoutBuilder(builder: (context, constrains) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            CircleAvatar(
-              child: Text('S',
-              style: TextStyle(fontSize: constrains.maxWidth *0.1),
+            Container(
+              height: constrains.maxHeight * 0.2,
+              width: constrains.maxWidth * 0.2,
+              child: FloatingActionButton(
+                onPressed: () {},
+                elevation: 20,
+                child: Text(
+                  PaginaMain.user.getnombre().substring(0, 1).toUpperCase(),
+                  style: TextStyle(
+                      fontSize: constrains.maxWidth * 0.1,
+                      color: Theme.of(context).accentColor),
+                ),
+                backgroundColor: Colors.white,
               ),
-              radius: constrains.maxWidth*0.1,
             ),
             Text(
-              'Nombre usuario',
+              PaginaMain.user.getnombre(),
               textAlign: TextAlign.right,
               style: TextStyle(fontSize: 20),
             ),
             Text(
-              'nombreusuario@gmail.com',
+              PaginaMain.user.getcorreo(),
               textAlign: TextAlign.right,
-              style: TextStyle(
-              color: Colors.grey
+              style: TextStyle(color: Colors.grey),
+            ),
+            Padding(padding: EdgeInsets.only(top:constrains.maxHeight*0.03),),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.edit,
+                    size: constrains.maxHeight * 0.03,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  InkWell(
+                      child: Text(
+                        'Editar perfil',
+                        style: TextStyle(color: Theme.of(context).accentColor),
+                      ),
+                      onTap: () {
+                        //editar
+                      }),
+                ],
               ),
             ),
-            InkWell(
-                child: Row(
-                  children: <Widget>[
-                    Icon(Icons.edit),
-                    Text(
-                      'Editar perfil',
-                      style: TextStyle(
-                        color: Colors.blue
-                      ),
-                    )
-                  ],
-                ),
-                onTap: () {
-                 //editar
-                }),
-                InkWell(
-      
-                   child: Text(
-                      'Cerrar sesión',
-                      style: TextStyle(
-                        color: Colors.red
-                      ),
-                    ),
-                
-                onTap: () {
-                 //cerrar sesion
-                }),
-
+            Padding(padding: EdgeInsets.only(top:constrains.maxHeight*0.03),),
+            Container(
+              child: InkWell(
+                  child: Text(
+                    'Cerrar sesión',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                  onTap: () {
+                    //cerrar sesion
+                  }),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: constrains.maxHeight * 0.44),
+            ),
             Text(
               '¿Necesitas ayuda?',
               textAlign: TextAlign.right,
@@ -80,7 +96,7 @@ class _CuentaScreenState extends State<CuentaScreen> {
                   ],
                 ),
                 onTap: () {
-                  _ejecutarCorreo('dtorres@asesoftware.com',
+                  _ejecutarCorreo('atencionAlCliente@numeratead.onmicrosoft.com',
                       'Dudas e inquietudes', 'prueba');
                 }),
           ],

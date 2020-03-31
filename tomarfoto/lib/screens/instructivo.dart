@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:tomarfoto/main.dart';
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
-
+import 'package:corsac_jwt/corsac_jwt.dart';
 class InstructivoScreen extends StatefulWidget {
   static const routedName = '/Instructivo';
   @override
@@ -11,6 +12,12 @@ class InstructivoScreen extends StatefulWidget {
 class _InstructivoScrrenState extends State<InstructivoScreen> {
   @override
   Widget build(BuildContext context) {
+
+  var decodedToken = new JWT.parse(PaginaMain.user.gettoken());
+  print(decodedToken.claims);
+  PaginaMain.user.completarDatosBasicos(decodedToken.claims);
+
+  //print(decodedToken.verify(signer)); 
     return LayoutBuilder(
       builder: (context, medida) {
         return ContenidoPagina(
