@@ -175,7 +175,7 @@ class _MyAppState extends State<MyApp> {
                         ],
                       ),
                     ),
-                    onTapDown: (dato) {
+                    onTapUp: (dato) {
                       if (_editar) {
                         modificar(dato.localPosition.dx.toInt(),
                             dato.localPosition.dy.toInt(), false);
