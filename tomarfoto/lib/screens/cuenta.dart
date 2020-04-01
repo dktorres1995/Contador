@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/main.dart';
+import 'package:tomarfoto/screens/PantallaWeb.dart';
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:tomarfoto/provider/providerConfig.dart';
@@ -62,9 +63,13 @@ class _CuentaScreenState extends State<CuentaScreen> {
                         style: TextStyle(color: Theme.of(context).accentColor),
                       ),
                       onTap: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            PantallaWebEdicion.routedname, (ro) => false,
-                            arguments: ConfigPaths.linkEditarNombre);
+                        if (PaginaMain.user.gettokenMicrosoft() == '') {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              PantallaWebEdicion.routedname, (ro) => false,
+                              arguments: ConfigPaths.linkEditarNombre);
+                        } else {
+                          anuncio(context);
+                        }
                       }),
                 ],
               ),
@@ -87,9 +92,13 @@ class _CuentaScreenState extends State<CuentaScreen> {
                         style: TextStyle(color: Theme.of(context).accentColor),
                       ),
                       onTap: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            PantallaWebEdicion.routedname, (ro) => false,
-                            arguments: ConfigPaths.linkRecoveryPassword);
+                        if (PaginaMain.user.gettokenMicrosoft() == '') {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              PantallaWebEdicion.routedname, (ro) => false,
+                              arguments: ConfigPaths.linkRecoveryPassword);
+                        } else {
+                          anuncio(context);
+                        }
                       }),
                 ],
               ),
@@ -104,7 +113,9 @@ class _CuentaScreenState extends State<CuentaScreen> {
                     style: TextStyle(color: Colors.red),
                   ),
                   onTap: () {
-                    //cerrar sesion
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                              PantallaWeb.routedname, (ro) => false,
+                              arguments: ConfigPaths.cierreSesion);
                   }),
             ),
             Padding(
@@ -148,4 +159,32 @@ class _CuentaScreenState extends State<CuentaScreen> {
     var url = 'mailto:$toMailId?subject=$subject&body=$body';
     launch(url);
   }
+}
+
+void anuncio(BuildContext ctx) {
+  showDialog(
+      context: ctx,
+      barrierDismissible: true,
+      builder: (context) {
+        return AlertDialog(
+            title: Text('Cuenta de microsoft',
+                style: TextStyle(color: Colors.blue)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            titleTextStyle: TextStyle(
+              fontSize: 24,
+              fontFamily: 'RobotoCondensed',
+              fontWeight: FontWeight.bold,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('cerrar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+            content: Text(
+                'Usted ha ingresado con una cuenta de microsoft. Las solicitudes de edición de datos no se pueden realizar por esta plataforma'));
+      });
 }

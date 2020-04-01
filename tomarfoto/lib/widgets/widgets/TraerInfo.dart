@@ -92,7 +92,6 @@ class _MyAppState extends State<MyApp> {
           conteo++;
         });
 
-        
         if (indiceAgregada != -1) {
           listaAdibujar.removeAt(indiceAgregada);
           List<Map<String, int>> listaAgregada = List<Map<String, int>>();
@@ -188,11 +187,14 @@ class _MyAppState extends State<MyApp> {
                       }
                     },
                   )),
-              circulo(
-                  medida,
-                  0.2,
-                  0.03,
-                  Center(
+              Container(
+                margin: EdgeInsets.all(medida.maxHeight * 0.05),
+                height: medida.maxHeight * 0.12,
+                width: medida.maxHeight * 0.12,
+                child: FloatingActionButton(
+                  elevation: 30,
+                  heroTag: 'cuenta',
+                  child: Center(
                       child: Text(
                     '${widget.listaPuntos[0].conteo + cambioConteo}',
                     style: TextStyle(
@@ -200,8 +202,10 @@ class _MyAppState extends State<MyApp> {
                         fontWeight: FontWeight.bold,
                         fontSize: medida.maxHeight * 0.05),
                   )),
-                  Colors.white,
-                  Colors.grey),
+                  backgroundColor: Colors.white,
+                  onPressed: () {},
+                ),
+              ),
               Container(
                 height: medida.maxHeight,
                 width: medida.maxWidth,
@@ -212,7 +216,8 @@ class _MyAppState extends State<MyApp> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    FloatingActionButton(heroTag: 'boton_mas',
+                    FloatingActionButton(
+                      heroTag: 'boton_mas',
                       elevation: 20,
                       child: Center(
                         child: Icon(
@@ -231,7 +236,8 @@ class _MyAppState extends State<MyApp> {
                         cambiarEditar(_editar ? false : true);
                       },
                     ),
-                    FloatingActionButton(heroTag: 'boton_menos',
+                    FloatingActionButton(
+                      heroTag: 'boton_menos',
                       elevation: 20,
                       child: Center(
                         child: Icon(

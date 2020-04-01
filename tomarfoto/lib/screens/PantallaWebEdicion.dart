@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/main.dart';
-import 'package:tomarfoto/screens/instructivo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
 import 'package:tomarfoto/screens/cuenta.dart';
