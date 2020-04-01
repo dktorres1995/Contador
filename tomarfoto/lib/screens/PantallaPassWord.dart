@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/main.dart';
+import 'package:tomarfoto/screens/PantallaWeb.dart';
 import 'package:tomarfoto/screens/instructivo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
-import 'package:tomarfoto/screens/PantallaPassWord.dart';
 
-class PantallaWeb extends StatefulWidget {
-  static const routedname = "/PantallaWeb";
+class PantallaPassword extends StatefulWidget {
+  static const routedname = "/PantallaPassword";
   @override
   _PantallaWebState createState() => _PantallaWebState();
 }
 
-class _PantallaWebState extends State<PantallaWeb> {
+class _PantallaWebState extends State<PantallaPassword> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   @override
@@ -28,17 +28,12 @@ class _PantallaWebState extends State<PantallaWeb> {
           return NavigationDecision.navigate;
         },
         onPageStarted: (este) {
-          print('ESTE:::==> $este');
+          print(este);
           if (este.contains(
-              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
-            var token = este.split('#id_token=')[1];
-            //print('token $token');
-            //print('----------');
-            PaginaMain.user.setToken(token);
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                InstructivoScreen.routedName, (ro) => false);
-          } 
-
+              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90118')) {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(PantallaWeb.routedname, (ro) => false,arguments: PaginaMain.linkRecoveryPassword);
+          }
         },
       ),
     );

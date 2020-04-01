@@ -7,6 +7,7 @@ import 'package:tomarfoto/screens/historial.dart';
 import 'package:tomarfoto/screens/pantallaInicial.dart';
 import 'package:tomarfoto/screens/envioImagen2.dart';
 import 'package:tomarfoto/screens/instructivo.dart';
+import 'package:tomarfoto/screens/PantallaPassWord.dart';
 
 Map<String, WidgetBuilder> getAplicaciones() {
   return <String, WidgetBuilder>{
@@ -17,6 +18,7 @@ Map<String, WidgetBuilder> getAplicaciones() {
     DetalleImagen.routedName: (ctx) => DetalleImagen(),
     EsperaScreen.routedName: (ctx) => EsperaScreen(),
     CuentaScreen.routedName: (ctx)=> CuentaScreen(),
-    PantallaWeb.routedname: (ctx)=>PantallaWeb()
+    PantallaWeb.routedname: (ctx)=>PantallaWeb(),
+    PantallaPassword.routedname:(ctx)=>PantallaPassword()
   };
 }
