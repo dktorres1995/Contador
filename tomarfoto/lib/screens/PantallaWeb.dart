@@ -28,7 +28,7 @@ class _PantallaWebState extends State<PantallaWeb> {
           return NavigationDecision.navigate;
         },
         onPageStarted: (este) {
-          print('ESTE:::==> $este');
+          print('Link Actual:::==> $este');
           if (este.contains(
               'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
             var token = este.split('#id_token=')[1];
@@ -37,7 +37,17 @@ class _PantallaWebState extends State<PantallaWeb> {
             PaginaMain.user.setToken(token);
             Navigator.of(context).pushNamedAndRemoveUntil(
                 InstructivoScreen.routedName, (ro) => false);
-          } 
+          } else if (este.contains(
+              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90091')) {
+           print('volvio al login desde el formulario');
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(PantallaPassword.routedname, (ro) => false,arguments: PaginaMain.linkAzure);
+          } else if (este.contains(
+              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90118')) {
+           print('volvio al login desde password');
+           Navigator.of(context)
+                .pushNamedAndRemoveUntil(PantallaPassword.routedname, (ro) => false,arguments: PaginaMain.linkRecoveryPassword);
+          }
 
         },
       ),

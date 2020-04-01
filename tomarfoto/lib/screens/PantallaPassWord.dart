@@ -28,11 +28,20 @@ class _PantallaWebState extends State<PantallaPassword> {
           return NavigationDecision.navigate;
         },
         onPageStarted: (este) {
-          print(este);
+          print('Pantalla segunda::=>$este');
           if (este.contains(
-              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90118')) {
+              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
+            var token = este.split('#id_token=')[1];
+            //print('token $token');
+            //print('----------');
+            PaginaMain.user.setToken(token);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                InstructivoScreen.routedName, (ro) => false);
+          } else if (este.contains(
+              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90091')) {
+           print('volvio al login desde el formulario');
             Navigator.of(context)
-                .pushNamedAndRemoveUntil(PantallaWeb.routedname, (ro) => false,arguments: PaginaMain.linkRecoveryPassword);
+                .pushNamedAndRemoveUntil(PantallaWeb.routedname, (ro) => false,arguments: PaginaMain.linkAzure);
           }
         },
       ),
