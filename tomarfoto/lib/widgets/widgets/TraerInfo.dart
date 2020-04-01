@@ -192,7 +192,7 @@ class _MyAppState extends State<MyApp> {
                 height: medida.maxHeight * 0.12,
                 width: medida.maxHeight * 0.12,
                 child: FloatingActionButton(
-                  elevation: 30,
+                  elevation: 1,
                   heroTag: 'cuenta',
                   child: Center(
                       child: Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tomarfoto/Models/Conteo.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/detalleImagen.dart';
@@ -12,6 +13,29 @@ class PagHistorial extends StatefulWidget {
 }
 
 class _PagHistorialState extends State<PagHistorial> {
+  bool hoy = false;
+  bool ayer = false;
+  bool estaSemana = false;
+  DateFormat dateConvert = DateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  DateTime now = DateTime.now();
+
+  Widget showDate(String fechaItem) {
+    DateTime dateItem = dateConvert.parse(fechaItem);
+    hoy = !hoy ? now.day == dateItem.day :false;
+    ayer = !ayer ? now.subtract(Duration(days: 1)).day == dateItem.day : false;
+    estaSemana = !estaSemana
+        ? now.subtract(Duration(days: 7)).isBefore(dateItem)
+        : false;
+
+    return Text(now.day == dateItem.day
+        ? 'hoy'
+        : now.subtract(Duration(days: 1)).day == dateItem.day
+            ? 'ayer'
+            : now.subtract(Duration(days: 7)).isBefore(dateItem)
+                ? 'esta Semana'
+                : 'dias anteriores');
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -28,19 +52,24 @@ class _PagHistorialState extends State<PagHistorial> {
                       children:
                           (infoPagina.data['lista'] as List<RecursoConteo>)
                               .map((conteoIndividual) {
-                        return Container(
-                            height: medida.maxHeight / 10,
-                            child: conteoIndividual.id != null
-                                ? ItemHistorial(
-                                    idImag: conteoIndividual.id,
-                                    conteo: conteoIndividual.conteo,
-                                    fecha: conteoIndividual.fecha,
-                                    nombre: conteoIndividual.nombre,
-                                    urlImag: conteoIndividual.imagenUrl,
-                                    urlImagSmall:
-                                        conteoIndividual.imagenUrlSmall,
-                                  )
-                                : Divider());
+                        return Stack(
+                          children: <Widget>[
+                            showDate(conteoIndividual.fecha),
+                            Container(
+                                height: medida.maxHeight / 10,
+                                child: conteoIndividual.id != null
+                                    ? ItemHistorial(
+                                        idImag: conteoIndividual.id,
+                                        conteo: conteoIndividual.conteo,
+                                        fecha: conteoIndividual.fecha,
+                                        nombre: conteoIndividual.nombre,
+                                        urlImag: conteoIndividual.imagenUrl,
+                                        urlImagSmall:
+                                            conteoIndividual.imagenUrlSmall,
+                                      )
+                                    : Divider()),
+                          ],
+                        );
                       }).toList(),
                     );
             },

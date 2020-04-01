@@ -61,7 +61,11 @@ class _itemHistorial extends State<ItemHistorial> {
               horizontal: medida.maxWidth * 0.05,
               vertical: medida.maxHeight * 0.05),
           child: Card(
+            borderOnForeground: true,
             elevation: 20,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -118,6 +122,7 @@ class _itemHistorial extends State<ItemHistorial> {
                               : Text(
                                   '${widget.conteo}',
                                   style: TextStyle(
+                                      fontSize: medida.maxWidth * 0.06,
                                       color: Theme.of(context).accentColor,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -131,7 +136,12 @@ class _itemHistorial extends State<ItemHistorial> {
                             arguments: widget.idImag);
                       }
                     }),
-                    Divider(color: Colors.black,height: 1,),
+                Divider(
+                  color: Colors.grey,
+                  height: 1,
+                  endIndent: medida.maxWidth * 0.04,
+                  indent: medida.maxWidth * 0.04,
+                ),
                 Container(
                   height: medida.maxHeight * 0.1,
                   margin: EdgeInsets.only(left: medida.maxWidth * 0.7),
