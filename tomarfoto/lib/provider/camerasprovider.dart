@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:tomarfoto/main.dart';
 import 'package:tomarfoto/provider/providerConfig.dart';
 import 'package:http/http.dart' as http;
 
@@ -7,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 
 Future enviarImagenn(String filename) async {
-  String tenant = 'ASESOFTWARE';
+  String tenant = PaginaMain.user.getcorreo();
   String url = '${ConfigPaths.pathServicios}/contar/'+tenant; 
   var request = http.MultipartRequest('POST', Uri.parse(url));
 

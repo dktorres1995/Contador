@@ -25,7 +25,7 @@ class _CuentaScreenState extends State<CuentaScreen> {
             Container(
               height: constrains.maxHeight * 0.2,
               width: constrains.maxWidth * 0.2,
-              child: CircleAvatar(
+              child: FloatingActionButton(heroTag: 'cuenta',onPressed: (){},
                 child: Text(
                   PaginaMain.user.getnombre().substring(0, 1).toUpperCase(),
                   style: TextStyle(
