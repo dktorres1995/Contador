@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/main.dart';
+import 'package:tomarfoto/provider/providerConfig.dart';
 import 'package:tomarfoto/screens/PantallaWeb.dart';
 import 'package:tomarfoto/screens/instructivo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
 
-class PantallaPassword extends StatefulWidget {
+class PantallaWebAux extends StatefulWidget {
   static const routedname = "/PantallaPassword";
   @override
   _PantallaWebState createState() => _PantallaWebState();
 }
 
-class _PantallaWebState extends State<PantallaPassword> {
+class _PantallaWebState extends State<PantallaWebAux> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   @override
@@ -41,7 +42,7 @@ class _PantallaWebState extends State<PantallaPassword> {
               'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90091')) {
            print('volvio al login desde el formulario');
             Navigator.of(context)
-                .pushNamedAndRemoveUntil(PantallaWeb.routedname, (ro) => false,arguments: PaginaMain.linkAzure);
+                .pushNamedAndRemoveUntil(PantallaWeb.routedname, (ro) => false,arguments: ConfigPaths.linkAzure);
           }
         },
       ),

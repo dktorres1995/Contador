@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tomarfoto/main.dart';
 import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:tomarfoto/provider/providerConfig.dart';
+import 'package:tomarfoto/screens/PantallaWebEdicion.dart';
 
 class CuentaScreen extends StatefulWidget {
   static const routedName = "/cuentaScreen";
@@ -10,13 +12,8 @@ class CuentaScreen extends StatefulWidget {
 }
 
 class _CuentaScreenState extends State<CuentaScreen> {
-
-  
-
   @override
   Widget build(BuildContext context) {
-  
-
     return ContenidoPagina(
       contenido: LayoutBuilder(builder: (context, constrains) {
         return Column(
@@ -25,7 +22,9 @@ class _CuentaScreenState extends State<CuentaScreen> {
             Container(
               height: constrains.maxHeight * 0.2,
               width: constrains.maxWidth * 0.2,
-              child: FloatingActionButton(heroTag: 'cuenta',onPressed: (){},
+              child: FloatingActionButton(
+                heroTag: 'cuenta',
+                onPressed: () {},
                 child: Text(
                   PaginaMain.user.getnombre().substring(0, 1).toUpperCase(),
                   style: TextStyle(
@@ -63,7 +62,34 @@ class _CuentaScreenState extends State<CuentaScreen> {
                         style: TextStyle(color: Theme.of(context).accentColor),
                       ),
                       onTap: () {
-                        //editar
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            PantallaWebEdicion.routedname, (ro) => false,
+                            arguments: ConfigPaths.linkEditarNombre);
+                      }),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: constrains.maxHeight * 0.03),
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.edit,
+                    size: constrains.maxHeight * 0.03,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  InkWell(
+                      child: Text(
+                        'Editar Contraseña',
+                        style: TextStyle(color: Theme.of(context).accentColor),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            PantallaWebEdicion.routedname, (ro) => false,
+                            arguments: ConfigPaths.linkRecoveryPassword);
                       }),
                 ],
               ),
@@ -82,7 +108,7 @@ class _CuentaScreenState extends State<CuentaScreen> {
                   }),
             ),
             Padding(
-              padding: EdgeInsets.only(top: constrains.maxHeight * 0.44),
+              padding: EdgeInsets.only(top: constrains.maxHeight * 0.4),
             ),
             Text(
               '¿Necesitas ayuda?',

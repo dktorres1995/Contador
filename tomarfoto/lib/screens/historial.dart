@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
 import 'package:tomarfoto/screens/detalleImagen.dart';
@@ -18,7 +19,7 @@ class _HistorialState extends State<Historial> {
   }
 
   Widget contenidoHistorial(int totalPag, BuildContext ctx) {
-    return ListView.builder(
+    return ListView.builder(dragStartBehavior: DragStartBehavior.start,
         addAutomaticKeepAlives: true,
         itemCount: totalPag,
         itemBuilder: (ctx, index) {

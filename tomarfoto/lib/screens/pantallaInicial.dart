@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/main.dart';
+import 'package:tomarfoto/provider/providerConfig.dart';
 import 'package:tomarfoto/screens/PantallaWeb.dart';
 
 class PantallaInicial extends StatefulWidget {
@@ -39,7 +39,7 @@ class _State extends State<PantallaInicial> {
                 'NUMERATE',
                 style: TextStyle(color: Colors.white,fontSize: 20),
               ),onTap: (){
-                Navigator.of(context).pushNamedAndRemoveUntil(PantallaWeb.routedname,(ro)=>false,arguments: PaginaMain.linkAzure);
+                Navigator.of(context).pushNamedAndRemoveUntil(PantallaWeb.routedname,(ro)=>false,arguments: ConfigPaths.linkAzure);
            // .pushNamedAndRemoveUntil(InstructivoScreen.routedName,(ro)=>false);
             }) //botonesIniciales(context),
                   ),

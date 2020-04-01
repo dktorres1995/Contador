@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/main.dart';
-import 'package:tomarfoto/provider/providerConfig.dart';
 import 'package:tomarfoto/screens/instructivo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
-import 'package:tomarfoto/screens/PantallaWebAux.dart';
+import 'package:tomarfoto/screens/cuenta.dart';
 
-class PantallaWeb extends StatefulWidget {
-  static const routedname = "/PantallaWeb";
+class PantallaWebEdicion extends StatefulWidget {
+  static const routedname = "/PantallaPassword";
   @override
   _PantallaWebState createState() => _PantallaWebState();
 }
 
-class _PantallaWebState extends State<PantallaWeb> {
+class _PantallaWebState extends State<PantallaWebEdicion> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   @override
@@ -29,7 +28,7 @@ class _PantallaWebState extends State<PantallaWeb> {
           return NavigationDecision.navigate;
         },
         onPageStarted: (este) {
-          print('Link Actual:::==> $este');
+          print('Pantalla segunda::=>$este');
           if (este.contains(
               'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
             var token = este.split('#id_token=')[1];
@@ -37,19 +36,13 @@ class _PantallaWebState extends State<PantallaWeb> {
             //print('----------');
             PaginaMain.user.setToken(token);
             Navigator.of(context).pushNamedAndRemoveUntil(
-                InstructivoScreen.routedName, (ro) => false);
+                CuentaScreen.routedName, (ro) => false);
           } else if (este.contains(
               'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90091')) {
            
             Navigator.of(context)
-                .pushNamedAndRemoveUntil(PantallaWebAux.routedname, (ro) => false,arguments: ConfigPaths.linkAzure);
-          } else if (este.contains(
-              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90118')) {
-           
-           Navigator.of(context)
-                .pushNamedAndRemoveUntil(PantallaWebAux.routedname, (ro) => false,arguments: ConfigPaths.linkRecoveryPassword);
+                .pushNamedAndRemoveUntil(CuentaScreen.routedName, (ro) => false);
           }
-
         },
       ),
     );
