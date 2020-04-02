@@ -16,26 +16,36 @@ class _PagHistorialState extends State<PagHistorial> {
   bool hoy = false;
   bool ayer = false;
   bool estaSemana = false;
+  bool otrosDias = false;
   DateFormat dateConvert = DateFormat("yyyy-MM-dd'T'HH:mm:ss");
   DateTime now = DateTime.now();
 
   Widget showDate(String fechaItem) {
     DateTime dateItem = dateConvert.parse(fechaItem);
-    hoy = !hoy ? now.day == dateItem.day ? true : false : hoy;
-    ayer = !ayer
-        ? now.subtract(Duration(days: 1)).day == dateItem.day ? true : ayer
-        : false;
-    estaSemana = !estaSemana
-        ? now.subtract(Duration(days: 7)).isBefore(dateItem) ? true : false
-        : estaSemana;
+    
 
-    return Text(now.day == dateItem.day
+    Widget salida = Text(now.day == dateItem.day && !hoy
         ? 'hoy'
-        : now.subtract(Duration(days: 1)).day == dateItem.day 
-            ? 'ayer'
-            : now.subtract(Duration(days: 7)).isBefore(dateItem)
+        : now.subtract(Duration(days: 1)).day == dateItem.day && !ayer 
+            ? 'ayer' 
+            : now.subtract(Duration(days: 7)).isBefore(dateItem) && !estaSemana
                 ? 'esta Semana'
-                : 'dias anteriores');
+                : !otrosDias?'dias anteriores':'');
+                
+    if(!hoy && now.day == dateItem.day){
+      hoy = true;
+    }
+    if(!ayer && now.subtract(Duration(days: 1)).day == dateItem.day){
+      ayer = true;
+    }
+    if(!estaSemana && now.subtract(Duration(days: 7)).isBefore(dateItem)){
+      estaSemana = true;
+    }
+    if(!otrosDias&&hoy&&ayer&&estaSemana){
+      otrosDias = true;
+    }
+
+    return salida;
   }
 
   @override

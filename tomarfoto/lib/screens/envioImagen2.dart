@@ -37,6 +37,7 @@ class _MyHomePageState extends State<EnvioImagen2> {
 
   void enviarFotoBase(BuildContext ctx) {
     //mostrarMensaje('Espere mientras se carga la foto');
+    print('oprimió');
     Navigator.of(context)
           .pushNamed(EsperaScreen.routedName);
     enviarImagenn(_image.path).then((res) {
@@ -68,6 +69,9 @@ class _MyHomePageState extends State<EnvioImagen2> {
                     'Se ha enviado la foto, por favor espere hasta que el sistema haga el conteo'));
           });
     }).catchError((err){
+      
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(Historial.routedName, (ro) => false);
       print('error: $err');
         showDialog(
           context: ctx,
