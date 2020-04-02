@@ -44,9 +44,9 @@ class _itemHistorial extends State<ItemHistorial> {
     //final String configFileName = 'lastConfig.$dateString.json';
     try {
       DateFormat dateConvert = DateFormat("yyyy-MM-dd'T'HH:mm:ss");
-      //DateFormat dateFormat = DateFormat(" MMMM dd yyyy", 'es_ES');
+      DateFormat dateFormat = DateFormat(" MMMM dd yyyy", 'es_ES');
       DateTime date = dateConvert.parse(fecha);
-      return DateFormat.yMd().format(date);
+      return dateFormat.format(date);
     } on FormatException {
       return fecha;
     }
