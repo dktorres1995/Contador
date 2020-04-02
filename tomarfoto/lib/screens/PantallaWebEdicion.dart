@@ -3,7 +3,7 @@ import 'package:tomarfoto/main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
 import 'package:tomarfoto/screens/cuenta.dart';
-
+import 'package:corsac_jwt/corsac_jwt.dart';
 class PantallaWebEdicion extends StatefulWidget {
   static const routedname = "/PantallaEdicion";
   @override
@@ -37,9 +37,9 @@ class _PantallaWebEdicionState extends State<PantallaWebEdicion> {
             if (este.contains(
                 'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
               var token = este.split('#id_token=')[1];
-              //print('token $token');
-              //print('----------');
               PaginaMain.user.setToken(token);
+              var decodedToken = new JWT.parse(PaginaMain.user.gettoken());
+             PaginaMain.user.completarDatosBasicos(decodedToken.claims);
               Navigator.of(context).pushNamedAndRemoveUntil(
                   CuentaScreen.routedName, (ro) => false);
             } else if (este.contains(
