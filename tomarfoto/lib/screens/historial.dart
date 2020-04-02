@@ -25,19 +25,26 @@ class _HistorialState extends State<Historial> {
         return Column(
           children: <Widget>[
             Container(
-              height: medida.maxHeight * 0.07,
-              width: medida.maxWidth,
-              padding: EdgeInsets.symmetric(horizontal: medida.maxWidth*0.1),
-              child: Stack(children: <Widget>[
-                Icon(Icons.search)
-                ,TextField(enabled: false,
-                  controller: busqueda,
-                  decoration: InputDecoration(
-                      hintText: "",
-                      fillColor: Color(0X1F000000),
-                      filled: true),
-                ),],)
-            ),
+                height: medida.maxHeight * 0.07,
+                width: medida.maxWidth,color: Colors.transparent,
+                padding:
+                    EdgeInsets.symmetric(horizontal: medida.maxWidth * 0.1),
+                child: Card(
+                  elevation: 20,
+                  child: Stack(
+                    children: <Widget>[
+                      Icon(Icons.search),
+                      TextField(
+                        enabled: false,
+                        controller: busqueda,
+                        decoration: InputDecoration(
+                            hintText: "",
+                            fillColor: Color(0X1F000000),
+                            filled: true),
+                      ),
+                    ],
+                  ),
+                )),
             Container(
               height: medida.maxHeight * 0.93,
               width: medida.maxWidth,
