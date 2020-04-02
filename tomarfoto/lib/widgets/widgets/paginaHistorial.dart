@@ -21,15 +21,17 @@ class _PagHistorialState extends State<PagHistorial> {
 
   Widget showDate(String fechaItem) {
     DateTime dateItem = dateConvert.parse(fechaItem);
-    hoy = !hoy ? now.day == dateItem.day :false;
-    ayer = !ayer ? now.subtract(Duration(days: 1)).day == dateItem.day : false;
-    estaSemana = !estaSemana
-        ? now.subtract(Duration(days: 7)).isBefore(dateItem)
+    hoy = !hoy ? now.day == dateItem.day ? true : false : hoy;
+    ayer = !ayer
+        ? now.subtract(Duration(days: 1)).day == dateItem.day ? true : ayer
         : false;
+    estaSemana = !estaSemana
+        ? now.subtract(Duration(days: 7)).isBefore(dateItem) ? true : false
+        : estaSemana;
 
     return Text(now.day == dateItem.day
         ? 'hoy'
-        : now.subtract(Duration(days: 1)).day == dateItem.day
+        : now.subtract(Duration(days: 1)).day == dateItem.day 
             ? 'ayer'
             : now.subtract(Duration(days: 7)).isBefore(dateItem)
                 ? 'esta Semana'

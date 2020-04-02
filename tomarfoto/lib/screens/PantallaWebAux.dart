@@ -7,7 +7,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
 
 class PantallaWebAux extends StatefulWidget {
-  static const routedname = "/PantallaPassword";
+  static const routedname = "/PantallaAux";
   @override
   _PantallaWebState createState() => _PantallaWebState();
 }
@@ -31,7 +31,7 @@ class _PantallaWebState extends State<PantallaWebAux> {
         onPageStarted: (este) {
           print('Pantalla segunda::=>$este');
           if (este.contains(
-              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
+                  'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
             var token = este.split('#id_token=')[1];
             //print('token $token');
             //print('----------');
@@ -39,11 +39,12 @@ class _PantallaWebState extends State<PantallaWebAux> {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 InstructivoScreen.routedName, (ro) => false);
           } else if (este.contains(
-              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90091')) {
-           print('volvio al login desde el formulario');
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil(PantallaWeb.routedname, (ro) => false,arguments: ConfigPaths.linkAzure);
-          }
+              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#error=access_denied&error_description=AADB2C90091:')) {
+            print('volvio al login desde el formulario');
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                PantallaWeb.routedname, (ro) => false,
+                arguments: ConfigPaths.linkAzure);
+          } 
         },
       ),
     );

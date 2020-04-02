@@ -5,12 +5,12 @@ import 'dart:async';
 import 'package:tomarfoto/screens/cuenta.dart';
 
 class PantallaWebEdicion extends StatefulWidget {
-  static const routedname = "/PantallaPassword";
+  static const routedname = "/PantallaEdicion";
   @override
-  _PantallaWebState createState() => _PantallaWebState();
+  _PantallaWebEdicionState createState() => _PantallaWebEdicionState();
 }
 
-class _PantallaWebState extends State<PantallaWebEdicion> {
+class _PantallaWebEdicionState extends State<PantallaWebEdicion> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
   @override
@@ -27,7 +27,7 @@ class _PantallaWebState extends State<PantallaWebEdicion> {
           return NavigationDecision.navigate;
         },
         onPageStarted: (este) {
-          print('Pantalla segunda::=>$este');
+          print('Pantalla Edicion::=>$este');
           if (este.contains(
               'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
             var token = este.split('#id_token=')[1];

@@ -30,9 +30,9 @@ class _PantallaWebState extends State<PantallaWeb> {
           return NavigationDecision.navigate;
         },
         onPageStarted: (este) {
-          //print('Link Actual:::==> $este');
+          print('Link Actual:::==> $este');
           if (este.contains(
-              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
+              'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=' )) {
             var token = este.split('#id_token=')[1];
             //print('token $token');
             //print('----------');
