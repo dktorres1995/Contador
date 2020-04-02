@@ -9,6 +9,7 @@ import 'package:tomarfoto/screens/envioImagen2.dart';
 import 'package:tomarfoto/screens/instructivo.dart';
 import 'package:tomarfoto/screens/PantallaWebAux.dart';
 import 'package:tomarfoto/screens/PantallaWebEdicion.dart';
+import 'package:tomarfoto/screens/cuenta2.dart';
 
 Map<String, WidgetBuilder> getAplicaciones() {
   return <String, WidgetBuilder>{
@@ -21,6 +22,7 @@ Map<String, WidgetBuilder> getAplicaciones() {
     CuentaScreen.routedName: (ctx)=> CuentaScreen(),
     PantallaWeb.routedname: (ctx)=>PantallaWeb(),
     PantallaWebAux.routedname:(ctx)=>PantallaWebAux(),
-    PantallaWebEdicion.routedname:(ctx)=>PantallaWebEdicion()
+    PantallaWebEdicion.routedname:(ctx)=>PantallaWebEdicion(),
+    CuentaScreen2.routedName: (ctx)=> CuentaScreen2(),
   };
 }

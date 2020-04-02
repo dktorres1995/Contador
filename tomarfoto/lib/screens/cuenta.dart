@@ -5,6 +5,7 @@ import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:tomarfoto/provider/providerConfig.dart';
 import 'package:tomarfoto/screens/PantallaWebEdicion.dart';
+import 'package:tomarfoto/screens/cuenta2.dart';
 
 class CuentaScreen extends StatefulWidget {
   static const routedName = "/cuentaScreen";
@@ -65,7 +66,7 @@ class _CuentaScreenState extends State<CuentaScreen> {
                       onTap: () {
                         if (PaginaMain.user.gettokenMicrosoft() == '') {
                           Navigator.of(context).pushNamedAndRemoveUntil(
-                              PantallaWebEdicion.routedname, (ro) => false,
+                              CuentaScreen2.routedName, (ro) => false,
                               arguments: ConfigPaths.linkEditarNombre);
                         } else {
                           anuncio(context);
@@ -94,7 +95,7 @@ class _CuentaScreenState extends State<CuentaScreen> {
                       onTap: () {
                         if (PaginaMain.user.gettokenMicrosoft() == '') {
                           Navigator.of(context).pushNamedAndRemoveUntil(
-                              PantallaWebEdicion.routedname, (ro) => false,
+                              CuentaScreen2.routedName, (ro) => false,
                               arguments: ConfigPaths.linkRecoveryPassword);
                         } else {
                           anuncio(context);
