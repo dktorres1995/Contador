@@ -85,8 +85,7 @@ class _PagHistorialState extends State<PagHistorial> {
                                         nombre: conteoIndividual.nombre,
                                         urlImag: conteoIndividual.imagenUrl,
                                         urlImagSmall:
-                                            conteoIndividual.imagenUrlSmall,
-                                        etiquetasAdicionales: conteoIndividual.etiquetasAdicionales
+                                            conteoIndividual.imagenUrlSmall
                                       )
                                   
                                     : Divider()),

@@ -13,8 +13,7 @@ class ItemHistorial extends StatefulWidget {
       this.urlImagSmall,
       this.conteo,
       this.fecha,
-      this.nombre,
-      this.etiquetasAdicionales});
+      this.nombre});
 
   final String idImag;
   final String urlImag;
@@ -22,7 +21,6 @@ class ItemHistorial extends StatefulWidget {
   final int conteo;
   final String fecha;
   final String nombre;
-  final List<dynamic> etiquetasAdicionales;
   @override
   _itemHistorial createState() => _itemHistorial();
 }
@@ -44,8 +42,7 @@ class _itemHistorial extends State<ItemHistorial> {
     //DateTime now = DateTime.now();
     //var dateString = DateFormat('dd-MM-yyyy').format(now);
     //final String configFileName = 'lastConfig.$dateString.json';
-    if(widget.etiquetasAdicionales != null){
-    }
+
     try {
       DateFormat dateConvert = DateFormat("yyyy-MM-dd'T'HH:mm:ss");
       DateFormat dateFormat = DateFormat(" MMMM dd yyyy", 'es_ES');
@@ -124,8 +121,6 @@ class _itemHistorial extends State<ItemHistorial> {
                                   child: Icon(Icons.access_time),
                                 )
                               : Text(
-                                widget.etiquetasAdicionales != null ?
-                                  '${widget.conteo + widget.etiquetasAdicionales.length}':
                                   '${widget.conteo}',
                                   style: TextStyle(
                                       fontSize: medida.maxWidth * 0.06,

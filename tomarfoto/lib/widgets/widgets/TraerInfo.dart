@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
     if (_eliminar) {
       for (var coordenada in listaAdibujar) {
         dist = distanciaEuclidiana(coordenada['x'] - x, coordenada['y'] - y);
-        if (dist < menorDistancia && coordenada['estado']!='eliminada') {
+        if (dist < menorDistancia && coordenada['estado'] != 'eliminada') {
           menorDistancia = dist;
           xIn = coordenada['x'];
           yIn = coordenada['y'];
@@ -81,24 +81,25 @@ class _MyAppState extends State<MyApp> {
       }
 
       setState(() {
-          listaAdibujar.removeAt(indice);
-          if(state=='sistema')listaAdibujar.add({'x': xIn, 'y': yIn, 'estado': 'eliminada'});
-          List<Map<String, int>> listaAgregada = List<Map<String, int>>();
-          List<Map<String, int>> listaEliminada = List<Map<String, int>>();
-          List<Map<String, int>> listacentros = List<Map<String, int>>();
+        listaAdibujar.removeAt(indice);
+        if (state == 'sistema')
+          listaAdibujar.add({'x': xIn, 'y': yIn, 'estado': 'eliminada'});
+        List<Map<String, int>> listaAgregada = List<Map<String, int>>();
+        List<Map<String, int>> listaEliminada = List<Map<String, int>>();
+        List<Map<String, int>> listacentros = List<Map<String, int>>();
 
-          listaAdibujar.forEach((element) {
-            if (element['estado'] == 'agregada') {
-              listaAgregada.add({'x': element['x'], 'y': element['y']});
-            } else if (element['estado'] == 'eliminada') {
-              listaEliminada.add({'x': element['x'], 'y': element['y']});
-            } else if (element['estado'] == 'sistema') {
-              listacentros.add({'x': element['x'], 'y': element['y']});
-            }
-          });
-          widget.anadirEtiquetas(listaAgregada);
-          widget.eliminarEtiquetas(listaEliminada);
-          widget.actualizarCentros(listacentros);
+        listaAdibujar.forEach((element) {
+          if (element['estado'] == 'agregada') {
+            listaAgregada.add({'x': element['x'], 'y': element['y']});
+          } else if (element['estado'] == 'eliminada') {
+            listaEliminada.add({'x': element['x'], 'y': element['y']});
+          } else if (element['estado'] == 'sistema') {
+            listacentros.add({'x': element['x'], 'y': element['y']});
+          }
+        });
+        widget.anadirEtiquetas(listaAgregada);
+        widget.eliminarEtiquetas(listaEliminada);
+        widget.actualizarCentros(listacentros);
 
         cambioConteo--;
       });
@@ -121,6 +122,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     print('contruye---------------------------------');
+
     setState(() {
       imageMostrar =
           LibIma.decodeJpg((widget.listaPuntos[1] as http.Response).bodyBytes);
@@ -139,6 +141,11 @@ class _MyAppState extends State<MyApp> {
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'eliminada'});
       }
     });
+
+  
+        widget.anadirEtiquetas((widget.listaPuntos[0] as Recursos).etiquetasAdd);
+        widget.eliminarEtiquetas((widget.listaPuntos[0] as Recursos).etiquetasEliminadas);
+        widget.actualizarCentros((widget.listaPuntos[0] as Recursos).centros);
   }
 
   @override

@@ -18,17 +18,14 @@ class _DetalleImagenState extends State<DetalleImagen> {
 
   void addEtiquetas(List<Map<String, int>> listaentrante) {
     etAgregadas = listaentrante;
-    print(etAgregadas);
   }
 
   void eliminadasEtiquetas(List<Map<String, int>> listaentrante) {
     etEliminadas = listaentrante;
-    print(etEliminadas);
   }
 
   void actualizarCentros(List<Map<String, int>> listaentrante) {
     centros = listaentrante;
-    print(centros);
   }
 
   void enviarTodo(String id, BuildContext ctx) {
