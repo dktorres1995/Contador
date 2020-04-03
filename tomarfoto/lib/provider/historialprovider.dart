@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:tomarfoto/Models/Recursos.dart';
+import 'package:tomarfoto/main.dart';
 import 'package:tomarfoto/provider/providerConfig.dart';
 import 'package:tomarfoto/Models/Conteo.dart';
 
@@ -66,8 +67,9 @@ Future<http.Response> traerImagen(String url) async {
 }
 
 Future<Map<String, dynamic>> obtenerListaPaginada(String pag) async {
+  String tenant = PaginaMain.user.getcorreo();
   final response = await http
-      .get(ConfigPaths.pathServicios + '/ListaPaginada/' + pag + '/todo');
+      .get(ConfigPaths.pathServicios + '/ListaPaginada/'+tenant + '/'+pag + '/todo');
   if (response.statusCode == 200) {
     final List<dynamic> lista = json.decode(response.body)['result'];
     List<RecursoConteo> listaRecursos = [];
