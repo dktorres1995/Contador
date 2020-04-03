@@ -69,7 +69,7 @@ class _PagHistorialState extends State<PagHistorial> {
                             showDate(conteoIndividual.fecha),
                             Container(
                                 height: medida.maxHeight / 10,
-                                child: conteoIndividual.id != null
+                                child: conteoIndividual.id != null 
                                     ? ItemHistorial(
                                         idImag: conteoIndividual.id,
                                         conteo: conteoIndividual.conteo,
@@ -78,7 +78,9 @@ class _PagHistorialState extends State<PagHistorial> {
                                         urlImag: conteoIndividual.imagenUrl,
                                         urlImagSmall:
                                             conteoIndividual.imagenUrlSmall,
+                                        etiquetasAdicionales: conteoIndividual.etiquetasAdicionales
                                       )
+                                  
                                     : Divider()),
                           ],
                         );

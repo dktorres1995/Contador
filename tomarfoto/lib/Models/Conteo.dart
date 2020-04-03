@@ -7,6 +7,7 @@ class RecursoConteo {
   final int conteo;
   final String fecha;
   final String nombre;
+  final List<dynamic> etiquetasAdicionales;
 
   RecursoConteo(
       {@required this.id,
@@ -14,7 +15,8 @@ class RecursoConteo {
       this.imagenUrlSmall,
       this.conteo,
       this.fecha,
-      this.nombre});
+      this.nombre,
+      this.etiquetasAdicionales});
 
   factory RecursoConteo.fromJson(Map<String, dynamic> json) {
     return RecursoConteo(
@@ -23,6 +25,7 @@ class RecursoConteo {
         imagenUrlSmall: json["image_url_Small"]==null?null:json["image_url_Small"],
         conteo: json['conteo']==null?null:json['conteo'],
         fecha: json['fecha']==null?null:json['fecha'],
-        nombre: json['nombre']==null?null:json['nombre']);
+        nombre: json['nombre']==null?null:json['nombre'],
+        etiquetasAdicionales: json['etiquetasAdicionales']==null?null:json['etiquetasAdicionales']);
   }
 }
