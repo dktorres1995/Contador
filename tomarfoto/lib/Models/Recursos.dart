@@ -6,6 +6,7 @@ class Recursos {
   final List<dynamic> centros;
   final double radio;
   final List<dynamic> etiquetasAdd;
+    final List<dynamic> etiquetasEliminadas;
 
   Recursos(
       {this.id,
@@ -14,7 +15,8 @@ class Recursos {
       this.conteo,
       this.centros,
       this.radio,
-      this.etiquetasAdd});
+      this.etiquetasAdd,
+      this.etiquetasEliminadas});
 
   factory Recursos.fromJson(Map<String, dynamic> json) {
     if (json["resultado"] != null) {
@@ -26,7 +28,10 @@ class Recursos {
           tenant: json["tenant"],
           centros: json["resultado"]["centros"],
           radio: radioAux,
-          conteo: json["resultado"]["conteo"] );
+          conteo: json["resultado"]["conteo"],
+          etiquetasAdd:  json["etiquetasAdicionales"]!=null?json["etiquetasAdicionales"]:List<dynamic>(),
+          etiquetasEliminadas: json["etiquetasEliminadas"]!=null?json["etiquetasEliminadas"]:List<dynamic>()
+           );
     } else {
       return Recursos(
           id: json["_id"],

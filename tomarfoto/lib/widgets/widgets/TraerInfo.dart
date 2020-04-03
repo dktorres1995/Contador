@@ -5,7 +5,6 @@ import 'package:image/image.dart' as LibIma;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tomarfoto/Models/Recursos.dart';
-import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 
 class MyApp extends StatefulWidget {
@@ -14,11 +13,13 @@ class MyApp extends StatefulWidget {
   final List<dynamic> listaPuntos;
   final Function eliminarEtiquetas;
   final Function anadirEtiquetas;
+  final Function actualizarCentros;
   MyApp(
       {@required this.id,
       @required this.listaPuntos,
       @required this.anadirEtiquetas,
-      @required this.eliminarEtiquetas});
+      @required this.eliminarEtiquetas,
+      @required this.actualizarCentros});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -62,51 +63,43 @@ class _MyAppState extends State<MyApp> {
     double dist = 0;
     var xIn = 0;
     var yIn = 0;
+    var state = '';
+    var indice = 0;
 
+    var iAux = 0;
     if (_eliminar) {
       for (var coordenada in listaAdibujar) {
         dist = distanciaEuclidiana(coordenada['x'] - x, coordenada['y'] - y);
-        if (dist < menorDistancia) {
+        if (dist < menorDistancia && coordenada['estado']!='eliminada') {
           menorDistancia = dist;
           xIn = coordenada['x'];
           yIn = coordenada['y'];
+          state = coordenada['estado'];
+          indice = iAux;
         }
+        iAux++;
       }
 
       setState(() {
-        var indiceAgregada = -1;
-        var conteo = 0;
-        listaAdibujar.forEach((element) {
-          if (mapEquals({'x': xIn, 'y': yIn, 'estado': 'agregada'}, element)) {
-            indiceAgregada = conteo;
-          }
-          conteo++;
-        });
-
-        var indiceSistema = -1;
-        conteo = 0;
-        listaAdibujar.forEach((element) {
-          if (mapEquals({'x': xIn, 'y': yIn, 'estado': 'sistema'}, element)) {
-            indiceSistema = conteo;
-          }
-          conteo++;
-        });
-
-        if (indiceAgregada != -1) {
-          listaAdibujar.removeAt(indiceAgregada);
+          listaAdibujar.removeAt(indice);
+          if(state=='sistema')listaAdibujar.add({'x': xIn, 'y': yIn, 'estado': 'eliminada'});
           List<Map<String, int>> listaAgregada = List<Map<String, int>>();
+          List<Map<String, int>> listaEliminada = List<Map<String, int>>();
+          List<Map<String, int>> listacentros = List<Map<String, int>>();
+
           listaAdibujar.forEach((element) {
             if (element['estado'] == 'agregada') {
               listaAgregada.add({'x': element['x'], 'y': element['y']});
+            } else if (element['estado'] == 'eliminada') {
+              listaEliminada.add({'x': element['x'], 'y': element['y']});
+            } else if (element['estado'] == 'sistema') {
+              listacentros.add({'x': element['x'], 'y': element['y']});
             }
           });
           widget.anadirEtiquetas(listaAgregada);
-        } else if (indiceSistema != -1) {
-          print('este elimino');
-          listaAdibujar.removeAt(indiceSistema);
-          widget.eliminarEtiquetas(xIn, yIn);
-          listaAdibujar.add({'x': xIn, 'y': yIn, 'estado': 'eliminada'});
-        }
+          widget.eliminarEtiquetas(listaEliminada);
+          widget.actualizarCentros(listacentros);
+
         cambioConteo--;
       });
     } else if (_editar) {
@@ -135,6 +128,15 @@ class _MyAppState extends State<MyApp> {
       for (var coor in (widget.listaPuntos[0] as Recursos).centros) {
         listaAdibujar
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
+      }
+      for (var coor in (widget.listaPuntos[0] as Recursos).etiquetasAdd) {
+        listaAdibujar
+            .add({'x': coor['x'], 'y': coor['y'], 'estado': 'agregada'});
+      }
+      for (var coor
+          in (widget.listaPuntos[0] as Recursos).etiquetasEliminadas) {
+        listaAdibujar
+            .add({'x': coor['x'], 'y': coor['y'], 'estado': 'eliminada'});
       }
     });
   }

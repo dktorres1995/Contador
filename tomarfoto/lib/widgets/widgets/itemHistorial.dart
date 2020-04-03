@@ -45,7 +45,7 @@ class _itemHistorial extends State<ItemHistorial> {
     //var dateString = DateFormat('dd-MM-yyyy').format(now);
     //final String configFileName = 'lastConfig.$dateString.json';
     if(widget.etiquetasAdicionales != null){
-    print(widget.etiquetasAdicionales);}
+    }
     try {
       DateFormat dateConvert = DateFormat("yyyy-MM-dd'T'HH:mm:ss");
       DateFormat dateFormat = DateFormat(" MMMM dd yyyy", 'es_ES');
