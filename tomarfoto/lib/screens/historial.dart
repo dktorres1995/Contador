@@ -20,11 +20,12 @@ class _HistorialState extends State<Historial> {
   }
 
   Widget contenidoHistorial(int totalPag, BuildContext ctx) {
+    bool cuadroBusqueda = false;
     return LayoutBuilder(
       builder: (ctx, medida) {
         return Column(
           children: <Widget>[
-            Container(
+            cuadroBusqueda?Container(
                 height: medida.maxHeight * 0.07,
                 width: medida.maxWidth,color: Colors.transparent,
                 padding:
@@ -44,9 +45,9 @@ class _HistorialState extends State<Historial> {
                       ),
                     ],
                   ),
-                )),
+                )):Container(),
             Container(
-              height: medida.maxHeight * 0.93,
+              height: cuadroBusqueda?medida.maxHeight * 0.93:medida.maxHeight,
               width: medida.maxWidth,
               child: ListView.builder(
                   dragStartBehavior: DragStartBehavior.start,

@@ -122,6 +122,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     print('contruye---------------------------------');
+    
+        List<Map<String, int>> listaAgregada = List<Map<String, int>>();
+        List<Map<String, int>> listaEliminada = List<Map<String, int>>();
+        List<Map<String, int>> listacentros = List<Map<String, int>>();
 
     setState(() {
       imageMostrar =
@@ -130,22 +134,25 @@ class _MyAppState extends State<MyApp> {
       for (var coor in (widget.listaPuntos[0] as Recursos).centros) {
         listaAdibujar
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
+             listacentros.add({'x': coor['x'], 'y': coor['y']}) ;  
       }
       for (var coor in (widget.listaPuntos[0] as Recursos).etiquetasAdd) {
         listaAdibujar
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'agregada'});
+         listaAgregada.add({'x': coor['x'], 'y': coor['y']}) ;  
       }
       for (var coor
           in (widget.listaPuntos[0] as Recursos).etiquetasEliminadas) {
         listaAdibujar
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'eliminada'});
+             listaEliminada.add({'x': coor['x'], 'y': coor['y']}) ;  
       }
     });
 
-  
-        widget.anadirEtiquetas((widget.listaPuntos[0] as Recursos).etiquetasAdd);
-        widget.eliminarEtiquetas((widget.listaPuntos[0] as Recursos).etiquetasEliminadas);
-        widget.actualizarCentros((widget.listaPuntos[0] as Recursos).centros);
+
+        widget.anadirEtiquetas(listaAgregada);
+        widget.eliminarEtiquetas(listaEliminada);
+        widget.actualizarCentros(listacentros);
   }
 
   @override
