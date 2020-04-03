@@ -93,8 +93,10 @@ Future<Map<String, dynamic>> obtenerListaPaginada(String pag) async {
 }
 
 Future<dynamic> obtenerListaPaginadatotal() async {
+  
+  String tenant = PaginaMain.user.getcorreo();
   final response =
-      await http.get(ConfigPaths.pathServicios + '/ListaPaginada/1/total');
+      await http.get(ConfigPaths.pathServicios + '/ListaPaginada/'+tenant+'/1/total');
   if (response.statusCode == 200) {
     return json.decode(response.body);
   } else {
