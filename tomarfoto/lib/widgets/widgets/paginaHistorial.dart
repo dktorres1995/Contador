@@ -65,9 +65,7 @@ class _PagHistorialState extends State<PagHistorial> {
           return LayoutBuilder(
             builder: (context, medida) {
               return (infoPagina.data['lista'] as List<RecursoConteo>).isEmpty
-                  ? Center(
-                      child: Text('No hay registros en esta cuenta'),
-                    )
+                  ?Text('No hay registros en esta cuenta')
                   : Column(
                       children:
                           (infoPagina.data['lista'] as List<RecursoConteo>)

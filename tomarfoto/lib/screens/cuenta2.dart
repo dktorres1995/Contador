@@ -4,6 +4,7 @@ import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
 import 'package:tomarfoto/screens/cuenta.dart';
+import 'package:corsac_jwt/corsac_jwt.dart';
 
 class CuentaScreen2 extends StatefulWidget {
   static const routedName = "/cuentaScreen2";
@@ -54,9 +55,9 @@ class _CuentaScreenState extends State<CuentaScreen2> {
               if (este.contains(
                   'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
                 var token = este.split('#id_token=')[1];
-                //print('token $token');
-                //print('----------');
-                PaginaMain.user.setToken(token);
+                  PaginaMain.user.setToken(token);
+                 var decodedToken = new JWT.parse(PaginaMain.user.gettoken());
+                 PaginaMain.user.completarDatosBasicos(decodedToken.claims);
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     CuentaScreen.routedName, (ro) => false);
               } else if (este.contains(
