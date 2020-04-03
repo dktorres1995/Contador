@@ -145,7 +145,6 @@ class _MyAppState extends State<MyApp> {
         }
       }
 
-      if (!hayerror) {
         for (var coor in (widget.listaPuntos[0] as Recursos).centros) {
           listaAdibujar
               .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
@@ -166,7 +165,7 @@ class _MyAppState extends State<MyApp> {
         widget.anadirEtiquetas(listaAgregada);
         widget.eliminarEtiquetas(listaEliminada);
         widget.actualizarCentros(listacentros);
-      }
+      
     });
   }
 
