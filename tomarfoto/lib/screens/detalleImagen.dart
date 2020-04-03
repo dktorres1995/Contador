@@ -28,6 +28,8 @@ class _DetalleImagenState extends State<DetalleImagen> {
     centros = listaentrante;
   }
 
+  
+
   void enviarTodo(String id, BuildContext ctx) {
     Navigator.of(context).pushNamed(EsperaScreen.routedName);
     actualizarListas(etAgregadas, etEliminadas, centros, id).then((res) {
@@ -37,7 +39,8 @@ class _DetalleImagenState extends State<DetalleImagen> {
           'sus cambios se han guardado exitosamente');
     }).catchError((onError) {
       Navigator.of(context).pushNamed(Historial.routedName);
-      mensaje(ctx, 'Error', 'Hubo un error al Actualizar los cambios, por favor registrelos nuevamente');
+      mensaje(ctx, 'Error',
+          'Hubo un error al Actualizar los cambios, por favor registrelos nuevamente');
     });
   }
 
@@ -99,7 +102,7 @@ class _DetalleImagenState extends State<DetalleImagen> {
                   listaPuntos: snapshot.data,
                   anadirEtiquetas: this.addEtiquetas,
                   eliminarEtiquetas: this.eliminadasEtiquetas,
-                  actualizarCentros: this.actualizarCentros,
+                  actualizarCentros: this.actualizarCentros
                 ),
                 titulo: 'Entrega',
                 bloqueo: false,

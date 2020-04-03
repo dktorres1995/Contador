@@ -25,7 +25,7 @@ class ContenidoPagina extends StatelessWidget {
         primarySwatch: Colors.blue,
         accentColor: Colors.indigo[900],
       ),
-      home: Scaffold(
+      home: Scaffold(resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text(titulo),

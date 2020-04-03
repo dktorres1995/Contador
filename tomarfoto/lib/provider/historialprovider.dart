@@ -67,7 +67,7 @@ Future<http.Response> traerImagen(String url) async {
 }
 
 Future<Map<String, dynamic>> obtenerListaPaginada(String pag) async {
-  String tenant = PaginaMain.user.getcorreo();
+  String tenant = "dktorres95@gmail.com";//PaginaMain.user.getcorreo();
   final response = await http
       .get(ConfigPaths.pathServicios + '/ListaPaginada/'+tenant + '/'+pag + '/todo');
   if (response.statusCode == 200) {
