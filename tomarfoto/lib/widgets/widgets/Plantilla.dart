@@ -9,8 +9,8 @@ class ContenidoPagina extends StatelessWidget {
   final Widget contenido;
   final String titulo;
   final bool bloqueo; //bloquear botontes
-  bool confirmacionSalida;
-  Function mensajeConfirmacionSalida;
+  final bool confirmacionSalida;
+  final Function mensajeConfirmacionSalida;
   ContenidoPagina(
       {@required this.contenido,
       @required this.titulo,
