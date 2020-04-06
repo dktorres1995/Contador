@@ -101,6 +101,7 @@ class Puntos extends StatelessWidget {
                                       title: Text("Cambiar Nombre"),
                                       content: TextField(
                                         controller: nombreConteo,
+                                        maxLength: 15,
                                         decoration: InputDecoration(
                                             hintText: "Nombre",
                                             fillColor: Color(0X1F000000),
