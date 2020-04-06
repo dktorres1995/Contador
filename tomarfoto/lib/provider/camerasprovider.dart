@@ -25,7 +25,8 @@ Future enviarImagenn(String filename) async {
   return res;
   }else
   {
-    throw Exception('${res.statusCode} ');
+    var response = await http.Response.fromStream(res);
+    throw Exception('${res.statusCode}, => ${response.body}');
   }
 }
 
