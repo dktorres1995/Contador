@@ -123,14 +123,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    print('inicializa variables ${DateTime.now()}');
 
     List<Map<String, int>> listaAgregada = List<Map<String, int>>();
     List<Map<String, int>> listaEliminada = List<Map<String, int>>();
     List<Map<String, int>> listacentros = List<Map<String, int>>();
+    print('convierte imagen de la descarga 1 ${DateTime.now()}');
     setState(() {
       try {
         imageMostrar = LibIma.decodeJpg(
             (widget.listaPuntos[1] as http.Response).bodyBytes);
+            
       } catch (error) {
         print(error.toString());
         if (error.toString() ==
@@ -142,7 +145,8 @@ class _MyAppState extends State<MyApp> {
           errorObtenido = error;
         }
       }
-
+      
+    print('barre las variables de envio ${DateTime.now()}');
       for (var coor in (widget.listaPuntos[0] as Recursos).centros) {
         listaAdibujar
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
@@ -159,6 +163,7 @@ class _MyAppState extends State<MyApp> {
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'eliminada'});
         listaEliminada.add({'x': coor['x'], 'y': coor['y']});
       }
+       print('actualiza las variables de envio ${DateTime.now()}');
       widget.anadirEtiquetas(listaAgregada);
       widget.eliminarEtiquetas(listaEliminada);
       widget.actualizarCentros(listacentros);
@@ -175,6 +180,7 @@ class _MyAppState extends State<MyApp> {
           )
         : LayoutBuilder(
             builder: (context, medida) {
+               print('Contruye la app ${DateTime.now()}');
               return Container(
                 height: medida.maxHeight,
                 width: medida.maxWidth,
@@ -192,8 +198,8 @@ class _MyAppState extends State<MyApp> {
                             width: imageMostrar.width.toDouble(),
                             child: Stack(
                               children: <Widget>[
-                                Image.network(widget.listaPuntos[0].imagenUrl),
-                                // Image.memory(LibIma.encodeJpg(imageMostrar)),
+                                //  Image.network(widget.listaPuntos[0].imagenUrl),
+                               Image.memory((widget.listaPuntos[1] as http.Response).bodyBytes),
                                 CustomPaint(
                                   size: Size(imageMostrar.width.toDouble(),
                                       imageMostrar.height.toDouble()),
@@ -309,6 +315,7 @@ class MyPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     var center;
     var paint = Paint();
+     print('barre las variables de envio ${DateTime.now()}');
     for (var coordenada in centros) {
       center = Offset(coordenada['x'].toDouble(), coordenada['y'].toDouble());
       paint
