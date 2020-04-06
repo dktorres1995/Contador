@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
+import '../widgets/widgets/Plantilla.dart';
 
 class EsperaScreen extends StatelessWidget {
   static const routedName = '/espera';

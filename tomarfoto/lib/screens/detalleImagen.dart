@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/provider/historialprovider.dart';
-import 'package:tomarfoto/screens/Espera.dart';
-import 'package:tomarfoto/screens/historial.dart';
-import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
-import 'package:tomarfoto/widgets/widgets/TraerInfo.dart';
+import '../provider/historialprovider.dart';
+import '../screens/Espera.dart';
+import '../screens/historial.dart';
+import '../widgets/widgets/Plantilla.dart';
+import '../widgets/widgets/TraerInfo.dart';
 
 class DetalleImagen extends StatefulWidget {
   static const routedName = '/detalleImagen';

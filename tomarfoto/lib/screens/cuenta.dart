@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/main.dart';
-import 'package:tomarfoto/screens/PantallaWeb.dart';
-import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
+import '../main.dart';
+import '../screens/PantallaWeb.dart';
+import '../widgets/widgets/Plantilla.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:tomarfoto/provider/providerConfig.dart';
-import 'package:tomarfoto/screens/PantallaWebEdicion.dart';
-import 'package:tomarfoto/screens/cuenta2.dart';
+import '../provider/providerConfig.dart';
+import '../screens/cuenta2.dart';
 
 class CuentaScreen extends StatefulWidget {
   static const routedName = "/cuentaScreen";

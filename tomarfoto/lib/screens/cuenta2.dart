@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/main.dart';
-import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
+import '../main.dart';
+import '../widgets/widgets/Plantilla.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
-import 'package:tomarfoto/screens/cuenta.dart';
+import '../screens/cuenta.dart';
 import 'package:corsac_jwt/corsac_jwt.dart';
 
 class CuentaScreen2 extends StatefulWidget {

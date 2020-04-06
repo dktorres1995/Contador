@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:tomarfoto/Models/Recursos.dart';
-import 'package:tomarfoto/main.dart';
-import 'package:tomarfoto/provider/providerConfig.dart';
-import 'package:tomarfoto/Models/Conteo.dart';
+import '../Models/Recursos.dart';
+import '../main.dart';
+import '../provider/providerConfig.dart';
+import '../Models/Conteo.dart';
 
 Future<List<dynamic>> fetchPost(String id) async {
   final response = await http.get('${ConfigPaths.pathServicios}/contar/$id');

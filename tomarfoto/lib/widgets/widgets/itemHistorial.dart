@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/provider/historialprovider.dart';
-import 'package:tomarfoto/screens/detalleImagen.dart';
+import 'package:Numerate/provider/historialprovider.dart';
+import 'package:Numerate/screens/detalleImagen.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:tomarfoto/widgets/widgets/puntoOpciones.dart';
+import 'package:Numerate/widgets/widgets/puntoOpciones.dart';
 
 class ItemHistorial extends StatefulWidget {
   ItemHistorial(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/main.dart';
-import 'package:tomarfoto/provider/providerConfig.dart';
-import 'package:tomarfoto/screens/PantallaWeb.dart';
-import 'package:tomarfoto/screens/instructivo.dart';
+import '../main.dart';
+import '../provider/providerConfig.dart';
+import '../screens/PantallaWeb.dart';
+import '../screens/instructivo.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:async';
 
@@ -29,7 +29,7 @@ class _PantallaWebState extends State<PantallaWebAux> {
           return NavigationDecision.navigate;
         },
         onPageStarted: (este) {
-          print('Pantalla segunda::=>$este');
+         // print('Pantalla segunda::=>$este');
           if (este.contains(
                   'https://login.microsoftonline.com/tfp/oauth2/nativeclient#id_token=')) {
             var token = este.split('#id_token=')[1];

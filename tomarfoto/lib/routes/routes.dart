@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/screens/Espera.dart';
-import 'package:tomarfoto/screens/PantallaWeb.dart';
-import 'package:tomarfoto/screens/cuenta.dart';
-import 'package:tomarfoto/screens/detalleImagen.dart';
-import 'package:tomarfoto/screens/historial.dart';
-import 'package:tomarfoto/screens/pantallaInicial.dart';
-import 'package:tomarfoto/screens/envioImagen2.dart';
-import 'package:tomarfoto/screens/instructivo.dart';
-import 'package:tomarfoto/screens/PantallaWebAux.dart';
-import 'package:tomarfoto/screens/PantallaWebEdicion.dart';
-import 'package:tomarfoto/screens/cuenta2.dart';
+import '../screens/Espera.dart';
+import '../screens/PantallaWeb.dart';
+import '../screens/cuenta.dart';
+import '../screens/detalleImagen.dart';
+import '../screens/historial.dart';
+import '../screens/pantallaInicial.dart';
+import '../screens/envioImagen2.dart';
+import '../screens/instructivo.dart';
+import '../screens/PantallaWebAux.dart';
+import '../screens/PantallaWebEdicion.dart';
+import '../screens/cuenta2.dart';
 
 Map<String, WidgetBuilder> getAplicaciones() {
   return <String, WidgetBuilder>{

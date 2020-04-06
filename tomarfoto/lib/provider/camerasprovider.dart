@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:tomarfoto/main.dart';
-import 'package:tomarfoto/provider/providerConfig.dart';
+import '../main.dart';
+import '../provider/providerConfig.dart';
 import 'package:http/http.dart' as http;
 
 

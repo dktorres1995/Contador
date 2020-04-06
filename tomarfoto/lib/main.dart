@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/Models/usuarioDatos.dart';
-import 'package:tomarfoto/routes/routes.dart';
-import 'package:tomarfoto/screens/pantallaInicial.dart';
-import 'package:tomarfoto/mixis/mixis_block_screen.dart';
+import 'package:Numerate/Models/usuarioDatos.dart';
+import 'package:Numerate/routes/routes.dart';
+import 'package:Numerate/screens/pantallaInicial.dart';
+import 'package:Numerate/mixis/mixis_block_screen.dart';
 
 void main() => runApp(PaginaMain());
 

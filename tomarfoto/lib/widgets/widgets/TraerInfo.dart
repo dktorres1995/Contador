@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:image/image.dart' as LibIma;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:tomarfoto/Models/Recursos.dart';
+import 'package:Numerate/Models/Recursos.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 
 class MyApp extends StatefulWidget {
@@ -19,8 +19,7 @@ class MyApp extends StatefulWidget {
       @required this.listaPuntos,
       @required this.anadirEtiquetas,
       @required this.eliminarEtiquetas,
-      @required this.actualizarCentros
-      });
+      @required this.actualizarCentros});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -124,19 +123,18 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    print('contruye---------------------------------');
 
     List<Map<String, int>> listaAgregada = List<Map<String, int>>();
     List<Map<String, int>> listaEliminada = List<Map<String, int>>();
     List<Map<String, int>> listacentros = List<Map<String, int>>();
-
     setState(() {
       try {
         imageMostrar = LibIma.decodeJpg(
             (widget.listaPuntos[1] as http.Response).bodyBytes);
       } catch (error) {
         print(error.toString());
-        if (error.toString() == "ImageException: Start Of Image marker not found.") {
+        if (error.toString() ==
+            "ImageException: Start Of Image marker not found.") {
           imageMostrar = LibIma.decodePng(
               (widget.listaPuntos[1] as http.Response).bodyBytes);
         } else {
@@ -145,27 +143,25 @@ class _MyAppState extends State<MyApp> {
         }
       }
 
-        for (var coor in (widget.listaPuntos[0] as Recursos).centros) {
-          listaAdibujar
-              .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
-          listacentros.add({'x': coor['x'], 'y': coor['y']});
-        }
-        for (var coor in (widget.listaPuntos[0] as Recursos).etiquetasAdd) {
-          listaAdibujar
-              .add({'x': coor['x'], 'y': coor['y'], 'estado': 'agregada'});
-          listaAgregada.add({'x': coor['x'], 'y': coor['y']});
-        }
-        for (var coor
-            in (widget.listaPuntos[0] as Recursos).etiquetasEliminadas) {
-          listaAdibujar
-              .add({'x': coor['x'], 'y': coor['y'], 'estado': 'eliminada'});
-          listaEliminada.add({'x': coor['x'], 'y': coor['y']});
-        }
-
-        widget.anadirEtiquetas(listaAgregada);
-        widget.eliminarEtiquetas(listaEliminada);
-        widget.actualizarCentros(listacentros);
-      
+      for (var coor in (widget.listaPuntos[0] as Recursos).centros) {
+        listaAdibujar
+            .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
+        listacentros.add({'x': coor['x'], 'y': coor['y']});
+      }
+      for (var coor in (widget.listaPuntos[0] as Recursos).etiquetasAdd) {
+        listaAdibujar
+            .add({'x': coor['x'], 'y': coor['y'], 'estado': 'agregada'});
+        listaAgregada.add({'x': coor['x'], 'y': coor['y']});
+      }
+      for (var coor
+          in (widget.listaPuntos[0] as Recursos).etiquetasEliminadas) {
+        listaAdibujar
+            .add({'x': coor['x'], 'y': coor['y'], 'estado': 'eliminada'});
+        listaEliminada.add({'x': coor['x'], 'y': coor['y']});
+      }
+      widget.anadirEtiquetas(listaAgregada);
+      widget.eliminarEtiquetas(listaEliminada);
+      widget.actualizarCentros(listacentros);
     });
   }
 
@@ -174,15 +170,15 @@ class _MyAppState extends State<MyApp> {
     //dibuja de lo colocado en pantalla
 
     return hayerror
-              ? Center(
-                  child: Text('Error: $errorObtenido'),
-                )
-              :LayoutBuilder(
-      builder: (context, medida) {
-        return Container(
-          height: medida.maxHeight,
-          width: medida.maxWidth,
-          child:  Stack(
+        ? Center(
+            child: Text('Error: $errorObtenido'),
+          )
+        : LayoutBuilder(
+            builder: (context, medida) {
+              return Container(
+                height: medida.maxHeight,
+                width: medida.maxWidth,
+                child: Stack(
                   children: <Widget>[
                     Zoom(
                         zoomSensibility: 2,
@@ -296,9 +292,9 @@ class _MyAppState extends State<MyApp> {
                     )
                   ],
                 ),
-        );
-      },
-    );
+              );
+            },
+          );
   }
 }
 

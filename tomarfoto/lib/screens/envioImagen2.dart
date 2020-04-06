@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/provider/camerasprovider.dart';
-import 'package:tomarfoto/screens/Espera.dart';
-import 'package:tomarfoto/screens/historial.dart';
+import '../provider/camerasprovider.dart';
+import '../screens/Espera.dart';
+import '../screens/historial.dart';
 
 class EnvioImagen2 extends StatefulWidget {
   static const routedName = "/pantallaInicialEnvioImagen2";

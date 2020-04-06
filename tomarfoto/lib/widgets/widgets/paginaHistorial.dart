@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tomarfoto/Models/Conteo.dart';
-import 'package:tomarfoto/provider/historialprovider.dart';
-import 'package:tomarfoto/screens/detalleImagen.dart';
-import 'package:tomarfoto/widgets/widgets/itemHistorial.dart';
+import 'package:Numerate/Models/Conteo.dart';
+import 'package:Numerate/provider/historialprovider.dart';
+import 'package:Numerate/screens/detalleImagen.dart';
+import 'package:Numerate/widgets/widgets/itemHistorial.dart';
 
 class PagHistorial extends StatefulWidget {
   final int pagina;
@@ -22,34 +22,29 @@ class _PagHistorialState extends State<PagHistorial> {
 
   Widget showDate(String fechaItem) {
     DateTime dateItem = dateConvert.parse(fechaItem);
-
     Widget salida = Text(
       now.day == dateItem.day && hoy
           ? 'HOY'
           : now.subtract(Duration(days: 1)).day == dateItem.day && ayer
               ? 'AYER'
-              : now.subtract(Duration(days: 7)).isBefore(dateItem) &&
-                      estaSemana &&
-                      !hoy &&
-                      !ayer
+              : !( now.day == dateItem.day) && !(now.subtract(Duration(days: 1)).day == dateItem.day)&& 
+        now.subtract(Duration(days: 7)).isBefore(dateItem) && estaSemana
                   ? 'ESTA SEMANA '
-                  : otrosDias && estaSemana && hoy && ayer
+                  : now.subtract(Duration(days: 7)).isAfter(dateItem) && otrosDias
                       ? 'DIAS ANTERIORES'
                       : '',
       style: TextStyle(color: Colors.grey,fontSize: 20),
     );
 
-    if (hoy && now.day == dateItem.day) {
+    if ( now.day == dateItem.day) {
       hoy = false;
-    } else if (!hoy &&
-        ayer &&
+    } else if (
         now.subtract(Duration(days: 1)).day == dateItem.day) {
       ayer = false;
-    } else if (!ayer &&
-        estaSemana &&
+    } else if ( !( now.day == dateItem.day) && !(now.subtract(Duration(days: 1)).day == dateItem.day)&& 
         now.subtract(Duration(days: 7)).isBefore(dateItem)) {
       estaSemana = false;
-    } else if (!estaSemana && otrosDias) {
+    } else if (now.subtract(Duration(days: 7)).isAfter(dateItem)) {
       otrosDias = false;
     }
 

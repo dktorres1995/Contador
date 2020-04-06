@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/screens/historial.dart';
+import 'package:Numerate/screens/historial.dart';
 
 class Puntos extends StatelessWidget {
   final String nombre;

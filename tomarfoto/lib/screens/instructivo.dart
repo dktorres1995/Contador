@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:tomarfoto/main.dart';
-import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
+import '../main.dart';
+import '../widgets/widgets/Plantilla.dart';
 import 'package:corsac_jwt/corsac_jwt.dart';
 class InstructivoScreen extends StatefulWidget {
   static const routedName = '/Instructivo';

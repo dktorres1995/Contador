@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/routes/routes.dart';
-import 'package:tomarfoto/screens/cuenta.dart';
-import 'package:tomarfoto/screens/envioImagen2.dart';
-import 'package:tomarfoto/screens/historial.dart';
-import 'package:tomarfoto/screens/instructivo.dart';
+import 'package:Numerate/routes/routes.dart';
+import 'package:Numerate/screens/cuenta.dart';
+import 'package:Numerate/screens/envioImagen2.dart';
+import 'package:Numerate/screens/historial.dart';
+import 'package:Numerate/screens/instructivo.dart';
 
 class ContenidoPagina extends StatelessWidget {
   final Widget contenido;

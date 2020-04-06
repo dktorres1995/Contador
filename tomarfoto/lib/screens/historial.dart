@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/provider/historialprovider.dart';
-import 'package:tomarfoto/screens/detalleImagen.dart';
-import 'package:tomarfoto/widgets/widgets/Plantilla.dart';
-import 'package:tomarfoto/widgets/widgets/paginaHistorial.dart';
+import '../provider/historialprovider.dart';
+import '../screens/detalleImagen.dart';
+import '../widgets/widgets/Plantilla.dart';
+import '../widgets/widgets/paginaHistorial.dart';
 
 class Historial extends StatefulWidget {
   static const routedName = '/historial';

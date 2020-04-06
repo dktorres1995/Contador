@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/provider/providerConfig.dart';
-import 'package:tomarfoto/screens/PantallaWeb.dart';
+import '../provider/providerConfig.dart';
+import '../screens/PantallaWeb.dart';
 
 class PantallaInicial extends StatefulWidget {
   static const routedName = '/pantallaInicial';
