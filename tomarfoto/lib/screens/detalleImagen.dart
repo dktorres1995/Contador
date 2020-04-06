@@ -91,7 +91,7 @@ class _DetalleImagenState extends State<DetalleImagen> {
   @override
   Widget build(BuildContext context) {
     final String id = ModalRoute.of(context).settings.arguments;
-    print('inicio descarga 1 ${DateTime.now()}');
+   //print('inicio descarga 1 ${DateTime.now()}');
     return FutureBuilder(
         future: fetchPost(id),
         builder: (context, snapshot) {

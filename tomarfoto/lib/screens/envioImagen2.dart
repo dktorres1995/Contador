@@ -96,7 +96,7 @@ class _MyHomePageState extends State<EnvioImagen2> {
                   )
                 ],
                 content: Text(
-                    'Ha habido un error al enviar la foto'));
+                    'Ha habido un error al enviar la foto $err'));
           });
     });
   }

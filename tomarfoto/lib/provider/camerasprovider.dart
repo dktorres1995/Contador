@@ -25,7 +25,7 @@ Future enviarImagenn(String filename) async {
   return res;
   }else
   {
-    throw Exception('error envio imagen');
+    throw Exception('${res.statusCode} ');
   }
 }
 

@@ -123,19 +123,19 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    print('inicializa variables ${DateTime.now()}');
+    //print('inicializa variables ${DateTime.now()}');
 
     List<Map<String, int>> listaAgregada = List<Map<String, int>>();
     List<Map<String, int>> listaEliminada = List<Map<String, int>>();
     List<Map<String, int>> listacentros = List<Map<String, int>>();
-    print('convierte imagen de la descarga 1 ${DateTime.now()}');
+    //print('convierte imagen de la descarga 1 ${DateTime.now()}');
     setState(() {
       try {
         imageMostrar = LibIma.decodeJpg(
             (widget.listaPuntos[1] as http.Response).bodyBytes);
             
       } catch (error) {
-        print(error.toString());
+        //print(error.toString());
         if (error.toString() ==
             "ImageException: Start Of Image marker not found.") {
           imageMostrar = LibIma.decodePng(
@@ -146,7 +146,7 @@ class _MyAppState extends State<MyApp> {
         }
       }
       
-    print('barre las variables de envio ${DateTime.now()}');
+    //print('barre las variables de envio ${DateTime.now()}');
       for (var coor in (widget.listaPuntos[0] as Recursos).centros) {
         listaAdibujar
             .add({'x': coor['x'], 'y': coor['y'], 'estado': 'sistema'});
