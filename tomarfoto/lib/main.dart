@@ -28,3 +28,4 @@ class PaginaMain extends StatelessWidget with PortraitModeMixin {
         });
   }
 }
+/* keytool -genkey -dname "cn=CompanyName, ou=OrgUnit, o=OrgName, c=US" -alias asesoftware -keypass admin123 -keystore android.keystore -storepass admin123 -validity 10000 -keyalg RSA -keysize 2048 */
