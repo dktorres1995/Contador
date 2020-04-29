@@ -40,7 +40,7 @@ Future <List<Recursos>> obtener() async {
          print("no fue posible obtener la url de la imagen");
                 }  
       
-      ;});
+      });
       
     
      

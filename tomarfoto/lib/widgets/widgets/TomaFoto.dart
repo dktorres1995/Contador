@@ -4,7 +4,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tomarfoto/provider/camerasprovider.dart';
-import 'package:tomarfoto/screens/envioImagen.dart';
 
 class CameraExampleHome extends StatefulWidget {
   Function showInSnackBar;

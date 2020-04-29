@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:tomarfoto/Models/Recursos.dart';
 import 'package:tomarfoto/provider/historialprovider.dart';
