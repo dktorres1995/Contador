@@ -1,81 +1,102 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/Models/Recursos.dart';
-import 'package:tomarfoto/provider/historialprovider.dart';
-import 'package:tomarfoto/screens/TraerInfo.dart';
-import 'package:tomarfoto/screens/envioImagen.dart';
+import '../provider/historialprovider.dart';
+import '../screens/detalleImagen.dart';
+import '../widgets/widgets/Plantilla.dart';
+import '../widgets/widgets/paginaHistorial.dart';
 
-import 'TraerInfo.dart';
-
-class Historial extends StatelessWidget {
+class Historial extends StatefulWidget {
   static const routedName = '/historial';
+
   @override
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('NUMERATE'),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).accentColor,
-      ),
-      body: Center(
-          child: FutureBuilder(
-              future: obtener(),
-              builder: (context, AsyncSnapshot<List<Recursos>> snapshot) {
-                if (snapshot.hasData) {
-                  return crear(snapshot.data, context);
-                } else {
-                  return CircularProgressIndicator();
-                }
-              })),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        child: Container(
-          child: Icon(
-            Icons.camera_alt,
-            color: Theme.of(context).accentColor,
-          ),
-        ),
-        onPressed: () =>
-            Navigator.of(context).pushNamed(EnvioImagen.routedName),
-        backgroundColor: Colors.white,
-      ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Container(
-          color: Theme.of(context).accentColor,
-          height: 50.0,
-        ),
-      ),
+  _HistorialState createState() => _HistorialState();
+}
+
+class _HistorialState extends State<Historial> {
+  TextEditingController busqueda;
+  void reiniciar() {
+    print('reinicio');
+    setState(() {});
+  }
+
+  Widget contenidoHistorial(int totalPag, BuildContext ctx) {
+    bool cuadroBusqueda = false;
+    return LayoutBuilder(
+      builder: (ctx, medida) {
+        return Column(
+          children: <Widget>[
+            cuadroBusqueda?Container(
+                height: medida.maxHeight * 0.07,
+                width: medida.maxWidth,color: Colors.transparent,
+                padding:
+                    EdgeInsets.symmetric(horizontal: medida.maxWidth * 0.1),
+                child: Card(
+                  elevation: 20,
+                  child: Stack(
+                    children: <Widget>[
+                      Icon(Icons.search),
+                      TextField(
+                        enabled: false,
+                        controller: busqueda,
+                        decoration: InputDecoration(
+                            hintText: "",
+                            fillColor: Color(0X1F000000),
+                            filled: true),
+                      ),
+                    ],
+                  ),
+                )):Container(),
+            Container(
+              height: cuadroBusqueda?medida.maxHeight * 0.93:medida.maxHeight,
+              width: medida.maxWidth,
+              child: ListView.builder(
+                  dragStartBehavior: DragStartBehavior.start,
+                  addAutomaticKeepAlives: true,
+                  itemCount: totalPag,
+                  itemBuilder: (ctx, index) {
+                    return Container(
+                      height: 1500,
+                      width: double.infinity,
+                      child: PagHistorial(index + 1),
+                    );
+                  }),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget crear(List<Recursos> lista, BuildContext ctx) {
-    return ListView.builder(
-      itemCount: lista.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Card(
-          shape: BeveledRectangleBorder(
-            side: BorderSide(
-              color: Colors.grey,
-              width: 0.8,
-            ),
-          ),
-          child: ListTile(
-            leading: Image.network(lista[index].imagenUrl,
-                width: 70.0, height: 70.0, fit: BoxFit.fitWidth),
-            title: Text('Varillas conteo ' +
-                (index + 1).toString() +
-                '           ' +
-                '${lista[index].conteo == -1 ? 'Cargando..' : lista[index].conteo.toString()}'),
-            onTap: () {
-              if (lista[index].conteo == -1 ){
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: obtenerListaPaginadatotal(),
+      builder: (context, infoIni) {
+        if (infoIni.hasData) {
+          return ContenidoPagina(
+              contenido:
+                  contenidoHistorial(infoIni.data['totalPag'] as int, context),
+              titulo: 'Historial',
+              bloqueo: false,
+              confirmacionSalida: false,
+              mensajeConfirmacionSalida: () {});
+        } else if (infoIni.hasError) {
+          mensaje(context, 'Error al cargar historial',
+              'Se ha presentado un error al cargar el historial');
+          return ContenidoPagina(
+              contenido: Text('${infoIni.error}'),
+              titulo: 'Historial',
+              bloqueo: false,
+              confirmacionSalida: false,
+              mensajeConfirmacionSalida: () {});
+        }
 
-              }else{
-             Navigator.of(ctx)
-                .pushNamed(MyApp.routedName, arguments: lista[index].id);}
-            }
-          ),
-        );
+        return ContenidoPagina(
+            contenido: Center(child: CircularProgressIndicator()),
+            titulo: 'Historial',
+            bloqueo: false,
+            confirmacionSalida: false,
+            mensajeConfirmacionSalida: () {});
       },
     );
   }

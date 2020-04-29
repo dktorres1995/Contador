@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tomarfoto/screens/historial.dart';
+import '../provider/providerConfig.dart';
+import '../screens/PantallaWeb.dart';
 
 class PantallaInicial extends StatefulWidget {
   static const routedName = '/pantallaInicial';
@@ -37,8 +38,10 @@ class _State extends State<PantallaInicial> {
                       child: Text(
                 'NUMERATE',
                 style: TextStyle(color: Colors.white,fontSize: 20),
-              ),onTap: ()=>Navigator.of(context)
-            .pushNamed(Historial.routedName)) //botonesIniciales(context),
+              ),onTap: (){
+                Navigator.of(context).pushNamedAndRemoveUntil(PantallaWeb.routedname,(ro)=>false,arguments: ConfigPaths.linkAzure);
+           // .pushNamedAndRemoveUntil(InstructivoScreen.routedName,(ro)=>false);
+            }) //botonesIniciales(context),
                   ),
             ],
           ),
